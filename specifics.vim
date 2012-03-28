@@ -1,0 +1,24 @@
+if filereadable("CMakeLists.txt")
+    " set makeprg=oc\ %
+    set makeprg=om\ release\ -j24
+endif
+
+" Add source root to the path
+set path+=$root
+
+" Add source root as tags location
+" set tags+=$root
+
+" clang_complete
+" Use libclang.so instead of clang executable
+" let g:clang_exec='~/llvm/usr/local/bin/clang'
+let g:clang_use_library = 1
+let g:clang_library_path = '/home/kartynnik/bin/llvm/usr/local/lib'
+" Periodically update the quickfix window
+let g:clang_periodic_quickfix = 1
+" Disable auto popup, use <Tab> to autocomplete
+let g:clang_complete_auto = 0
+" Show clang errors in the quickfix window
+let g:clang_complete_copen = 1
+" Auto select the first entry and insert it
+let g:clang_auto_select = 2

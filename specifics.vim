@@ -31,6 +31,9 @@ let g:clang_complete_patterns = 1
 " Clang quickfix window
 nnoremap <silent> <leader>f :call g:ClangUpdateQuickFix()<CR>
 
+" Activate clang_complete via SuperTab
+let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
+
 " Show relative numbers
 " set relativenumber
 

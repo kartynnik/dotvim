@@ -15,10 +15,21 @@ set path+=$root
 let g:clang_use_library = 1
 let g:clang_library_path = '/home/kartynnik/bin/llvm/usr/local/lib'
 " Periodically update the quickfix window
-let g:clang_periodic_quickfix = 1
+" let g:clang_periodic_quickfix = 1
 " Disable auto popup, use <Tab> to autocomplete
 let g:clang_complete_auto = 0
 " Show clang errors in the quickfix window
 let g:clang_complete_copen = 1
 " Auto select the first entry and insert it
 let g:clang_auto_select = 2
+" Complete preprocessor macros and constants
+let g:clang_complete_macros = 1
+" Complete code patterns. e.g. loops
+let g:clang_complete_patterns = 1
+
+" Clang quickfix window
+nnoremap <silent> <leader>f :call g:ClangUpdateQuickFix()<CR>
+
+" Show relative numbers
+" set relativenumber
+

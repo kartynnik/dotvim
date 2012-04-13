@@ -37,3 +37,6 @@ let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
 " Show relative numbers
 " set relativenumber
 
+" Open source root in NERDTree
+nnoremap <leader>A :NERDTree $root<CR>
+

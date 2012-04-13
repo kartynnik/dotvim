@@ -40,3 +40,6 @@ let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
 " Open source root in NERDTree
 nnoremap <leader>A :NERDTree $root<CR>
 
+" For large directories, use .allfiles instead of find in Ctrl-P
+let g:ctrlp_user_command = 'listfiles.sh %s'
+

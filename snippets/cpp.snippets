@@ -28,3 +28,56 @@ snippet cl
 	private:
 		${3:/* data */}
 	};
+#
+#
+# Mapreduce
+snippet mapred
+	#include <quality/mapreducelib/all.h>
+	#include <quality/mr_util/io_utils.h>
+
+	using namespace NMR;
+
+# IMap
+snippet imap
+	/**
+	 * Input:  ${7:; ; }
+	 * Output: ${8:; ; }
+	**/
+	class ${1:TMap}: public IMap
+	{
+	    OBJECT_NOCOPY_METHODS($1)
+	
+	public:
+	    virtual void DoSub(TValue ${3:key}, TValue ${4:subKey}, TValue ${5:value}, TUpdate& ${6:output})
+	    {
+			${2:// code}
+	        $6.AddSub($3, $4, $5);
+	    }
+	};
+	
+	REGISTER_SAVELOAD_CLASS(`strftime("%s")`, $1)
+	
+	${9}
+# IReduce
+snippet ired
+	/**
+	 * Input:  ${6:; ; }
+	 * Output: ${7:; ; }
+	**/
+	class ${1:TReduce}: public IReduce
+	{
+	    OBJECT_NOCOPY_METHODS($1)
+
+	public:
+	    virtual void Do(TValue ${3:key}, TTableIterator& ${4:input}, TUpdate& ${5:output})
+	    {
+	        for (; $4.IsValid(); ++$4) {
+				${2:// code}
+	            $5.AddSub($3, $4.GetSubKey(), $4.GetValue())};
+	        }
+	    }
+	};
+
+	REGISTER_SAVELOAD_CLASS($1)
+
+	${8}

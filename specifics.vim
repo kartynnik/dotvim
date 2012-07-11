@@ -43,3 +43,5 @@ nnoremap <leader>A :NERDTree $root<CR>
 " For large directories, use .allfiles instead of find in Ctrl-P
 let g:ctrlp_user_command = 'listfiles.sh %s'
 
+" Show fancy unicode symbols in powerline
+let g:Powerline_symbols = 'fancy'

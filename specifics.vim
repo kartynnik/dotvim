@@ -10,11 +10,11 @@ set path+=$root
 " set tags+=$root
 
 " clang_complete
-let g:clang_complete_enabled = 1
+let g:clang_complete_enabled = 0
 " Use libclang.so instead of clang executable
 " let g:clang_exec='~/llvm/usr/local/bin/clang'
-let g:clang_use_library = 1
-let g:clang_library_path = '/home/kartynnik/bin/llvm/usr/local/lib'
+" let g:clang_use_library = 1
+" let g:clang_library_path = '/home/kartynnik/bin/llvm/usr/local/lib'
 " Periodically update the quickfix window
 " let g:clang_periodic_quickfix = 1
 " Disable auto popup, use <Tab> to autocomplete

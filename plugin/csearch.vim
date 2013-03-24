@@ -1,31 +1,31 @@
 " Maintainer:  Yury Kartynnik
-" Last Change: 20120416
+" Last Change: 20130324
 
-let $csearch = "csearch"
+let $csearch = "f"
 
 "------------------------------------------------------------------------
-func! FindRegex(regex)
+func! CodeSearch(args)
 "------------------------------------------------------------------------
 
-  let cmd = "$csearch '" . a:regex . "'"
+  let cmd = "COLORS=no $csearch " . a:args
 
-  " echo "Performing command: " . cmd
+  echom "Performing command: " . cmd
   cex system(cmd)
   copen
-  let b:csearch_regex = a:regex
-  setlocal statusline=%{b:csearch_regex}
-  if len(getqflist()) == 1
+  let b:csearch_args = a:args
+  setlocal statusline=%{b:csearch_args}
+  if len(getqflist()) == 2
       cfirst
       cclose
-  elseif len(getqflist()) == 0
+  elseif len(getqflist()) <= 1
       cclose
-      echohl ErrorMsg | echo "Couldn't find '" . a:regex . "'" | echohl None
+      echohl ErrorMsg | echo "Couldn't find code matching '" . a:args . "'" | echohl None
   endif
 endfunc
 
-command -nargs=1 FindRegex call FindRegex("<args>")
+" Usage: :CodeSearch regexp fileRegexp matches
+command -nargs=+ CodeSearch call CodeSearch("<args>")
 
-" Perform usage search for the regex under cursor
-map <leader>U :call FindRegex(expand("<cword>"))<CR>
-map <leader>R :FindRegex 
-                                 
+" Perform code search for the regex under cursor
+nmap K :call CodeSearch(expand("<cword>"))<CR>
+nmap <leader>f :CodeSearch 

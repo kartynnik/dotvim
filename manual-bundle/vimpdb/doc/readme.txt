@@ -1,4 +1,4 @@
-VimPdb Beta
+*VimPdb* Beta
 by Yaron Budowski
 
 
@@ -114,3 +114,4 @@ This is probably due to the use of another Python thread within the Vim process.
 I've tried to make it so that the main Vim process doesn't interact directly with the Python thread (only via a common
 command queue). This improved stability, but not entirely.
 
+" vim: set expandtab sts=2 ts=2 sw=2 tw=78 ft=help norl:

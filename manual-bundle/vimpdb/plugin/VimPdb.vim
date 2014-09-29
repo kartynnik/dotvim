@@ -114,7 +114,6 @@ function! PdbBuffEnter()
 
 	python <<EOF
 if (vim_pdb.is_debugged()):
-	file('out.txt', 'a').write('BuffEnter\n')
 	vim_pdb.add_queued_method('highlight_current_line_for_file', vim.current.buffer.name)
 	vim_pdb.add_queued_method('highlight_breakpoints_for_file', vim.current.buffer.name)
 EOF

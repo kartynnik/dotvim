@@ -31,7 +31,7 @@ VimPdb allows you to debug Python programs like in a standard IDE (Step in/over,
 
 Just drop VimPdb.py and VimPdb.vim into your plugin directory. Make sure the key bindings do not interfere with any existing ones.
 
-4. Key Bindings
+4. Key Bindings *VimPdbKeyBindings*
 -----------------
 
 - F5 - Start/continue debug session of current file.
@@ -92,10 +92,10 @@ VimPdb.vim contains several options which allow the user to customize it:
 - default_breakpoints_filename: the filename used when auto_load_breakpoints_file/auto_saved_breakpoints_file are set.
 
 The following highlighting groups can be changed as well:
-- PdbCurrentLine: the currently debugged line.
-- PdbBreakpoint: a "regular" breakpoint.
-- PdbConditionalBreakpoint: a conditional breakpoint.
-- PdbTemporaryBreakpoint: a temporary breakpoint.
+- *PdbCurrentLine* - the currently debugged line.
+- *PdbBreakpoint* - a "regular" breakpoint.
+- *PdbConditionalBreakpoint* - a conditional breakpoint.
+- *PdbTemporaryBreakpoint* - a temporary breakpoint.
 
 And of course, default key bindings can be modified.
 

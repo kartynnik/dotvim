@@ -41,5 +41,16 @@ command -nargs=+ CodeSearch   call CodeSearch("'<args>'")
 
 " Perform code search for the regexp under cursor
 nmap K :call CodeSearch("'\\b" . expand("<cword>") . "\\b'")<CR>
+function! CodeSearchGetVisualSelection()
+  let [line1, col1] = getpos("'<")[1:2]
+  let [line2, col2] = getpos("'>")[1:2]
+  if line1 != line2
+      throw "CodeSearch doesn't support multiline regexps"
+  endif
+  let line = getline(line1)
+  let line = line[col1 - 1 : col2 - (&selection == 'inclusive' ? 1 : 2)]
+  return line
+endfunction
+vmap K :call CodeSearch("'\\b" . CodeSearchGetVisualSelection() . "\\b'")<CR>
 nmap <leader>f :CodeSearch 
 nmap <leader>F :CodeSearchEx 

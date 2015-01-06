@@ -36,8 +36,8 @@ func! CodeSearch(args)
 endfunc
 
 " Usage: :CodeSearchEx regexp -f fileRegexp -m matches ... (see f usage)
-command -nargs=+ CodeSearchEx call CodeSearch("<args>")
-command -nargs=+ CodeSearch   call CodeSearch("'<args>'")
+command! -nargs=+ CodeSearchEx call CodeSearch("<args>")
+command! -nargs=+ CodeSearch   call CodeSearch("'<args>'")
 
 " Perform code search for the regexp under cursor
 nmap K :call CodeSearch("'\\b" . expand("<cword>") . "\\b'")<CR>

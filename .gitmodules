@@ -1,0 +1,4 @@
+[submodule "bundle/neobundle.vim"]
+	path = bundle/neobundle.vim
+	url = git@github.com:Shougo/neobundle.vim
+	branch = master

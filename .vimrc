@@ -139,9 +139,9 @@ else
     if g:_ycm_enabled
         NeoBundle 'Valloric/YouCompleteMe', {
              \ 'build' : {
-             \     'mac' : './build.py --clang-completer',
-             \     'linux' : './build.py --clang-completer',
-             \     'unix' : './build.py --clang-completer',
+             \     'mac' : './install.sh --clang-completer',
+             \     'linux' : './install.sh --clang-completer',
+             \     'unix' : './install.sh --clang-completer',
              \    }
              \ }
     endif

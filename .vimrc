@@ -134,6 +134,7 @@ else
 
     " Ctrl-P fuzzy search
     NeoBundle 'kien/ctrlp.vim'
+" }}}
 " Multiple languages {{{3
     " Autocompletion with <Tab>, clang-based for C-like languages
     if g:_ycm_enabled
@@ -164,7 +165,7 @@ else
 " }}}
 " Python {{{3
     " Python IDE and editor enhancement features
-    " (motion, syntax checking, refactoring, documentation, :help pymode)
+    " (motion, syntax checking, refactoring, documentation, breakpoints on <Leader>b, :help pymode)
     NeoBundle 'klen/python-mode'
 
     " Python autocompletion (YouCompleteMe includes its features)
@@ -174,15 +175,10 @@ else
 
     " Resolve Python modules on gf (go to file)
     NeoBundle 'mkomitee/vim-gf-python'
-
-    " Python debugger (installed manually and not managed by NeoBundle)
-    NeoBundleLocal '~/.vim/manual-bundle/vimpdb'
-
 " }}}
 " Jade templates {{{3
     " Jade syntax plugin
     NeoBundle 'digitaltoad/vim-jade.git'
-
 " }}}2
 
 " NeoBundle initialization finish {{{2
@@ -801,13 +797,6 @@ function! PythonPath(...)
     endfor
 endfunction
 command! -nargs=+ PythonPath call PythonPath(<args>)
-
-" VimPdb - Python debugger interface {{{2
-" Colors
-highlight PdbCurrentLine ctermbg=blue
-highlight PdbBreakpoint ctermbg=red
-highlight PdbContitionalBreakpoint ctermbg=green
-highlight PdbTemporaryBreakpoint ctermbg=yellow
 
 " Python-Mode - Python IDE features {{{2
 " Maximum line width

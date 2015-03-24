@@ -141,6 +141,11 @@ else
         NeoBundleSafe 'farseer90718/vim-taskwarrior'
     endif
 
+" Additional syntax definitions {{{2
+
+" tmux configuration
+NeoBundleSafe 'whatyouhide/vim-tmux-syntax'
+
 " IDE features {{{2
 
 " Language-agnostic {{{3

@@ -13,7 +13,7 @@ set runtimepath+=~/.vim/bundle/neobundle.vim/
 " List NeoBundle bundles
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-" A flag to indicate YouCompleteMe availability (see below)
+" A flag to indicate availability and desirability of YouCompleteMe (see below)
 " YouCompleteMe requires VIM 7.3.584+ compiled with Python support
 let g:_ycm_enabled =
     \ filereadable(expand('~/.want_ycm')) &&
@@ -629,7 +629,6 @@ nnoremap <silent> <Leader><space> :noh<CR>
 command! GCC set makeprg=g++\ -O3\ -o\ %:p:r\ %
 command! Make set makeprg=make\ -j${cores:-16}
 command! YaBuild set makeprg=ya\ build\ -j${cores:-16}\ -r
-command! Check set makeprg=check
 command! UT set noautochdir | cd ut | set makeprg+=&&./*-ut
 
 " Make with g++, make or ya build
@@ -639,17 +638,6 @@ if filereadable("Makefile")
 elseif filereadable("CMakeLists.txt")
     YaBuild
 endif
-
-" Check syntax using check
-function! CheckSyntax()
-    let oldmakeprg = &makeprg
-    Check
-    silent make
-    redraw!
-    let &makeprg = oldmakeprg
-endfunction
-" Save and check syntax
-" nnoremap <silent> <Leader>s :call CheckSyntax()<CR>
 
 " Make (and jump to the first error - :cfirst<CR>)
 map <C-F5> :make<CR>
@@ -662,15 +650,15 @@ autocmd FileType qf setlocal wrap linebreak
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
-" Add current file's, current {and all subdirectories} to the path
-set path=., " {,**} - doesn't play well with inccomplete.vim and makes not much sense
-" Add source root to the path
-set path+=$root,$root/../build/release
+" Add Vim's current directory and current file's location directory to the path
+set path=.,
+" Add source and build roots to the path
+set path+=$root,$root/../ybuild/latest
 
 " List possible tags locations
 " set tags=tags\ ../tags\ ../../tags
 
-" Run current file
+" Run current file (for scripts)
 nnoremap <silent> <Leader><Leader> :!./%<CR>
 
 
@@ -754,7 +742,7 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'c'
 
 " Syntastic - syntax checker {{{2
-" Use custom script for syntastic
+" Use custom script for syntastic ('check' is my custom script that runs compilation with necessary options)
 let g:syntastic_cpp_compiler = 'check'
 " Do not search for headers of special libraries
 let g:syntastic_cpp_no_include_search = 1
@@ -764,7 +752,7 @@ let g:syntastic_cpp_no_default_include_dirs = 1
 let g:syntastic_check_on_wq = 0
 " ...and on all writes (use :SyntasticCheck and :SyntasticToggleMode)
 let g:syntastic_mode_map = { "mode": "passive" }
-" Save and check syntax
+" Save and check syntax - superceded by YouCompleteMe when available
 if g:_ycm_enabled != 1
     nnoremap <silent> <Leader>s :w<CR>:SyntasticCheck<CR>
 endif

@@ -6,7 +6,7 @@
 set nocompatible
 
 " Use NeoBundle for plugin management
-" (separate plugins live in private folders under ~/.vim/bundles)
+" (separate plugins live in private folders under ~/.vim/bundle)
 " Should be called before "filetype *": manually add NeoBundle to the runtime path
 set runtimepath+=~/.vim/bundle/neobundle.vim/
 
@@ -23,7 +23,6 @@ let g:_ycm_enabled =
 " Compare bundle cache modification time with .vimrc, skip if up to date
 if neobundle#has_fresh_cache()
     NeoBundleLoadCache
-
 else
     " For NeoBundle, 'user/repository' is a shortcut for GitHub repos
 
@@ -140,6 +139,9 @@ else
         " Vim interface for the TaskWarrior command line task manager
         NeoBundleSafe 'farseer90718/vim-taskwarrior'
     endif
+
+    " Either you know what it is or you hardly need it (f bindings for Vim)
+    NeoBundleSafe 'kartynnik/vim-f'
 
 " Additional syntax definitions {{{2
 

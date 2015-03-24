@@ -398,7 +398,7 @@ set iminsert=0
 set imsearch=0
 " Show a different cursor in GUI for lmap'ped mode
 highlight lCursor guifg=NONE guibg=Cyan
-" Avoid issues with ё on spelling
+" Avoid issues with ё in spelling
 " :setlocal spell spelllang=ru_yo,en_us
 
 
@@ -673,7 +673,7 @@ set wildmenu
 set wildmode=list:longest
 
 
-" Disable jj/jk (see above) in lmap'ped mode for "сообщать" and "положить"
+" Disable jj/jk (see above) in lmap'ped mode for the cases like "сообщать" and "положить"
 function! LMap()
     if &iminsert == 1
         set iminsert=0
@@ -689,7 +689,6 @@ function! LMap()
     call feedkeys('a')
 endfunction
 inoremap <silent> <C-^> <ESC>:call LMap()<CR>
-
 
 
 " Plugin settings and mappings {{{1

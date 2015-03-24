@@ -25,18 +25,33 @@ if neobundle#has_fresh_cache()
     NeoBundleLoadCache
 
 else
+    " For NeoBundle, 'user/repository' is a shortcut for GitHub repos
+
+    " Use this function to overcome restrictive firewalls (allowing only :80 and :443 connections)
+    function! FirewallAwareURL(shortcut)
+        return 'ssh://git@ssh.github.com:443/' . a:shortcut . '.git'
+    endfunction
+
     " NeoBundle itself
     " (registers a bundle but doesn't add it to the runtime path as we've done it manually before)
-    NeoBundleFetch 'Shougo/neobundle.vim'
+    NeoBundleFetch FirewallAwareURL('Shougo/neobundle.vim')
 
-    " 'user/repository' is a shortcut for GitHub repos
+    " A shortcut
+    command! -nargs=1 NeoBundleSafe :NeoBundle FirewallAwareURL("<args>")
+
+" }}}
+
+" Color schemes {{{2
+
+    " Mustang
+    NeoBundleSafe 'croaker/mustang-vim'
 
 " }}}
 
 " Libraries - the plugins used by other plugins {{{2
 
     " Asynchronous execution library for Vim (used e.g. by NeoBundle to parallelize updates)
-    NeoBundle 'Shougo/vimproc.vim', {
+    NeoBundle FirewallAwareURL('Shougo/vimproc.vim'), {
             \ 'build': {
             \     'mac': 'make -f make_mac.mak',
             \     'linux': 'make',
@@ -45,100 +60,100 @@ else
             \ }
 
     " Allows to repeat the plugin mappings with "." in the normal mode
-    NeoBundle 'tpope/vim-repeat'
+    NeoBundleSafe 'tpope/vim-repeat'
 
 " New text objects (like "the right hand side of =" or "a camel case word") {{{2
 
     " Enables <Leader>w... for moving around CamelCase word parts
-    NeoBundle 'bkad/CamelCaseMotion'
+    NeoBundleSafe 'bkad/CamelCaseMotion'
 
     " Makes H a text object for the LHS of an expression (=, ==, =>) and L for the RHS,
     " try e.g. ciL in "stri|ng a = 'some string';"
-    NeoBundle 'vim-scripts/text-object-left-and-right'
+    NeoBundleSafe 'vim-scripts/text-object-left-and-right'
 
     " Text objects for surrounding brackets, tags... (:help surround.txt)
-    NeoBundle 'tpope/vim-surround'
+    NeoBundleSafe 'tpope/vim-surround'
 
 " Editing experience enhancements {{{2
 
     " Move and jump to elements of comma-separated lists (e.g. arguments)
-    NeoBundle 'AndrewRadev/sideways.vim'
+    NeoBundleSafe 'AndrewRadev/sideways.vim'
 
     " Automatic alignment
     " (e.g. around =, try <Enter> in visual mode, :help easy-align)
-    NeoBundle 'junegunn/vim-easy-align'
+    NeoBundleSafe 'junegunn/vim-easy-align'
 
     " Split argument list to multiple lines
     " (binded to <Leader>a in this .vimrc, :help argumentrewrap-examples)
-    NeoBundle 'jakobwesthoff/argumentrewrap'
+    NeoBundleSafe 'jakobwesthoff/argumentrewrap'
 
     " Abbreviation and substitution of many word variants at once (:help abolish)
     " + case coercion (try crm on some_word, :help abolish-coerce)
-    NeoBundle 'tpope/vim-abolish'
+    NeoBundleSafe 'tpope/vim-abolish'
 
     " Enables <Leader>m to mark all the occurences of a word with a new color,
     " <Leader>r to mark by a regular expression specified, <Leader>n to clear the marks,
     " and allows to jump to the next/previous mark occurences with */# (:help mark.txt)
-    NeoBundle 'vim-scripts/Mark--Karkat'
+    NeoBundleSafe 'vim-scripts/Mark--Karkat'
 
     " Highlight pairs of matching parentheses in distinct colors
-    NeoBundle 'kien/rainbow_parentheses.vim'
+    NeoBundleSafe 'kien/rainbow_parentheses.vim'
 
     " SublimeText-like multiple cursors with Ctrl-N (:help vim-multiple-cursors.txt)
-    NeoBundle 'terryma/vim-multiple-cursors'
+    NeoBundleSafe 'terryma/vim-multiple-cursors'
 
 " Interface enhancements {{{2
 
     " Many paired commands
     " (like [on, ]on, con to enable/disable/toggle numbering, :help unimpaired)
-    NeoBundle 'tpope/vim-unimpaired'
+    NeoBundleSafe 'tpope/vim-unimpaired'
 
     " Mini buffer explorer (mapped to <Leader>x)
-    NeoBundle 'fholgado/minibufexpl.vim'
+    NeoBundleSafe 'fholgado/minibufexpl.vim'
 
     " Extended status line
-    NeoBundle 'bling/vim-airline'
+    NeoBundleSafe 'bling/vim-airline'
 
     " Undo tree (mapped to <Leader>u)
     if (v:version >= 703)
-        NeoBundle 'sjl/gundo.vim'
+        NeoBundleSafe 'sjl/gundo.vim'
     endif
 
 " Bridges for other tools (UNIX, git, ack...) {{{2
 
     " Allow to open terminal sessions in buffers
-    NeoBundle 'pthrasher/conqueterm-vim'
+    NeoBundleSafe 'pthrasher/conqueterm-vim'
 
     " Vim sugar for the UNIX shell commands
     " (:Rename, :SudoWrite, :Chmod, :Locate... - :help eunuch-commands)
-    NeoBundle 'tpope/vim-eunuch'
+    NeoBundleSafe 'tpope/vim-eunuch'
 
     " Git management (:help fugitive.txt)
-    NeoBundle 'tpope/vim-fugitive'
+    NeoBundleSafe 'tpope/vim-fugitive'
     " Gitk-like repository history
-    NeoBundle 'gregsexton/gitv'
+    NeoBundleSafe 'gregsexton/gitv'
 
     " Ack interface for vim
-    NeoBundle 'mileszs/ack.vim'
+    NeoBundleSafe 'mileszs/ack.vim'
 
     if isdirectory(expand('~/.task'))
         " Vim interface for the TaskWarrior command line task manager
-        NeoBundle 'farseer90718/vim-taskwarrior'
+        NeoBundleSafe 'farseer90718/vim-taskwarrior'
     endif
 
 " IDE features {{{2
 
 " Language-agnostic {{{3
     " File tree
-    NeoBundle 'scrooloose/nerdtree'
+    NeoBundleSafe 'scrooloose/nerdtree'
 
     " Ctrl-P fuzzy search
-    NeoBundle 'kien/ctrlp.vim'
+    NeoBundleSafe 'kien/ctrlp.vim'
 " }}}
 " Multiple languages {{{3
     " Autocompletion with <Tab>, clang-based for C-like languages
     if g:_ycm_enabled
-        NeoBundle 'Valloric/YouCompleteMe', {
+        NeoBundle FirewallAwareURL('Valloric/YouCompleteMe'), {
              \ 'build' : {
              \     'mac' : './install.sh --clang-completer',
              \     'linux' : './install.sh --clang-completer',
@@ -148,37 +163,36 @@ else
     endif
 
     " Syntax error highlighting
-    NeoBundle 'scrooloose/syntastic'
+    NeoBundleSafe 'scrooloose/syntastic'
 
     " Code snippets support
-    NeoBundle 'SirVer/ultisnips'
+    NeoBundleSafe 'SirVer/ultisnips'
     " A bunch of predefined snippets for UltiSnips
-    NeoBundle 'honza/vim-snippets'
-
+    NeoBundleSafe 'honza/vim-snippets'
 
     " Commenting with gc*
-    NeoBundle 'tpope/vim-commentary'
+    NeoBundleSafe 'tpope/vim-commentary'
 " }}}
 " C/C++ {{{3
     " #include completion
-    NeoBundle 'xaizek/vim-inccomplete'
+    NeoBundleSafe 'xaizek/vim-inccomplete'
 " }}}
 " Python {{{3
     " Python IDE and editor enhancement features
     " (motion, syntax checking, refactoring, documentation, breakpoints on <Leader>b, :help pymode)
-    NeoBundle 'klen/python-mode'
+    NeoBundleSafe 'klen/python-mode'
 
     " Python autocompletion (YouCompleteMe includes its features)
     if ! g:_ycm_enabled
-        NeoBundle 'davidhalter/jedi-vim'
+        NeoBundleSafe 'davidhalter/jedi-vim'
     endif
 
     " Resolve Python modules on gf (go to file)
-    NeoBundle 'mkomitee/vim-gf-python'
+    NeoBundleSafe 'mkomitee/vim-gf-python'
 " }}}
 " Jade templates {{{3
     " Jade syntax plugin
-    NeoBundle 'digitaltoad/vim-jade.git'
+    NeoBundleSafe 'digitaltoad/vim-jade.git'
 " }}}2
 
 " NeoBundle initialization finish {{{2
@@ -221,7 +235,7 @@ set t_Co=256
 " Background and color scheme
 set background=dark
 if &t_Co >= 256 || has('gui_running')
-    colorscheme Mustang
+    colorscheme mustang
 endif
 
 " Prevent $VIMRUNTIME/syntax/synload.vim from issuing :colors

@@ -195,6 +195,10 @@ NeoBundleSafe 'whatyouhide/vim-tmux-syntax'
     " Resolve Python modules on gf (go to file)
     NeoBundleSafe 'mkomitee/vim-gf-python'
 " }}}
+" Go {{{3
+    " All-in-one Go development plugin
+    NeoBundleSafe 'fatih/vim-go'
+" }}}
 " Jade templates {{{3
     " Jade syntax plugin
     NeoBundleSafe 'digitaltoad/vim-jade.git'

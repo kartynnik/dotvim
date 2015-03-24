@@ -199,6 +199,10 @@ NeoBundleSafe 'whatyouhide/vim-tmux-syntax'
     " All-in-one Go development plugin
     NeoBundleSafe 'fatih/vim-go'
 " }}}
+" JSON {{{3
+    " A better JSON
+    NeoBundleSafe 'elzr/vim-json'
+" }}}
 " Jade templates {{{3
     " Jade syntax plugin
     NeoBundleSafe 'digitaltoad/vim-jade.git'

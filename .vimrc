@@ -207,7 +207,7 @@ NeoBundleSafe 'whatyouhide/vim-tmux-syntax'
 " }}}
 " Jade templates {{{3
     " Jade syntax plugin
-    NeoBundleSafe 'digitaltoad/vim-jade.git'
+    NeoBundleSafe 'digitaltoad/vim-jade'
 " }}}2
 
 " NeoBundle initialization finish {{{2

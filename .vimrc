@@ -381,6 +381,8 @@ set expandtab
 set tabstop=4
 " Number of spaces for autoindent step
 set shiftwidth=4
+" Backspace unindents
+set smarttab
 " Allow Tab & Shift-Tab indentation
 " in /normal and/ visual modes
 vnoremap <Tab> >>

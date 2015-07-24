@@ -768,7 +768,7 @@ if g:_ycm_enabled == 1
         \ pyeval('os.path.realpath(os.path.expanduser("~/.ycm_extra_conf.py"))'),
         \ pyeval('os.path.realpath(os.path.expandvars("$root/.ycm_extra_conf.py"))')
     \ ]
-    nnoremap <silent> <Leader>s :w<CR>:YcmDiags<CR>
+    nnoremap <silent> <Leader>s :w<CR>:YcmForceCompileAndDiagnostics<CR>
     " Add the preview string to completeop so that the completion preview window becomes available
     let g:ycm_add_preview_to_completeopt = 1
     " Do not trigger as-you-go completion

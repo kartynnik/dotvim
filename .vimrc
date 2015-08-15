@@ -408,7 +408,8 @@ highlight lCursor guifg=NONE guibg=Cyan
 " like public: at the beginning of the line [g0]
 " Open braces indentation: add only one shiftwidth
 " after an unclosed ( in previous line [(1s]
-set cinoptions=g0,(1s
+" switch statements indentation: align with case label, not braces [l1]
+set cinoptions=g0,(1s,l1
 
 
 " Python indentation

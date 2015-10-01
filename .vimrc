@@ -21,9 +21,7 @@ let g:_ycm_enabled =
     \ has('python')
 
 " Compare bundle cache modification time with .vimrc, skip if up to date
-if neobundle#has_fresh_cache()
-    NeoBundleLoadCache
-else
+if neobundle#load_cache()
     " For NeoBundle, 'user/repository' is a shortcut for GitHub repos
 
     " Use this function to overcome restrictive firewalls (allowing only :80 and :443 connections)
@@ -146,7 +144,7 @@ else
 " Additional syntax definitions {{{2
 
 " tmux configuration
-NeoBundleSafe 'whatyouhide/vim-tmux-syntax'
+    NeoBundleSafe 'whatyouhide/vim-tmux-syntax'
 
 " IDE features {{{2
 

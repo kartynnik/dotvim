@@ -830,12 +830,19 @@ let g:pymode_rope_autoimport_import_after_complete = 1
 let g:pymode_rope = 0
 let g:pymode_rope_completion = 0
 let g:pymode_rope_complete_on_dot = 0
+" Disable folding (https://github.com/klen/python-mode/issues/523)
+let g:pymode_folding = 0
 " Use PymodeLint instead of SyntasticCheck for Python
 autocmd FileType python nnoremap <buffer> <silent> <Leader>s :w<CR>:PymodeLint<CR>
 
 " Jedi-vim - Python autocompletion {{{2
 " Disable choose first function/method on autocomplete
 let g:jedi#popup_select_first = 0
+" Show function signatures in Vim's command line, because pop-ups
+" seem to leave garbage in my configuration sometimes
+let g:jedi#show_call_signatures = "2"
+" Add a ',gd' for consistency with other mappings
+let g:jedi#goto_definitions_command = "<Leader>gd"
 
 " UltiSnips - Code snippets
 " Mappings not conflicting with YouCompleteMe

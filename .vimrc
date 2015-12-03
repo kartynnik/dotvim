@@ -653,8 +653,11 @@ autocmd QuickFixCmdPost    l* nested lwindow
 
 " Add Vim's current directory and current file's location directory to the path
 set path=.,
-" Add source and build roots to the path
-set path+=$root,$root/../ybuild/latest
+" Add source root to the path
+" set path+=$root
+" Add source and include folders to the path (in the classic include/ - src/ layout)
+set path+=include,../include,../../include,../../../include
+set path+=src,../src,../../src,../../../src
 
 " List possible tags locations
 " set tags=tags\ ../tags\ ../../tags

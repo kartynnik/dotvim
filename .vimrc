@@ -697,6 +697,10 @@ inoremap <silent> <C-^> <ESC>:call LMap()<CR>
 
 " Plugin settings and mappings {{{1
 
+" CamelCaseMotion
+" Enable <leader> mappings
+call camelcasemotion#CreateMotionMappings('<leader>')
+
 " Mini Buffer Explorer
 " Disable autostart
 let g:miniBufExplAutoStart = 0

@@ -19,7 +19,7 @@ call neobundle#begin(expand(g:_editor_home . '/bundle/'))
 " YouCompleteMe requires VIM 7.3.584+ compiled with Python support
 let g:_ycm_enabled =
     \ filereadable(expand('~/.want_ycm')) &&
-    \ (v:version > 703 || (v:version == 703 && has('patch584'))) &&
+    \ (has('nvim') || v:version > 703 || (v:version == 703 && has('patch584'))) &&
     \ has('python')
 
 " Compare bundle cache modification time with .vimrc, skip if up to date
@@ -160,7 +160,9 @@ if neobundle#load_cache()
 " Multiple languages {{{3
     " Autocompletion with <Tab>, clang-based for C-like languages
     if g:_ycm_enabled
-        NeoBundle FirewallAwareURL('Valloric/YouCompleteMe'), {
+        NeoBundleLazy FirewallAwareURL('Valloric/YouCompleteMe'), {
+             \ 'autoload': {'filetypes': ['c', 'cpp', 'python', 'objcpp']},
+             \ 'install_process_timeout': 3600,
              \ 'build' : {
              \     'mac' : './install.sh --clang-completer',
              \     'linux' : './install.sh --clang-completer',
@@ -218,9 +220,6 @@ endif
 
 " Finalize NeoBundle initialization
 call neobundle#end()
-
-" Let YouComleteMe install in time
-let g:neobundle#install_process_timeout = 3000
 
 " Check that all NeoBundle plugins are installed
 NeoBundleCheck

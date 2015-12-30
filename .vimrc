@@ -252,6 +252,11 @@ if &t_Co >= 256 || has('gui_running')
     colorscheme mustang
 endif
 
+" GUI font
+if has('gui_running')
+    set guifont=Fantasque\ Sans\ Mono\ Bold\ 14
+endif
+
 " Prevent $VIMRUNTIME/syntax/synload.vim from issuing :colors
 " when .vimrc is reloaded
 if exists('colors_name')

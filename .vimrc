@@ -10,8 +10,10 @@ set nocompatible
 " Should be called before "filetype *": manually add NeoBundle to the runtime path
 set runtimepath+=~/.vim/bundle/neobundle.vim/
 
+let g:_editor_home = has('nvim') ? '~/.config/nvim' : '~/.vim'
+
 " List NeoBundle bundles
-call neobundle#begin(expand('~/.vim/bundle/'))
+call neobundle#begin(expand(g:_editor_home . '/bundle/'))
 
 " A flag to indicate availability and desirability of YouCompleteMe (see below)
 " YouCompleteMe requires VIM 7.3.584+ compiled with Python support
@@ -226,7 +228,7 @@ NeoBundleCheck
 " }}}
 
 " Environment check {{{1
-if ! has('ex_extra')
+if ! has('ex_extra') && ! has('nvim')
     echoerr 'This version of VIM is compiled in "small" or "tiny" configuration, so the .vimrc uses many unsupported features'
 endif
 
@@ -253,7 +255,7 @@ endif
 
 " Prevent $VIMRUNTIME/syntax/synload.vim from issuing :colors
 " when .vimrc is reloaded
-if exists("colors_name")
+if exists('colors_name')
     unlet colors_name
 endif
 
@@ -554,7 +556,7 @@ nmap <silent> gs :call SwitchSourceHeader()<CR>
 " %    :  saves and restores the buffer list
 " !    :  saves global variables (for the Mark--Karkat plugin)
 " n... :  where to save the viminfo files
-set viminfo='10,\"100,:20,%,!,n~/.viminfo
+set viminfo='10,\"100,:20,%,!
 
 " Yank/paste between vim sessions (via .viminfo - with the corresponding side effects)
 vmap <silent> <leader>y "xy:wviminfo!<CR>

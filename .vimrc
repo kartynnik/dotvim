@@ -371,9 +371,12 @@ nmap <silent> X :qa<CR>
 
 " Encoding, tabulation and indentation {{{1
 
-" UTF-8 encoding
-set enc=utf-8
+" Use UTF-8 encoding internally
+set encoding=utf-8
 language en_US.UTF-8
+
+" Try these encodings in order when opening a file
+set fileencodings=ucs-bom,utf-8,windows-1251
 
 " Enable automatic indentation
 set autoindent

@@ -10,6 +10,7 @@ set nocompatible
 " Should be called before "filetype *": manually add NeoBundle to the runtime path
 set runtimepath+=~/.vim/bundle/neobundle.vim/
 
+" NeoVim compatibility
 let g:_editor_home = has('nvim') ? '~/.config/nvim' : '~/.vim'
 
 " List NeoBundle bundles

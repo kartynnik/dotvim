@@ -154,6 +154,9 @@ if neobundle#load_cache()
 
     " Ctrl-P fuzzy search
     NeoBundleSafe 'kien/ctrlp.vim'
+
+    " Allow for per-project settings in the .local.vimrc file of the project root
+    NeoBundleSafe 'thinca/vim-localrc'
 " }}}
 " Multiple languages {{{3
     " Autocompletion with <Tab>, clang-based for C-like languages

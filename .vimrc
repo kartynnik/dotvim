@@ -10,14 +10,16 @@ set nocompatible
 " Should be called before "filetype *": manually add NeoBundle to the runtime path
 set runtimepath+=~/.vim/bundle/neobundle.vim/
 
+let g:_editor_home = has('nvim') ? '~/.config/nvim' : '~/.vim'
+
 " List NeoBundle bundles
-call neobundle#begin(expand('~/.vim/bundle/'))
+call neobundle#begin(expand(g:_editor_home . '/bundle/'))
 
 " A flag to indicate availability and desirability of YouCompleteMe (see below)
 " YouCompleteMe requires VIM 7.3.584+ compiled with Python support
 let g:_ycm_enabled =
     \ filereadable(expand('~/.want_ycm')) &&
-    \ (v:version > 703 || (v:version == 703 && has('patch584'))) &&
+    \ (has('nvim') || v:version > 703 || (v:version == 703 && has('patch584'))) &&
     \ has('python')
 
 " Compare bundle cache modification time with .vimrc, skip if up to date
@@ -161,7 +163,9 @@ if neobundle#load_cache()
 " Multiple languages {{{3
     " Autocompletion with <Tab>, clang-based for C-like languages
     if g:_ycm_enabled
-        NeoBundle FirewallAwareURL('Valloric/YouCompleteMe'), {
+        NeoBundleLazy FirewallAwareURL('Valloric/YouCompleteMe'), {
+             \ 'autoload': {'filetypes': ['c', 'cpp', 'python', 'objcpp']},
+             \ 'install_process_timeout': 3600,
              \ 'build' : {
              \     'mac' : './install.sh --clang-completer',
              \     'linux' : './install.sh --clang-completer',
@@ -220,16 +224,13 @@ endif
 " Finalize NeoBundle initialization
 call neobundle#end()
 
-" Let YouComleteMe install in time
-let g:neobundle#install_process_timeout = 3000
-
 " Check that all NeoBundle plugins are installed
 NeoBundleCheck
 
 " }}}
 
 " Environment check {{{1
-if ! has('ex_extra')
+if ! has('ex_extra') && ! has('nvim')
     echoerr 'This version of VIM is compiled in "small" or "tiny" configuration, so the .vimrc uses many unsupported features'
 endif
 
@@ -254,9 +255,14 @@ if &t_Co >= 256 || has('gui_running')
     colorscheme mustang
 endif
 
+" GUI font
+if has('gui_running')
+    set guifont=Fantasque\ Sans\ Mono\ Bold\ 14
+endif
+
 " Prevent $VIMRUNTIME/syntax/synload.vim from issuing :colors
 " when .vimrc is reloaded
-if exists("colors_name")
+if exists('colors_name')
     unlet colors_name
 endif
 
@@ -368,9 +374,12 @@ nmap <silent> X :qa<CR>
 
 " Encoding, tabulation and indentation {{{1
 
-" UTF-8 encoding
-set enc=utf-8
+" Use UTF-8 encoding internally
+set encoding=utf-8
 language en_US.UTF-8
+
+" Try these encodings in order when opening a file
+set fileencodings=ucs-bom,utf-8,windows-1251
 
 " Enable automatic indentation
 set autoindent
@@ -557,7 +566,7 @@ nmap <silent> gs :call SwitchSourceHeader()<CR>
 " %    :  saves and restores the buffer list
 " !    :  saves global variables (for the Mark--Karkat plugin)
 " n... :  where to save the viminfo files
-set viminfo='10,\"100,:20,%,!,n~/.viminfo
+set viminfo='10,\"100,:20,%,!
 
 " Yank/paste between vim sessions (via .viminfo - with the corresponding side effects)
 vmap <silent> <leader>y "xy:wviminfo!<CR>

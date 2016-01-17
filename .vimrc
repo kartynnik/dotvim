@@ -10,13 +10,14 @@ set nocompatible
 " Should be called before "filetype *": manually add NeoBundle to the runtime path
 set runtimepath+=~/.vim/bundle/neobundle.vim/
 
+" NeoVim compatibility
 let g:_editor_home = has('nvim') ? '~/.config/nvim' : '~/.vim'
 
 " List NeoBundle bundles
 call neobundle#begin(expand(g:_editor_home . '/bundle/'))
 
 " A flag to indicate availability and desirability of YouCompleteMe (see below)
-" YouCompleteMe requires VIM 7.3.584+ compiled with Python support
+" YouCompleteMe requires Vim 7.3.584+ compiled with Python support
 let g:_ycm_enabled =
     \ filereadable(expand('~/.want_ycm')) &&
     \ (has('nvim') || v:version > 703 || (v:version == 703 && has('patch584'))) &&
@@ -75,14 +76,14 @@ if neobundle#load_cache()
 
 " Editing experience enhancements {{{2
 
-    " Move and jump to elements of comma-separated lists (e.g. arguments)
+    " Move and jump to elements of comma-separated lists (e.g. function arguments)
     NeoBundleSafe 'AndrewRadev/sideways.vim'
 
     " Automatic alignment
-    " (e.g. around =, try <Enter> in visual mode, :help easy-align)
+    " (e.g. columns of "=" signs; try <Enter> in visual mode; :help easy-align)
     NeoBundleSafe 'junegunn/vim-easy-align'
 
-    " Split argument list to multiple lines
+    " Split argument lists to multiple lines
     " (binded to <Leader>a in this .vimrc, :help argumentrewrap-examples)
     NeoBundleSafe 'jakobwesthoff/argumentrewrap'
 
@@ -104,7 +105,7 @@ if neobundle#load_cache()
 " Interface enhancements {{{2
 
     " Many paired commands
-    " (like [on, ]on, con to enable/disable/toggle numbering, :help unimpaired)
+    " (like [on, ]on, con / [ow, ]ow, cow to enable/disable/toggle line numbering/wrapping, :help unimpaired)
     NeoBundleSafe 'tpope/vim-unimpaired'
 
     " Mini buffer explorer (mapped to <Leader>x)
@@ -120,7 +121,7 @@ if neobundle#load_cache()
 
 " Bridges for other tools (UNIX, git, ack...) {{{2
 
-    " Allow to open terminal sessions in buffers
+    " Allows to open terminal sessions in buffers
     NeoBundleSafe 'pthrasher/conqueterm-vim'
 
     " Vim sugar for the UNIX shell commands
@@ -132,7 +133,7 @@ if neobundle#load_cache()
     " Gitk-like repository history
     NeoBundleSafe 'gregsexton/gitv'
 
-    " Ack interface for vim
+    " An Ack interface for Vim
     NeoBundleSafe 'mileszs/ack.vim'
 
     if isdirectory(expand('~/.task'))
@@ -151,11 +152,14 @@ if neobundle#load_cache()
 " IDE features {{{2
 
 " Language-agnostic {{{3
-    " File tree
+    " Filesystem tree
     NeoBundleSafe 'scrooloose/nerdtree'
 
-    " Ctrl-P fuzzy search
+    " Ctrl-P fuzzy filename search
     NeoBundleSafe 'kien/ctrlp.vim'
+
+    " Allow for per-project settings in the .local.vimrc file of the project root
+    NeoBundleSafe 'thinca/vim-localrc'
 " }}}
 " Multiple languages {{{3
     " Autocompletion with <Tab>, clang-based for C-like languages
@@ -204,7 +208,7 @@ if neobundle#load_cache()
     NeoBundleSafe 'fatih/vim-go'
 " }}}
 " JSON {{{3
-    " A better JSON
+    " JSON highlighting/editing enhancements
     NeoBundleSafe 'elzr/vim-json'
 " }}}
 " Jade templates {{{3
@@ -221,14 +225,15 @@ endif
 " Finalize NeoBundle initialization
 call neobundle#end()
 
-" Check that all NeoBundle plugins are installed
+" Check that all the NeoBundle plugins are installed
 NeoBundleCheck
 
 " }}}
 
 " Environment check {{{1
 if ! has('ex_extra') && ! has('nvim')
-    echoerr 'This version of VIM is compiled in "small" or "tiny" configuration, so the .vimrc uses many unsupported features'
+    echoerr 'This version of Vim is compiled in a "small" or "tiny" configuration, ' .
+        \ 'so the .vimrc file is using many unsupported features'
 endif
 
 
@@ -246,16 +251,13 @@ if has('gui_running')
 endif
 
 
-" Enable syntax highlighting,
-" override color settings with defaults
+" Enable syntax highlighting, override color settings with the defaults
 syntax on
-" Enable filetype syntax plugin and
-" indentation plugin loading
-" after enabling filetype support
+" Enable filetype syntax plugin and indentation plugin loading after enabling filetype support
 filetype plugin indent on
 
 
-" Enable 256 colors
+" Enable 256 colors support
 set t_Co=256
 
 " Background and color scheme
@@ -264,8 +266,7 @@ if &t_Co >= 256 || has('gui_running')
     colorscheme mustang
 endif
 
-" Prevent $VIMRUNTIME/syntax/synload.vim from issuing :colors
-" when .vimrc is reloaded
+" Prevent $VIMRUNTIME/syntax/synload.vim from issuing :colors when .vimrc is reloaded
 if exists('colors_name')
     unlet colors_name
 endif
@@ -282,9 +283,9 @@ endif
 " Fast terminal connection - smoother redrawing
 set ttyfast
 
-" Don't wrap long lines
+" Don't wrap long lines by default (use "cow" mapping from vim-unimpaired to toggle)
 set nowrap
-" Except in diff mode
+" ...except in diff mode
 autocmd FilterWritePre * if &diff | setlocal wrap | endif
 
 " Show this amount of text around cursor
@@ -299,17 +300,17 @@ set number
 "     set relativenumber
 " endif
 
-" Show matching bracket
+" Highlight matching brackets
 set showmatch
 
-" Delphi-like 'last column'
+" Delphi-like highlighted 'last column'
 set colorcolumn=120
 highlight ColorColumn ctermbg=235
 
-" Always show status line
+" Always show the status line
 set laststatus=2
 
-" Show currently typed command in lower right corner
+" Show the currently typed command in lower right corner
 set showcmd
 
 " Enable mouse in all modes
@@ -328,12 +329,11 @@ autocmd Syntax * call SetupDontCommit()
 " Windows and tabs {{{1
 
 " When switching to files...
-" ...use open windows {..and tabs, open a new tab if the file is not open}
-" [...split a window]
+" ...use open windows {..and tabs, open a new tab if the file is not open} [...split a window]
 set switchbuf=useopen " {,usetab,newtab} [,split]
 
 " Tab hotkeys
-" map <C-N> :tabnew<CR>:edit<Space>
+" Close the current tab; exit if it was the last one
 map <silent> <Leader>c :call MyLastTabClose()<CR>
 function! MyLastTabClose()
     if tabpagenr('$') == 1
@@ -385,6 +385,9 @@ language en_US.UTF-8
 " Try these encodings in order when opening a file
 set fileencodings=ucs-bom,utf-8,windows-1251
 
+" Do not automatically wrap lines in text files and comments
+set textwidth=0
+
 " Enable automatic indentation
 set autoindent
 " Language-specific autoindenting
@@ -397,8 +400,7 @@ set tabstop=4
 set shiftwidth=4
 " Backspace unindents
 set smarttab
-" Allow Tab & Shift-Tab indentation
-" in /normal and/ visual modes
+" Allow (de-)indenting with Tab & Shift-Tab in visual mode
 vnoremap <Tab> >>
 vnoremap <S-Tab> <<
 " Show tabs as >---, trailing spaces as _ and non-breakable spaces as ! in gray, see :help listchars
@@ -406,10 +408,10 @@ set list
 set listchars=tab:>-,trail:_,nbsp:!
 
 
-" Russian support (switching via Ctrl-^) {{{1
+" Russian keymap support (switching via Ctrl-^, see language-mapping) {{{1
 
 set keymap=russian-jcukenwin
-" Reset lmap (language mappings) to off by default
+" Reset language mappings to off by default
 set iminsert=0
 set imsearch=0
 " Show a different cursor in GUI for lmap'ped mode
@@ -418,11 +420,9 @@ highlight lCursor guifg=NONE guibg=Cyan
 " :setlocal spell spelllang=ru_yo,en_us
 
 
-" C++ indentation: place scope declarations
-" like public: at the beginning of the line [g0]
-" Open braces indentation: add only one shiftwidth
-" after an unclosed ( in previous line [(1s]
-" switch statements indentation: align with case label, not braces [l1]
+" C++ indentation: place scope declarations like "public:" at the beginning of the line [g0].
+" Open braces indentation: add only one shiftwidth after an unclosed ( in previous line [(1s].
+" Switch statements indentation: align with case label, not braces [l1].
 set cinoptions=g0,(1s,l1
 
 
@@ -435,28 +435,29 @@ let g:pyindent_nested_paren = '&shiftwidth'
 " Indent for a continuation line
 let g:pyindent_continue = '&shiftwidth'
 
-" Auto remove spaces at ends of lines
+" Auto-remove spaces at ends of lines
 autocmd BufWritePre *.{c,cc,cxx,cpp,h,py} :%s/\s\+$//e
 
 
 " Basic mappings {{{1
 
-" Set Leader to comma
+" Set <Leader> to comma
 let mapleader = ","
 
 
 " jj is faster than <ESC>
 inoremap jj <ESC>
-" jk is better than <ESC>
+" jk is even faster
 inoremap jk <ESC>
 " See LMap() below that disables them in lmap'ped mode
-" Be evil - breaks Del, Ins, arrows etc. too
+
+" Be evil - breaks Del, Ins, arrows etc. too - only jj/jk remain for exiting the Insert mode
 " inoremap <ESC> <Nop>
 
 " <Space> + character = insert one character
 nmap <silent> <Space> :execute "normal i" . nr2char(getchar())<CR>
 
-" Use gj/gk by default
+" Use gj/gk by default (move by visible lines, not logical ones)
 nnoremap j gj
 nnoremap k gk
 
@@ -483,13 +484,13 @@ nmap <silent> <Leader>o :call JumpToPreviousBuffer()<CR>
 
 " Filesystem {{{1
 
-" Auto change directory
+" Auto change the current directory to the one the file being edited resides in
 set autochdir
 
 " When a file is changed outside with no local modifications, reload it
 set autoread
 
-" Auto write on some commands, e.g. make
+" Auto-write on some commands, e.g. make
 set autowrite
 
 " Do not create swap files
@@ -497,25 +498,24 @@ set autowrite
 " Directories for swap files
 set dir=/var/tmp,/tmp
 
-" Do not create a backup and do not call fsync() on writes
-" Dangerous, but helps fighting hangs on :w
+" Do not create a backup and do not call fsync() on writes. Dangerous, but helps fighting hangs on :w.
 set nofsync
 set nowritebackup
 
-" Confirm unsaved changes, read-only writes etc.
+" Auto-confirm unsaved changes, read-only writes etc.
 set confirm
 
-" Use terminal code to display visual bell (probably screen flash) instead of a beep
+" Use terminal code to display a visual bell (probably a screen flash) instead of a beep
 " set visualbell
 
-" Hide modified buffer when moving to another
+" Hide a modified buffer when moving to another
 set hidden
 
 
-" Show current file path
+" Show the current file path
 nnoremap <silent> <Leader>: :echo expand("%:p")<CR>
 
-" Go to .proto on gf instead of .pb.h
+" Go to the *.proto file on gf instead of *.pb.h
 :set includeexpr=substitute(v:fname,'\\.pb\\.h$','.proto','')
 
 " gf will create an unexisting file, see :help gf and :help <cfile>
@@ -531,7 +531,7 @@ endfunction
 nnoremap <silent> gf :call FindOrCreateCurrentFile()<CR>
 
 
-" Allow to switch source/header
+" Switch source/header with "gs"
 function! SwitchSourceHeader()
     " %:e stands for "current file extension"
     let extension = expand("%:e")
@@ -563,16 +563,15 @@ endfunction
 nmap <silent> gs :call SwitchSourceHeader()<CR>
 
 
-" Tell vim to remember certain things when we exit
+" Tell Vim to remember certain things when we exit
 " '10  :  marks will be remembered for up to 10 previously edited files
 " "100 :  will save up to 100 lines for each register
 " :20  :  up to 20 lines of command-line history will be remembered
 " %    :  saves and restores the buffer list
 " !    :  saves global variables (for the Mark--Karkat plugin)
-" n... :  where to save the viminfo files
 set viminfo='10,\"100,:20,%,!
 
-" Yank/paste between vim sessions (via .viminfo - with the corresponding side effects)
+" Yank/paste between Vim sessions (via .viminfo - with the corresponding side effects)
 vmap <silent> <leader>y "xy:wviminfo!<CR>
 nmap <silent> <leader>Y "xY:wviminfo!<CR>
 nmap <silent> <leader>p :rviminfo!<CR>"xp
@@ -581,8 +580,7 @@ nmap <silent> <leader>P :rviminfo!<CR>"xP
 
 " Editing {{{1
 
-" Allow backspacing over autoindent,
-" EOL, start of insert
+" Allow backspacing over auto-indent, EOL, the position where insert mode was entered
 set backspace=indent,eol,start
 
 " Allow moving cursor after EOLs
@@ -592,29 +590,28 @@ set virtualedit=all
 " The key that toggles paste mode, see also yo and yO in vim-unimpaired
 set pastetoggle=<C-S-F12>
 
-" Reselect the text that was just pasted
+" Reselect the text that has just been pasted
 nnoremap <Leader>v V']
 
+" Rename an identifier in a brace-delimited block it is local to.
+" Copy the inner word to the 'z' named register, call the AskForTheNewName() function that inputs the new name,
+" set the mark 'x', go to the definition, go to previous unmatched '{', select all the lines down to the pairing '}',
+" replace every occurence of the last search with the contents of the 'z' named register, return to the mark 'x'.
 " https://gist.github.com/DelvarWorld/048616a2e3f5d1b5a9ad
-function! Refactor()
+nmap <silent> <Leader>rf "zyiw:call AskForTheNewName()<CR>mx:silent! normal gd<CR>[{V%:s/<C-R>//<C-R>z/<CR>`x
+function! AskForTheNewName()
     call inputsave()
     let @z=input("What do you want to rename '" . @z . "' to? ")
     call inputrestore()
 endfunction
 
-" Locally (local to block) rename a variable
-" Copy inner word to 'z' named register, call Refactor() that modifies it, set mark 'x',
-" go to definition, go to previous unmatched '{', select all lines down to the pairing '}',
-" replace every occurence of the last search with the contents of the 'z' named register, return to mark 'x'
-nmap <silent> <Leader>rf "zyiw:call Refactor()<CR>mx:silent! normal gd<CR>[{V%:s/<C-R>//<C-R>z/<CR>`x
 
-
-" Open .vimrc
+" Open the .vimrc file for editing
 nnoremap <silent> <Leader>ev <C-w><C-v><C-l>:e $MYVIMRC<CR>
-" Open .bashrc
+" Open the .bashrc file for editing
 nnoremap <silent> <Leader>eb <C-w><C-v><C-l>:e ~/.bashrc<CR>
 
-" Source .vimrc upon closing
+" Source the .vimrc file upon writing to it
 autocmd! BufWritePost .vimrc nested source %
 
 
@@ -630,34 +627,31 @@ set hlsearch
 set incsearch
 " Wrap-around search
 set wrapscan
-" Select Perl-compatible regexes by default ("very magic")
+" Enable Perl-compatible regexes by default ("very magic")
 nnoremap / /\v
 vnoremap / /\v
 " Search globally by default, g switches back
 set gdefault
-" Clear search highlighting
+" Clear search highlighting by <Leader><space>
 nnoremap <silent> <Leader><space> :noh<CR>
 
 
 " Make and quickfix {{{1
 
 " Various make programs
-" %:r stands for "current file path without the extension"
+" %:r stands for "the current file path without the extension"
 command! GCC set makeprg=g++\ -O3\ -o\ %:p:r\ %
 command! Make set makeprg=make\ -j${cores:-16}
-command! YaBuild set makeprg=ya\ build\ -j${cores:-16}\ -r
-command! UT set noautochdir | cd ut | set makeprg+=&&./*-ut
+command! YaMake set makeprg=ya\ make\ -j${cores:-16}\ -r
 
 " Make with g++, make or ya build
 GCC
 if filereadable("Makefile")
     Make
 elseif filereadable("CMakeLists.txt")
-    YaBuild
+    YaMake
 endif
 
-" Make (and jump to the first error - :cfirst<CR>)
-map <C-F5> :make<CR>
 " Don't treat 'In file included from <path>' as a file name
 set errorformat^=%-GIn\ file\ included\ %.%#
 " Wrap quickfix window contents
@@ -675,10 +669,10 @@ set path=.,
 set path+=include,../include,../../include,../../../include
 set path+=src,../src,../../src,../../../src
 
-" List possible tags locations
+" List possible tag files locations
 " set tags=tags\ ../tags\ ../../tags
 
-" Run current file (for scripts)
+" Run the current file (for scripts)
 nnoremap <silent> <Leader><Leader> :!./%<CR>
 
 
@@ -693,17 +687,19 @@ set wildmenu
 set wildmode=list:longest
 
 
-" Disable jj/jk (see above) in lmap'ped mode for the cases like "сообщать" and "положить"
+" Disable jj/jk (see above) in language mappings mode for the cases like "сообщать" and "положить"
 function! LMap()
     if &iminsert == 1
         set iminsert=0
         inoremap jj <ESC>
         inoremap jk <ESC>
+        " For the "evil" case
         " imap <ESC> <Nop>
     else
         set iminsert=1
         iunmap jj
         iunmap jk
+        " For the "evil" case
         " iunmap <ESC>
     endif
     call feedkeys('a')
@@ -714,11 +710,11 @@ inoremap <silent> <C-^> <ESC>:call LMap()<CR>
 " Plugin settings and mappings {{{1
 
 " CamelCaseMotion
-" Enable <leader> mappings
-call camelcasemotion#CreateMotionMappings('<leader>')
+" Enable <Leader>-based mappings line <Leader>w to move one word inside a CamelCase or a snake_case word
+call camelcasemotion#CreateMotionMappings('<Leader>')
 
 " Mini Buffer Explorer
-" Disable autostart
+" Disable auto-start
 let g:miniBufExplAutoStart = 0
 " Toggle MiniBufExplorer
 nnoremap <silent> <Leader>x :MBEToggleAll<CR>
@@ -728,11 +724,11 @@ nnoremap <silent> <Leader>x :MBEToggleAll<CR>
 nnoremap <silent> <Leader>T :NERDTreeToggle<CR>
 " Draw pretty arrows in the tree
 let NERDTreeDirArrows=1
-" Close vim if NERDTree is the last window left
+" Close Vim if NERDTree is the last window left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-" Open source root in NERDTree
+" Open the source root in NERDTree
 nnoremap <silent> <Leader>A :NERDTree $root<CR>
-" Autoopen NERDTree if no files were specified on command line, but switch to the new file window
+" Autoopen NERDTree if no files were specified on the command line, but switch to the new file window
 " autocmd vimenter * if !argc() | NERDTree | call feedkeys("\<C-w>l") | endif
 
 " Gundo - undo tree (requires Vim 7.3) {{{2
@@ -744,7 +740,7 @@ nnoremap <silent> <Leader>u :GundoToggle<CR>
 let g:inccomplete_showdirs = 1
 " Append slash to directories
 let g:inccomplete_appendslash = 1
-" Use 'find'
+" Use the external 'find' command to navigate paths
 " let g:inccomplete_findcmd = 'find'
 
 " Airline - status line {{{2
@@ -757,19 +753,19 @@ let g:airline_theme = 'powerlineish'
 let g:airline#extensions#whitespace#max_lines = 2000
 
 " Ctrl-P - fuzzy finder {{{2
-" For large directories, use .allfiles instead of find in Ctrl-P
+" For large directories, use .allfiles instead of spawning 'find' in Ctrl-P (listfiles.sh is a custom script to do that)
 " let g:ctrlp_user_command = 'listfiles.sh %s'
-" Use Ctrl-P in mixed files/buffers/MRU mode
+" Use Ctrl-P in a mixed files/buffers/MRU mode
 let g:ctrlp_cmd = 'CtrlPMixed'
-" Use only the directory of current file in file mode
+" Use only the directory of the current file in file mode
 let g:ctrlp_working_path_mode = 'c'
 
 " Syntastic - syntax checker {{{2
-" Use custom script for syntastic ('check' is my custom script that runs compilation with necessary options)
+" Use a custom script for syntastic ('check' is my custom script that runs compilation with necessary options)
 let g:syntastic_cpp_compiler = 'check'
-" Do not search for headers of special libraries
+" Do not search for the headers of special libraries
 let g:syntastic_cpp_no_include_search = 1
-" Do not use default includes
+" Do not use the default includes
 let g:syntastic_cpp_no_default_include_dirs = 1
 " Do not check on exit-triggered writes
 let g:syntastic_check_on_wq = 0
@@ -782,7 +778,7 @@ endif
 
 " YouCompleteMe - autocompletion {{{2
 if g:_ycm_enabled == 1
-    " Fallback file with flags
+    " A fallback file with the compilation flags
     let g:ycm_global_ycm_extra_conf = expand('~/.repo/.ycm_extra_conf.py')
     " Whitelisted flag files
     python import os.path
@@ -795,7 +791,7 @@ if g:_ycm_enabled == 1
     let g:ycm_add_preview_to_completeopt = 1
     " Do not trigger as-you-go completion
     " let g:ycm_min_num_of_chars_for_completion = 100500
-    " Go to definition/declaration
+    " Go to the definition/declaration
     nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
 endif
 
@@ -803,17 +799,18 @@ endif
 " Activate interactive mode
 vmap <Enter> <Plug>(EasyAlign)
 
-" ArgumentRewrap - split argument list to multiple lines {{{2
+" ArgumentRewrap - split argument lists to multiple lines {{{2
 " Activate
 nnoremap <silent> <Leader>a :call argumentrewrap#RewrapArguments()<CR>
 
-" ConqueTerm - terminal inside Vim {{{2
+" ConqueTerm - a terminal inside Vim {{{2
 " Open terminal
 nnoremap <Leader>t :ConqueTermSplit bash<CR>
 " Open Python
 nnoremap <Leader>py :ConqueTermSplit python<CR>
 
 " Rainbow parentheses - show pairs of matching parentheses in different colors {{{2
+" A guard against the case when the plugin has not yet been installed
 if isdirectory(expand('~/.vim/bundle/rainbow_parentheses.vim'))
     " Enable automatically
     autocmd VimEnter * RainbowParenthesesToggle
@@ -829,8 +826,8 @@ if isdirectory(expand('~/.vim/bundle/rainbow_parentheses.vim'))
     \ ]
 endif
 
-" Vim-gf-python - python-aware gf
-" Extend sys.path for python gf plugin
+" Vim-gf-python - python-aware gf (go to file)
+" Extend sys.path for the python gf plugin
 function! PythonPath(...)
     for path in a:000
         python import os, vim, sys; sys.path.append(vim.eval('expand(path)'))
@@ -841,11 +838,11 @@ command! -nargs=+ PythonPath call PythonPath(<args>)
 " Python-Mode - Python IDE features {{{2
 " Maximum line width
 let g:pymode_options_max_line_length = &colorcolumn - 1
-" Show docstring
+" Show the docstring
 let g:pymode_rope_show_doc_bind = '<Leader>d'
-" Go to definition
+" Go to the definition
 let g:pymode_rope_goto_definition_bind = 'gd'
-" Command to execute when a definition has been found
+" The command to execute when a definition has been found
 let g:pymode_rope_goto_definition_cmd = 'e'
 " Offer to import unresolved objects after completion
 let g:pymode_rope_autoimport_import_after_complete = 1
@@ -859,12 +856,12 @@ let g:pymode_folding = 0
 autocmd FileType python nnoremap <buffer> <silent> <Leader>s :w<CR>:PymodeLint<CR>
 
 " Jedi-vim - Python autocompletion {{{2
-" Disable choose first function/method on autocomplete
+" Disable choosing the first function/method on autocomplete
 let g:jedi#popup_select_first = 0
-" Show function signatures in Vim's command line, because pop-ups
+" Show function signatures in the Vim's command line, because pop-ups
 " seem to leave garbage in my configuration sometimes
 let g:jedi#show_call_signatures = "2"
-" Add a ',gd' for consistency with other mappings
+" Add a '<Leader>gd' (go to the definition) for consistency with the other mappings
 let g:jedi#goto_definitions_command = "<Leader>gd"
 
 " UltiSnips - Code snippets
@@ -873,14 +870,14 @@ let g:UltiSnipsExpandTrigger="<NL>"
 let g:UltiSnipsJumpForwardTrigger="<C-n>"
 let g:UltiSnipsJumpBackwardTrigger="<C-p>"
 
-" VIM-TaskWarrior - TaskWarrior command-line task manager VIM interface {{{2
-" Open TaskWarrior 'task next' report
+" Vim-TaskWarrior - TaskWarrior command-line task manager Vim interface {{{2
+" Open the TaskWarrior's 'task next' report
 nmap T :TW<CR>
 " Clear filters (Ctrl-U clears the line in Insert mode)
 autocmd FileType taskreport nmap <buffer> F <Plug>(taskwarrior_filter)<C-U><CR>
-" Merge with remote location
+" Merge with the remote location
 autocmd FileType taskreport nmap <buffer> <Leader>m :TW merge<CR>
-" Modify task priority
+" Modify the task priority
 autocmd FileType taskreport nmap <buffer> P <Plug>(taskwarrior_command)mod pri:
 " Include own reports into the report list
 function! TaskWarriorAddOwnReports()
@@ -891,14 +888,14 @@ function! TaskWarriorAddOwnReports()
     endfor
 endfunction
 autocmd FileType taskreport call TaskWarriorAddOwnReports()
-" Clear defaults (with Ctrl-U) when asking for a report name
+" Clear the defaults (with Ctrl-U) when asking for a report name
 autocmd FileType taskreport nmap <buffer> r <Plug>(taskwarrior_report)<C-U>
 " Default fields to ask when adding a new task
 let g:task_default_prompt = ['project', 'description', 'priority']
 " .taskrc overrides
 let g:task_rc_override = 'rc.defaultwidth=0 rc.defaultheight=0'
 
-" Sideways - move and jump to elements of comma-separated lists (e.g. arguments)
+" Sideways - move and jump to the elements of comma-separated lists (e.g. arguments)
 nnoremap <silent> <Leader>h :SidewaysLeft<CR>
 nnoremap <silent> <Leader>l :SidewaysRight<CR>
 

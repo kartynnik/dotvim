@@ -234,6 +234,18 @@ endif
 
 " Display setup {{{1
 
+" GUI font and control visibility options
+if has('gui_running')
+    set guifont=Fantasque\ Sans\ Mono\ Bold\ 14
+    " Some of the GUI options (notably M) need to be set before syntax/filetype
+    " A minimalist setup (much like a console Vim):
+    " "a" - autoselect (use X clipboard with visual selections)
+    " "c" - use console dialogs instead of GUI pop-ups
+    " "M" - don't source menu.vim
+    set guioptions=acM
+endif
+
+
 " Enable syntax highlighting,
 " override color settings with defaults
 syntax on
@@ -250,11 +262,6 @@ set t_Co=256
 set background=dark
 if &t_Co >= 256 || has('gui_running')
     colorscheme mustang
-endif
-
-" GUI font
-if has('gui_running')
-    set guifont=Fantasque\ Sans\ Mono\ Bold\ 14
 endif
 
 " Prevent $VIMRUNTIME/syntax/synload.vim from issuing :colors

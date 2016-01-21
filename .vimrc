@@ -160,6 +160,10 @@ if neobundle#load_cache()
 
     " Allow for per-project settings in the .local.vimrc file of the project root
     NeoBundleSafe 'thinca/vim-localrc'
+
+    " :Make in a screen/tmux/iTerm/cmd.exe... spinoff with a quickfix window opened afterwards;
+    " :Make! for background, and more: see https://github.com/tpope/vim-dispatch
+    NeoBundleSafe 'tpope/vim-dispatch'
 " }}}
 " Multiple languages {{{3
     " Autocompletion with <Tab>, clang-based for C-like languages

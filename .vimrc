@@ -119,6 +119,9 @@ if neobundle#load_cache()
         NeoBundleSafe 'sjl/gundo.vim'
     endif
 
+    " Allows to build diffs with better algorithms (requires git-diff)
+    NeoBundleSafe 'chrisbra/vim-diff-enhanced'
+
 " Bridges for other tools (UNIX, git, ack...) {{{2
 
     " Allows to open terminal sessions in buffers
@@ -902,6 +905,12 @@ let g:task_rc_override = 'rc.defaultwidth=0 rc.defaultheight=0'
 " Sideways - move and jump to the elements of comma-separated lists (e.g. arguments)
 nnoremap <silent> <Leader>h :SidewaysLeft<CR>
 nnoremap <silent> <Leader>l :SidewaysRight<CR>
+
+" EnhancedDiff - use git-diff to obtain better diffs
+" If Vim is started in diff mode, use EnhancedDiff
+if &diff
+    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+endif
 
 
 " Local machine-specific .vimrc {{{1

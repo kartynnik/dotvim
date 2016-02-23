@@ -112,7 +112,8 @@ if neobundle#load_cache()
     NeoBundleSafe 'fholgado/minibufexpl.vim'
 
     " Extended status line
-    NeoBundleSafe 'bling/vim-airline'
+    NeoBundleSafe 'vim-airline/vim-airline'
+    NeoBundleSafe 'vim-airline/vim-airline-themes'
 
     " Undo tree (mapped to <Leader>u)
     if (v:version >= 703)

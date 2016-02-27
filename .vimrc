@@ -112,12 +112,16 @@ if neobundle#load_cache()
     NeoBundleSafe 'fholgado/minibufexpl.vim'
 
     " Extended status line
-    NeoBundleSafe 'bling/vim-airline'
+    NeoBundleSafe 'vim-airline/vim-airline'
+    NeoBundleSafe 'vim-airline/vim-airline-themes'
 
     " Undo tree (mapped to <Leader>u)
     if (v:version >= 703)
         NeoBundleSafe 'sjl/gundo.vim'
     endif
+
+    " Allows to build diffs with better algorithms (requires git-diff)
+    NeoBundleSafe 'chrisbra/vim-diff-enhanced'
 
 " Bridges for other tools (UNIX, git, ack...) {{{2
 
@@ -160,6 +164,10 @@ if neobundle#load_cache()
 
     " Allow for per-project settings in the .local.vimrc file of the project root
     NeoBundleSafe 'thinca/vim-localrc'
+
+    " :Make in a screen/tmux/iTerm/cmd.exe... spinoff with a quickfix window opened afterwards;
+    " :Make! for background, and more: see https://github.com/tpope/vim-dispatch
+    NeoBundleSafe 'tpope/vim-dispatch'
 " }}}
 " Multiple languages {{{3
     " Autocompletion with <Tab>, clang-based for C-like languages
@@ -898,6 +906,12 @@ let g:task_rc_override = 'rc.defaultwidth=0 rc.defaultheight=0'
 " Sideways - move and jump to the elements of comma-separated lists (e.g. arguments)
 nnoremap <silent> <Leader>h :SidewaysLeft<CR>
 nnoremap <silent> <Leader>l :SidewaysRight<CR>
+
+" EnhancedDiff - use git-diff to obtain better diffs
+" If Vim is started in diff mode, use EnhancedDiff
+if &diff
+    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+endif
 
 
 " Local machine-specific .vimrc {{{1

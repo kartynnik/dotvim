@@ -690,9 +690,9 @@ nnoremap <silent> <Leader><Leader> :!./%<CR>
 set completeopt=menu,menuone " {,longest}
 " Limit popup menu height
 set pumheight=15
-" Show menu on multiple options
+" When hitting <Tab> in command line and several words match by prefix, complete the longest prefix and show a list
+set wildmode=longest:full,full
 set wildmenu
-set wildmode=list:longest
 
 
 " Disable jj/jk (see above) in language mappings mode for the cases like "сообщать" and "положить"

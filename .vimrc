@@ -913,6 +913,10 @@ if &diff
     let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
 endif
 
+" LocalRC - Allow for per-project settings in the .local.vimrc file of the project root
+" Simplify the per-filetype regex to avoid globbing is highly populated directories upways along the path
+let g:localrc_filetype = '.local.%s.vimrc'
+
 
 " Local machine-specific .vimrc {{{1
 

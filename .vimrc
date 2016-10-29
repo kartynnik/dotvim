@@ -683,6 +683,14 @@ set path+=src,../src,../../src,../../../src
 " Run the current file (for scripts)
 nnoremap <silent> <Leader><Leader> :!./%<CR>
 
+" http://vim.wikia.com/wiki/Avoiding_the_"Hit_ENTER_to_continue"_prompts
+command! -nargs=1 Silent
+    \ | execute ':silent !' . <q-args>
+    \ | execute ':redraw!'
+command! -nargs=0 Mk
+    \ | execute ':wall'
+    \ | execute ':Silent make'
+
 
 " Completion {{{1
 

@@ -76,6 +76,9 @@ if neobundle#load_cache()
 
 " Editing experience enhancements {{{2
 
+    " For modern terminals, frees from the need to :set paste / :set nopaste
+    NeoBundleSafe 'ConradIrwin/vim-bracketed-paste'
+
     " Move and jump to elements of comma-separated lists (e.g. function arguments)
     NeoBundleSafe 'AndrewRadev/sideways.vim'
 
@@ -595,7 +598,7 @@ set backspace=indent,eol,start
 " and inside TABs
 set virtualedit=all
 
-" The key that toggles paste mode, see also yo and yO in vim-unimpaired
+" The key that toggles paste mode, see also vim-bracketed-paste + yo and yO in vim-unimpaired
 set pastetoggle=<C-S-F12>
 
 " Reselect the text that has just been pasted

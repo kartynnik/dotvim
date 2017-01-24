@@ -148,8 +148,8 @@ if neobundle#load_cache()
         NeoBundleSafe 'farseer90718/vim-taskwarrior'
     endif
 
-    " Either you know what it is or you hardly need it (f bindings for Vim)
-    NeoBundleSafe 'kartynnik/vim-f'
+    " Execute shell commands in the buffer
+    NeoBundleSafe 'JarrodCTaylor/vim-shell-executor'
 
 " Additional syntax definitions {{{2
 

@@ -274,7 +274,12 @@ set t_Co=256
 " Background and color scheme
 set background=dark
 if &t_Co >= 256 || has('gui_running')
-    colorscheme mustang
+    try
+        colorscheme mustang
+    catch /E185:/
+        " Mustang color scheme not (yet) installed
+        colorscheme desert
+    endtry
 endif
 
 " Prevent $VIMRUNTIME/syntax/synload.vim from issuing :colors when .vimrc is reloaded
@@ -730,7 +735,11 @@ inoremap <silent> <C-^> <ESC>:call LMap()<CR>
 
 " CamelCaseMotion
 " Enable <Leader>-based mappings line <Leader>w to move one word inside a CamelCase or a snake_case word
-call camelcasemotion#CreateMotionMappings('<Leader>')
+try
+    call camelcasemotion#CreateMotionMappings('<Leader>')
+catch /E117:/
+    " CamelCaseMotion not (yet) installed
+endtry
 
 " Mini Buffer Explorer
 " Disable auto-start

@@ -240,9 +240,8 @@ if v:version > 701
     " Check that all the NeoBundle plugins are installed
     NeoBundleCheck
 
-    " }}}
-    endfunction
 endif
+" }}}
 
 " Environment check {{{1
 if ! has('ex_extra') && ! has('nvim')

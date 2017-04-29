@@ -5,241 +5,244 @@
 " Turn off vi compatibility
 set nocompatible
 
-" Use NeoBundle for plugin management
-" (separate plugins live in private folders under ~/.vim/bundle)
-" Should be called before "filetype *": manually add NeoBundle to the runtime path
-set runtimepath+=~/.vim/bundle/neobundle.vim/
+if v:version > 701
+    " Use NeoBundle for plugin management
+    " (separate plugins live in private folders under ~/.vim/bundle)
+    " Should be called before "filetype *": manually add NeoBundle to the runtime path
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
 
-" NeoVim compatibility
-let g:_editor_home = has('nvim') ? '~/.config/nvim' : '~/.vim'
+    " NeoVim compatibility
+    let g:_editor_home = has('nvim') ? '~/.config/nvim' : '~/.vim'
 
-" List NeoBundle bundles
-call neobundle#begin(expand(g:_editor_home . '/bundle/'))
+    " List NeoBundle bundles
+    call neobundle#begin(expand(g:_editor_home . '/bundle/'))
 
-" A flag to indicate availability and desirability of YouCompleteMe (see below)
-" YouCompleteMe requires Vim 7.3.584+ compiled with Python support
-let g:_ycm_enabled =
-    \ filereadable(expand('~/.want_ycm')) &&
-    \ (has('nvim') || v:version > 703 || (v:version == 703 && has('patch584'))) &&
-    \ has('python')
+    " A flag to indicate availability and desirability of YouCompleteMe (see below)
+    " YouCompleteMe requires Vim 7.3.584+ compiled with Python support
+    let g:_ycm_enabled =
+        \ filereadable(expand('~/.want_ycm')) &&
+        \ (has('nvim') || v:version > 703 || (v:version == 703 && has('patch584'))) &&
+        \ has('python')
 
-" Compare bundle cache modification time with .vimrc, skip if up to date
-if neobundle#load_cache()
-    " For NeoBundle, 'user/repository' is a shortcut for GitHub repos
+    " Compare bundle cache modification time with .vimrc, skip if up to date
+    if neobundle#load_cache()
+        " For NeoBundle, 'user/repository' is a shortcut for GitHub repos
 
-    " Use this function to overcome restrictive firewalls (allowing only :80 and :443 connections)
-    function! FirewallAwareURL(shortcut)
-        return 'ssh://git@ssh.github.com:443/' . a:shortcut . '.git'
+        " Use this function to overcome restrictive firewalls (allowing only :80 and :443 connections)
+        function! FirewallAwareURL(shortcut)
+            return 'ssh://git@ssh.github.com:443/' . a:shortcut . '.git'
+        endfunction
+
+        " NeoBundle itself
+        " (registers a bundle but doesn't add it to the runtime path as we've done it manually before)
+        NeoBundleFetch FirewallAwareURL('Shougo/neobundle.vim')
+
+        " A shortcut
+        command! -nargs=1 NeoBundleSafe :NeoBundle FirewallAwareURL("<args>")
+
+    " }}}
+
+    " Color schemes {{{2
+
+        " Mustang
+        NeoBundleSafe 'croaker/mustang-vim'
+
+    " }}}
+
+    " Libraries - the plugins used by other plugins {{{2
+
+        " Asynchronous execution library for Vim (used e.g. by NeoBundle to parallelize updates)
+        NeoBundle FirewallAwareURL('Shougo/vimproc.vim'), {
+                \ 'build': {
+                \     'mac': 'make -f make_mac.mak',
+                \     'linux': 'make',
+                \     'unix': 'gmake',
+                \    },
+                \ }
+
+        " Allows to repeat the plugin mappings with "." in the normal mode
+        NeoBundleSafe 'tpope/vim-repeat'
+
+    " New text objects (like "the right hand side of =" or "a camel case word") {{{2
+
+        " Enables <Leader>w... for moving around CamelCase word parts
+        NeoBundleSafe 'bkad/CamelCaseMotion'
+
+        " Makes H a text object for the LHS of an expression (=, ==, =>) and L for the RHS,
+        " try e.g. ciL in "stri|ng a = 'some string';"
+        NeoBundleSafe 'vim-scripts/text-object-left-and-right'
+
+        " Text objects for surrounding brackets, tags... (:help surround.txt)
+        NeoBundleSafe 'tpope/vim-surround'
+
+    " Editing experience enhancements {{{2
+
+        " For modern terminals, frees from the need to :set paste / :set nopaste
+        NeoBundleSafe 'ConradIrwin/vim-bracketed-paste'
+
+        " Move and jump to elements of comma-separated lists (e.g. function arguments)
+        NeoBundleSafe 'AndrewRadev/sideways.vim'
+
+        " Automatic alignment
+        " (e.g. columns of "=" signs; try <Enter> in visual mode; :help easy-align)
+        NeoBundleSafe 'junegunn/vim-easy-align'
+
+        " Split argument lists to multiple lines
+        " (binded to <Leader>a in this .vimrc, :help argumentrewrap-examples)
+        NeoBundleSafe 'jakobwesthoff/argumentrewrap'
+
+        " Abbreviation and substitution of many word variants at once (:help abolish)
+        " + case coercion (try crm on some_word, :help abolish-coerce)
+        NeoBundleSafe 'tpope/vim-abolish'
+
+        " Enables <Leader>m to mark all the occurences of a word with a new color,
+        " <Leader>r to mark by a regular expression specified, <Leader>n to clear the marks,
+        " and allows to jump to the next/previous mark occurences with */# (:help mark.txt)
+        NeoBundleSafe 'vim-scripts/Mark--Karkat'
+
+        " Highlight pairs of matching parentheses in distinct colors
+        NeoBundleSafe 'kien/rainbow_parentheses.vim'
+
+        " SublimeText-like multiple cursors with Ctrl-N (:help vim-multiple-cursors.txt)
+        NeoBundleSafe 'terryma/vim-multiple-cursors'
+
+    " Interface enhancements {{{2
+
+        " Many paired commands
+        " (like [on, ]on, con / [ow, ]ow, cow to enable/disable/toggle line numbering/wrapping, :help unimpaired)
+        NeoBundleSafe 'tpope/vim-unimpaired'
+
+        " Mini buffer explorer (mapped to <Leader>x)
+        NeoBundleSafe 'fholgado/minibufexpl.vim'
+
+        " Extended status line
+        NeoBundleSafe 'vim-airline/vim-airline'
+        NeoBundleSafe 'vim-airline/vim-airline-themes'
+
+        " Undo tree (mapped to <Leader>u)
+        if (v:version >= 703)
+            NeoBundleSafe 'sjl/gundo.vim'
+        endif
+
+        " Allows to build diffs with better algorithms (requires git-diff)
+        NeoBundleSafe 'chrisbra/vim-diff-enhanced'
+
+    " Bridges for other tools (UNIX, git, ack...) {{{2
+
+        " Allows to open terminal sessions in buffers
+        NeoBundleSafe 'pthrasher/conqueterm-vim'
+
+        " Vim sugar for the UNIX shell commands
+        " (:Rename, :SudoWrite, :Chmod, :Locate... - :help eunuch-commands)
+        NeoBundleSafe 'tpope/vim-eunuch'
+
+        " Git management (:help fugitive.txt)
+        NeoBundleSafe 'tpope/vim-fugitive'
+        " Gitk-like repository history
+        NeoBundleSafe 'gregsexton/gitv'
+
+        " An Ack interface for Vim
+        NeoBundleSafe 'mileszs/ack.vim'
+
+        if isdirectory(expand('~/.task'))
+            " Vim interface for the TaskWarrior command line task manager
+            NeoBundleSafe 'farseer90718/vim-taskwarrior'
+        endif
+
+        " Execute shell commands in the buffer
+        NeoBundleSafe 'JarrodCTaylor/vim-shell-executor'
+
+    " Additional syntax definitions {{{2
+
+    " tmux configuration
+        NeoBundleSafe 'whatyouhide/vim-tmux-syntax'
+
+    " IDE features {{{2
+
+    " Language-agnostic {{{3
+        " Filesystem tree
+        NeoBundleSafe 'scrooloose/nerdtree'
+
+        " Ctrl-P fuzzy filename search
+        NeoBundleSafe 'kien/ctrlp.vim'
+
+        " Allow for per-project settings in the .local.vimrc file of the project root
+        NeoBundleSafe 'thinca/vim-localrc'
+
+        " :Make in a screen/tmux/iTerm/cmd.exe... spinoff with a quickfix window opened afterwards;
+        " :Make! for background, and more: see https://github.com/tpope/vim-dispatch
+        NeoBundleSafe 'tpope/vim-dispatch'
+    " }}}
+    " Multiple languages {{{3
+        " Autocompletion with <Tab>, clang-based for C-like languages
+        if g:_ycm_enabled
+            NeoBundleLazy FirewallAwareURL('Valloric/YouCompleteMe'), {
+                 \ 'autoload': {'filetypes': ['c', 'cpp', 'python', 'objcpp']},
+                 \ 'install_process_timeout': 3600,
+                 \ 'build' : {
+                 \     'mac' : './install.sh --clang-completer',
+                 \     'linux' : './install.sh --clang-completer',
+                 \     'unix' : './install.sh --clang-completer',
+                 \    }
+                 \ }
+        endif
+
+        " Syntax error highlighting
+        NeoBundleSafe 'scrooloose/syntastic'
+
+        " Code snippets support
+        NeoBundleSafe 'SirVer/ultisnips'
+        " A bunch of predefined snippets for UltiSnips
+        NeoBundleSafe 'honza/vim-snippets'
+
+        " Commenting with gc*
+        NeoBundleSafe 'tpope/vim-commentary'
+    " }}}
+    " C/C++ {{{3
+        " #include completion
+        NeoBundleSafe 'xaizek/vim-inccomplete'
+    " }}}
+    " Python {{{3
+        " Python IDE and editor enhancement features
+        " (motion, syntax checking, refactoring, documentation, breakpoints on <Leader>b, :help pymode)
+        NeoBundleSafe 'klen/python-mode'
+
+        " Python autocompletion (YouCompleteMe includes its features)
+        if ! g:_ycm_enabled
+            NeoBundleSafe 'davidhalter/jedi-vim'
+        endif
+
+        " Resolve Python modules on gf (go to file)
+        NeoBundleSafe 'mkomitee/vim-gf-python'
+    " }}}
+    " Go {{{3
+        " All-in-one Go development plugin
+        NeoBundleSafe 'fatih/vim-go'
+    " }}}
+    " JSON {{{3
+        " JSON highlighting/editing enhancements
+        NeoBundleSafe 'elzr/vim-json'
+    " }}}
+    " Jade templates {{{3
+        " Jade syntax plugin
+        NeoBundleSafe 'digitaltoad/vim-jade'
+    " }}}2
+
+    " NeoBundle initialization finish {{{2
+
+        " Save bundle cache
+        NeoBundleSaveCache
+    endif
+
+    " Finalize NeoBundle initialization
+    call neobundle#end()
+
+    " Check that all the NeoBundle plugins are installed
+    NeoBundleCheck
+
+    " }}}
     endfunction
-
-    " NeoBundle itself
-    " (registers a bundle but doesn't add it to the runtime path as we've done it manually before)
-    NeoBundleFetch FirewallAwareURL('Shougo/neobundle.vim')
-
-    " A shortcut
-    command! -nargs=1 NeoBundleSafe :NeoBundle FirewallAwareURL("<args>")
-
-" }}}
-
-" Color schemes {{{2
-
-    " Mustang
-    NeoBundleSafe 'croaker/mustang-vim'
-
-" }}}
-
-" Libraries - the plugins used by other plugins {{{2
-
-    " Asynchronous execution library for Vim (used e.g. by NeoBundle to parallelize updates)
-    NeoBundle FirewallAwareURL('Shougo/vimproc.vim'), {
-            \ 'build': {
-            \     'mac': 'make -f make_mac.mak',
-            \     'linux': 'make',
-            \     'unix': 'gmake',
-            \    },
-            \ }
-
-    " Allows to repeat the plugin mappings with "." in the normal mode
-    NeoBundleSafe 'tpope/vim-repeat'
-
-" New text objects (like "the right hand side of =" or "a camel case word") {{{2
-
-    " Enables <Leader>w... for moving around CamelCase word parts
-    NeoBundleSafe 'bkad/CamelCaseMotion'
-
-    " Makes H a text object for the LHS of an expression (=, ==, =>) and L for the RHS,
-    " try e.g. ciL in "stri|ng a = 'some string';"
-    NeoBundleSafe 'vim-scripts/text-object-left-and-right'
-
-    " Text objects for surrounding brackets, tags... (:help surround.txt)
-    NeoBundleSafe 'tpope/vim-surround'
-
-" Editing experience enhancements {{{2
-
-    " For modern terminals, frees from the need to :set paste / :set nopaste
-    NeoBundleSafe 'ConradIrwin/vim-bracketed-paste'
-
-    " Move and jump to elements of comma-separated lists (e.g. function arguments)
-    NeoBundleSafe 'AndrewRadev/sideways.vim'
-
-    " Automatic alignment
-    " (e.g. columns of "=" signs; try <Enter> in visual mode; :help easy-align)
-    NeoBundleSafe 'junegunn/vim-easy-align'
-
-    " Split argument lists to multiple lines
-    " (binded to <Leader>a in this .vimrc, :help argumentrewrap-examples)
-    NeoBundleSafe 'jakobwesthoff/argumentrewrap'
-
-    " Abbreviation and substitution of many word variants at once (:help abolish)
-    " + case coercion (try crm on some_word, :help abolish-coerce)
-    NeoBundleSafe 'tpope/vim-abolish'
-
-    " Enables <Leader>m to mark all the occurences of a word with a new color,
-    " <Leader>r to mark by a regular expression specified, <Leader>n to clear the marks,
-    " and allows to jump to the next/previous mark occurences with */# (:help mark.txt)
-    NeoBundleSafe 'vim-scripts/Mark--Karkat'
-
-    " Highlight pairs of matching parentheses in distinct colors
-    NeoBundleSafe 'kien/rainbow_parentheses.vim'
-
-    " SublimeText-like multiple cursors with Ctrl-N (:help vim-multiple-cursors.txt)
-    NeoBundleSafe 'terryma/vim-multiple-cursors'
-
-" Interface enhancements {{{2
-
-    " Many paired commands
-    " (like [on, ]on, con / [ow, ]ow, cow to enable/disable/toggle line numbering/wrapping, :help unimpaired)
-    NeoBundleSafe 'tpope/vim-unimpaired'
-
-    " Mini buffer explorer (mapped to <Leader>x)
-    NeoBundleSafe 'fholgado/minibufexpl.vim'
-
-    " Extended status line
-    NeoBundleSafe 'vim-airline/vim-airline'
-    NeoBundleSafe 'vim-airline/vim-airline-themes'
-
-    " Undo tree (mapped to <Leader>u)
-    if (v:version >= 703)
-        NeoBundleSafe 'sjl/gundo.vim'
-    endif
-
-    " Allows to build diffs with better algorithms (requires git-diff)
-    NeoBundleSafe 'chrisbra/vim-diff-enhanced'
-
-" Bridges for other tools (UNIX, git, ack...) {{{2
-
-    " Allows to open terminal sessions in buffers
-    NeoBundleSafe 'pthrasher/conqueterm-vim'
-
-    " Vim sugar for the UNIX shell commands
-    " (:Rename, :SudoWrite, :Chmod, :Locate... - :help eunuch-commands)
-    NeoBundleSafe 'tpope/vim-eunuch'
-
-    " Git management (:help fugitive.txt)
-    NeoBundleSafe 'tpope/vim-fugitive'
-    " Gitk-like repository history
-    NeoBundleSafe 'gregsexton/gitv'
-
-    " An Ack interface for Vim
-    NeoBundleSafe 'mileszs/ack.vim'
-
-    if isdirectory(expand('~/.task'))
-        " Vim interface for the TaskWarrior command line task manager
-        NeoBundleSafe 'farseer90718/vim-taskwarrior'
-    endif
-
-    " Execute shell commands in the buffer
-    NeoBundleSafe 'JarrodCTaylor/vim-shell-executor'
-
-" Additional syntax definitions {{{2
-
-" tmux configuration
-    NeoBundleSafe 'whatyouhide/vim-tmux-syntax'
-
-" IDE features {{{2
-
-" Language-agnostic {{{3
-    " Filesystem tree
-    NeoBundleSafe 'scrooloose/nerdtree'
-
-    " Ctrl-P fuzzy filename search
-    NeoBundleSafe 'kien/ctrlp.vim'
-
-    " Allow for per-project settings in the .local.vimrc file of the project root
-    NeoBundleSafe 'thinca/vim-localrc'
-
-    " :Make in a screen/tmux/iTerm/cmd.exe... spinoff with a quickfix window opened afterwards;
-    " :Make! for background, and more: see https://github.com/tpope/vim-dispatch
-    NeoBundleSafe 'tpope/vim-dispatch'
-" }}}
-" Multiple languages {{{3
-    " Autocompletion with <Tab>, clang-based for C-like languages
-    if g:_ycm_enabled
-        NeoBundleLazy FirewallAwareURL('Valloric/YouCompleteMe'), {
-             \ 'autoload': {'filetypes': ['c', 'cpp', 'python', 'objcpp']},
-             \ 'install_process_timeout': 3600,
-             \ 'build' : {
-             \     'mac' : './install.sh --clang-completer',
-             \     'linux' : './install.sh --clang-completer',
-             \     'unix' : './install.sh --clang-completer',
-             \    }
-             \ }
-    endif
-
-    " Syntax error highlighting
-    NeoBundleSafe 'scrooloose/syntastic'
-
-    " Code snippets support
-    NeoBundleSafe 'SirVer/ultisnips'
-    " A bunch of predefined snippets for UltiSnips
-    NeoBundleSafe 'honza/vim-snippets'
-
-    " Commenting with gc*
-    NeoBundleSafe 'tpope/vim-commentary'
-" }}}
-" C/C++ {{{3
-    " #include completion
-    NeoBundleSafe 'xaizek/vim-inccomplete'
-" }}}
-" Python {{{3
-    " Python IDE and editor enhancement features
-    " (motion, syntax checking, refactoring, documentation, breakpoints on <Leader>b, :help pymode)
-    NeoBundleSafe 'klen/python-mode'
-
-    " Python autocompletion (YouCompleteMe includes its features)
-    if ! g:_ycm_enabled
-        NeoBundleSafe 'davidhalter/jedi-vim'
-    endif
-
-    " Resolve Python modules on gf (go to file)
-    NeoBundleSafe 'mkomitee/vim-gf-python'
-" }}}
-" Go {{{3
-    " All-in-one Go development plugin
-    NeoBundleSafe 'fatih/vim-go'
-" }}}
-" JSON {{{3
-    " JSON highlighting/editing enhancements
-    NeoBundleSafe 'elzr/vim-json'
-" }}}
-" Jade templates {{{3
-    " Jade syntax plugin
-    NeoBundleSafe 'digitaltoad/vim-jade'
-" }}}2
-
-" NeoBundle initialization finish {{{2
-
-    " Save bundle cache
-    NeoBundleSaveCache
 endif
-
-" Finalize NeoBundle initialization
-call neobundle#end()
-
-" Check that all the NeoBundle plugins are installed
-NeoBundleCheck
-
-" }}}
 
 " Environment check {{{1
 if ! has('ex_extra') && ! has('nvim')
@@ -320,7 +323,10 @@ set number
 set showmatch
 
 " Delphi-like highlighted 'last column'
-set colorcolumn=120
+try
+    set colorcolumn=120
+catch
+endtry
 highlight ColorColumn ctermbg=235
 
 " Always show the status line
@@ -396,7 +402,10 @@ nmap <silent> X :qa<CR>
 
 " Use UTF-8 encoding internally
 set encoding=utf-8
-language en_US.UTF-8
+try
+    language en_US.UTF-8
+catch
+endtry
 
 " Try these encodings in order when opening a file
 set fileencodings=ucs-bom,utf-8,windows-1251
@@ -501,7 +510,10 @@ nmap <silent> <Leader>o :call JumpToPreviousBuffer()<CR>
 " Filesystem {{{1
 
 " Auto change the current directory to the one the file being edited resides in
-set autochdir
+try
+    set autochdir
+catch
+endtry
 
 " When a file is changed outside with no local modifications, reload it
 set autoread
@@ -730,212 +742,213 @@ function! LMap()
 endfunction
 inoremap <silent> <C-^> <ESC>:call LMap()<CR>
 
-
 " Plugin settings and mappings {{{1
 
-" CamelCaseMotion
-" Enable <Leader>-based mappings line <Leader>w to move one word inside a CamelCase or a snake_case word
-try
-    call camelcasemotion#CreateMotionMappings('<Leader>')
-catch /E117:/
-    " CamelCaseMotion not (yet) installed
-endtry
+if v:version > 701
+    " CamelCaseMotion
+    " Enable <Leader>-based mappings line <Leader>w to move one word inside a CamelCase or a snake_case word
+    try
+        call camelcasemotion#CreateMotionMappings('<Leader>')
+    catch /E117:/
+        " CamelCaseMotion not (yet) installed
+    endtry
 
-" Mini Buffer Explorer
-" Disable auto-start
-let g:miniBufExplAutoStart = 0
-" Toggle MiniBufExplorer
-nnoremap <silent> <Leader>x :MBEToggleAll<CR>
+    " Mini Buffer Explorer
+    " Disable auto-start
+    let g:miniBufExplAutoStart = 0
+    " Toggle MiniBufExplorer
+    nnoremap <silent> <Leader>x :MBEToggleAll<CR>
 
-" NERDTree (filesystem tree) {{{2
-" Toggle NERDTree
-nnoremap <silent> <Leader>T :NERDTreeToggle<CR>
-" Draw pretty arrows in the tree
-let NERDTreeDirArrows=1
-" Close Vim if NERDTree is the last window left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-" Open the source root in NERDTree
-nnoremap <silent> <Leader>A :NERDTree $root<CR>
-" Autoopen NERDTree if no files were specified on the command line, but switch to the new file window
-" autocmd vimenter * if !argc() | NERDTree | call feedkeys("\<C-w>l") | endif
+    " NERDTree (filesystem tree) {{{2
+    " Toggle NERDTree
+    nnoremap <silent> <Leader>T :NERDTreeToggle<CR>
+    " Draw pretty arrows in the tree
+    let NERDTreeDirArrows=1
+    " Close Vim if NERDTree is the last window left
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+    " Open the source root in NERDTree
+    nnoremap <silent> <Leader>A :NERDTree $root<CR>
+    " Autoopen NERDTree if no files were specified on the command line, but switch to the new file window
+    " autocmd vimenter * if !argc() | NERDTree | call feedkeys("\<C-w>l") | endif
 
-" Gundo - undo tree (requires Vim 7.3) {{{2
-" Toggle Gundo
-nnoremap <silent> <Leader>u :GundoToggle<CR>
+    " Gundo - undo tree (requires Vim 7.3) {{{2
+    " Toggle Gundo
+    nnoremap <silent> <Leader>u :GundoToggle<CR>
 
-" Inccomplete - autocomplete #includes {{{2
-" In the inccomplete plugin, show directories too
-let g:inccomplete_showdirs = 1
-" Append slash to directories
-let g:inccomplete_appendslash = 1
-" Use the external 'find' command to navigate paths
-" let g:inccomplete_findcmd = 'find'
+    " Inccomplete - autocomplete #includes {{{2
+    " In the inccomplete plugin, show directories too
+    let g:inccomplete_showdirs = 1
+    " Append slash to directories
+    let g:inccomplete_appendslash = 1
+    " Use the external 'find' command to navigate paths
+    " let g:inccomplete_findcmd = 'find'
 
-" Airline - status line {{{2
-" Show fancy unicode symbols (needs an ovelapping or a patched font on the client side, see
-"   http://powerline.readthedocs.org/en/latest/installation/linux.html)
-" let g:airline_powerline_fonts = 1
-" Theme setup
-let g:airline_theme = 'powerlineish'
-" Whitespace errors check slows down loading of large files
-let g:airline#extensions#whitespace#max_lines = 2000
+    " Airline - status line {{{2
+    " Show fancy unicode symbols (needs an ovelapping or a patched font on the client side, see
+    "   http://powerline.readthedocs.org/en/latest/installation/linux.html)
+    " let g:airline_powerline_fonts = 1
+    " Theme setup
+    let g:airline_theme = 'powerlineish'
+    " Whitespace errors check slows down loading of large files
+    let g:airline#extensions#whitespace#max_lines = 2000
 
-" Ctrl-P - fuzzy finder {{{2
-" For large directories, use .allfiles instead of spawning 'find' in Ctrl-P (listfiles.sh is a custom script to do that)
-" let g:ctrlp_user_command = 'listfiles.sh %s'
-" Use Ctrl-P in a mixed files/buffers/MRU mode
-let g:ctrlp_cmd = 'CtrlPMixed'
-" Use only the directory of the current file in file mode
-let g:ctrlp_working_path_mode = 'c'
+    " Ctrl-P - fuzzy finder {{{2
+    " For large directories, use .allfiles instead of spawning 'find' in Ctrl-P (listfiles.sh is a custom script to do that)
+    " let g:ctrlp_user_command = 'listfiles.sh %s'
+    " Use Ctrl-P in a mixed files/buffers/MRU mode
+    let g:ctrlp_cmd = 'CtrlPMixed'
+    " Use only the directory of the current file in file mode
+    let g:ctrlp_working_path_mode = 'c'
 
-" Syntastic - syntax checker {{{2
-" Use a custom script for syntastic ('check' is my custom script that runs compilation with necessary options)
-let g:syntastic_cpp_compiler = 'check'
-" Do not search for the headers of special libraries
-let g:syntastic_cpp_no_include_search = 1
-" Do not use the default includes
-let g:syntastic_cpp_no_default_include_dirs = 1
-" Do not check on exit-triggered writes
-let g:syntastic_check_on_wq = 0
-" ...and on all writes (use :SyntasticCheck and :SyntasticToggleMode)
-let g:syntastic_mode_map = { "mode": "passive" }
-" Save and check syntax - superceded by YouCompleteMe when available
-if g:_ycm_enabled != 1
-    nnoremap <silent> <Leader>s :w<CR>:SyntasticCheck<CR>
+    " Syntastic - syntax checker {{{2
+    " Use a custom script for syntastic ('check' is my custom script that runs compilation with necessary options)
+    let g:syntastic_cpp_compiler = 'check'
+    " Do not search for the headers of special libraries
+    let g:syntastic_cpp_no_include_search = 1
+    " Do not use the default includes
+    let g:syntastic_cpp_no_default_include_dirs = 1
+    " Do not check on exit-triggered writes
+    let g:syntastic_check_on_wq = 0
+    " ...and on all writes (use :SyntasticCheck and :SyntasticToggleMode)
+    let g:syntastic_mode_map = { "mode": "passive" }
+    " Save and check syntax - superceded by YouCompleteMe when available
+    if g:_ycm_enabled != 1
+        nnoremap <silent> <Leader>s :w<CR>:SyntasticCheck<CR>
+    endif
+
+    " YouCompleteMe - autocompletion {{{2
+    if g:_ycm_enabled == 1
+        " A fallback file with the compilation flags
+        let g:ycm_global_ycm_extra_conf = expand('~/.repo/.ycm_extra_conf.py')
+        " Whitelisted flag files
+        python import os.path
+        let g:ycm_extra_conf_globlist = [
+            \ pyeval('os.path.realpath(os.path.expanduser("~/.ycm_extra_conf.py"))'),
+            \ pyeval('os.path.realpath(os.path.expandvars("$root/.ycm_extra_conf.py"))')
+        \ ]
+        nnoremap <silent> <Leader>s :w<CR>:YcmForceCompileAndDiagnostics<CR>
+        " Add the preview string to completeopt so that the completion preview window becomes available
+        " let g:ycm_add_preview_to_completeopt = 1
+        " Do not trigger as-you-go completion
+        " let g:ycm_min_num_of_chars_for_completion = 100500
+        " Go to the definition/declaration
+        nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
+    endif
+
+    " EasyAlign - text alignment {{{2
+    " Activate interactive mode
+    vmap <Enter> <Plug>(EasyAlign)
+
+    " ArgumentRewrap - split argument lists to multiple lines {{{2
+    " Activate
+    nnoremap <silent> <Leader>a :call argumentrewrap#RewrapArguments()<CR>
+
+    " ConqueTerm - a terminal inside Vim {{{2
+    " Open terminal
+    nnoremap <Leader>t :ConqueTermSplit bash<CR>
+    " Open Python
+    nnoremap <Leader>py :ConqueTermSplit python<CR>
+
+    " Rainbow parentheses - show pairs of matching parentheses in different colors {{{2
+    " A guard against the case when the plugin has not yet been installed
+    if isdirectory(expand('~/.vim/bundle/rainbow_parentheses.vim'))
+        " Enable automatically
+        autocmd VimEnter * RainbowParenthesesToggle
+        autocmd Syntax * RainbowParenthesesLoadRound
+        autocmd Syntax * RainbowParenthesesLoadSquare
+        autocmd Syntax * RainbowParenthesesLoadBraces
+        " Colors used for bracket pairs
+        let g:rbpt_colorpairs = [
+            \ ['darkblue',    'SeaGreen3'],
+            \ ['darkgreen',   'firebrick3'],
+            \ ['darkcyan',    'RoyalBlue3'],
+            \ ['darkmagenta', 'DarkOrchid3'],
+        \ ]
+    endif
+
+    " Vim-gf-python - python-aware gf (go to file)
+    " Extend sys.path for the python gf plugin
+    function! PythonPath(...)
+        for path in a:000
+            python import os, vim, sys; sys.path.append(vim.eval('expand(path)'))
+        endfor
+    endfunction
+    command! -nargs=+ PythonPath call PythonPath(<args>)
+
+    " Python-Mode - Python IDE features {{{2
+    " Maximum line width
+    let g:pymode_options_max_line_length = &colorcolumn - 1
+    " Show the docstring
+    let g:pymode_rope_show_doc_bind = '<Leader>d'
+    " Go to the definition
+    let g:pymode_rope_goto_definition_bind = 'gd'
+    " The command to execute when a definition has been found
+    let g:pymode_rope_goto_definition_cmd = 'e'
+    " Offer to import unresolved objects after completion
+    let g:pymode_rope_autoimport_import_after_complete = 1
+    " Disable Rope autocompletion in favour of jedi-vim
+    let g:pymode_rope = 0
+    let g:pymode_rope_completion = 0
+    let g:pymode_rope_complete_on_dot = 0
+    " Disable folding (https://github.com/klen/python-mode/issues/523)
+    let g:pymode_folding = 0
+    " Use PymodeLint instead of SyntasticCheck for Python
+    autocmd FileType python nnoremap <buffer> <silent> <Leader>s :w<CR>:PymodeLint<CR>
+
+    " Jedi-vim - Python autocompletion {{{2
+    " Disable choosing the first function/method on autocomplete
+    let g:jedi#popup_select_first = 0
+    " Show function signatures in the Vim's command line, because pop-ups
+    " seem to leave garbage in my configuration sometimes
+    let g:jedi#show_call_signatures = "2"
+    " Add a '<Leader>gd' (go to the definition) for consistency with the other mappings
+    let g:jedi#goto_definitions_command = "<Leader>gd"
+
+    " UltiSnips - Code snippets
+    " Mappings not conflicting with YouCompleteMe
+    let g:UltiSnipsExpandTrigger="<NL>"
+    let g:UltiSnipsJumpForwardTrigger="<C-n>"
+    let g:UltiSnipsJumpBackwardTrigger="<C-p>"
+
+    " Vim-TaskWarrior - TaskWarrior command-line task manager Vim interface {{{2
+    " Open the TaskWarrior's 'task next' report
+    nmap T :TW<CR>
+    " Clear filters (Ctrl-U clears the line in Insert mode)
+    autocmd FileType taskreport nmap <buffer> F <Plug>(taskwarrior_filter)<C-U><CR>
+    " Merge with the remote location
+    autocmd FileType taskreport nmap <buffer> <Leader>m :TW merge<CR>
+    " Modify the task priority
+    autocmd FileType taskreport nmap <buffer> P <Plug>(taskwarrior_command)mod pri:
+    " Include own reports into the report list
+    function! TaskWarriorAddOwnReports()
+        for report in ['byproject']
+            if index(g:task_report_command, report) == -1
+                let g:task_report_command += [report]
+            endif
+        endfor
+    endfunction
+    autocmd FileType taskreport call TaskWarriorAddOwnReports()
+    " Clear the defaults (with Ctrl-U) when asking for a report name
+    autocmd FileType taskreport nmap <buffer> r <Plug>(taskwarrior_report)<C-U>
+    " Default fields to ask when adding a new task
+    let g:task_default_prompt = ['project', 'description', 'priority']
+    " .taskrc overrides
+    let g:task_rc_override = 'rc.defaultwidth=0 rc.defaultheight=0'
+
+    " Sideways - move and jump to the elements of comma-separated lists (e.g. arguments)
+    nnoremap <silent> <Leader>h :SidewaysLeft<CR>
+    nnoremap <silent> <Leader>l :SidewaysRight<CR>
+
+    " EnhancedDiff - use git-diff to obtain better diffs
+    " If Vim is started in diff mode, use EnhancedDiff
+    if &diff
+        let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+    endif
+
+    " LocalRC - Allow for per-project settings in the .local.vimrc file of the project root
+    " Simplify the per-filetype regex to avoid globbing is highly populated directories upways along the path
+    let g:localrc_filetype = '.local.%s.vimrc'
 endif
-
-" YouCompleteMe - autocompletion {{{2
-if g:_ycm_enabled == 1
-    " A fallback file with the compilation flags
-    let g:ycm_global_ycm_extra_conf = expand('~/.repo/.ycm_extra_conf.py')
-    " Whitelisted flag files
-    python import os.path
-    let g:ycm_extra_conf_globlist = [
-        \ pyeval('os.path.realpath(os.path.expanduser("~/.ycm_extra_conf.py"))'),
-        \ pyeval('os.path.realpath(os.path.expandvars("$root/.ycm_extra_conf.py"))')
-    \ ]
-    nnoremap <silent> <Leader>s :w<CR>:YcmForceCompileAndDiagnostics<CR>
-    " Add the preview string to completeopt so that the completion preview window becomes available
-    " let g:ycm_add_preview_to_completeopt = 1
-    " Do not trigger as-you-go completion
-    " let g:ycm_min_num_of_chars_for_completion = 100500
-    " Go to the definition/declaration
-    nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
-endif
-
-" EasyAlign - text alignment {{{2
-" Activate interactive mode
-vmap <Enter> <Plug>(EasyAlign)
-
-" ArgumentRewrap - split argument lists to multiple lines {{{2
-" Activate
-nnoremap <silent> <Leader>a :call argumentrewrap#RewrapArguments()<CR>
-
-" ConqueTerm - a terminal inside Vim {{{2
-" Open terminal
-nnoremap <Leader>t :ConqueTermSplit bash<CR>
-" Open Python
-nnoremap <Leader>py :ConqueTermSplit python<CR>
-
-" Rainbow parentheses - show pairs of matching parentheses in different colors {{{2
-" A guard against the case when the plugin has not yet been installed
-if isdirectory(expand('~/.vim/bundle/rainbow_parentheses.vim'))
-    " Enable automatically
-    autocmd VimEnter * RainbowParenthesesToggle
-    autocmd Syntax * RainbowParenthesesLoadRound
-    autocmd Syntax * RainbowParenthesesLoadSquare
-    autocmd Syntax * RainbowParenthesesLoadBraces
-    " Colors used for bracket pairs
-    let g:rbpt_colorpairs = [
-        \ ['darkblue',    'SeaGreen3'],
-        \ ['darkgreen',   'firebrick3'],
-        \ ['darkcyan',    'RoyalBlue3'],
-        \ ['darkmagenta', 'DarkOrchid3'],
-    \ ]
-endif
-
-" Vim-gf-python - python-aware gf (go to file)
-" Extend sys.path for the python gf plugin
-function! PythonPath(...)
-    for path in a:000
-        python import os, vim, sys; sys.path.append(vim.eval('expand(path)'))
-    endfor
-endfunction
-command! -nargs=+ PythonPath call PythonPath(<args>)
-
-" Python-Mode - Python IDE features {{{2
-" Maximum line width
-let g:pymode_options_max_line_length = &colorcolumn - 1
-" Show the docstring
-let g:pymode_rope_show_doc_bind = '<Leader>d'
-" Go to the definition
-let g:pymode_rope_goto_definition_bind = 'gd'
-" The command to execute when a definition has been found
-let g:pymode_rope_goto_definition_cmd = 'e'
-" Offer to import unresolved objects after completion
-let g:pymode_rope_autoimport_import_after_complete = 1
-" Disable Rope autocompletion in favour of jedi-vim
-let g:pymode_rope = 0
-let g:pymode_rope_completion = 0
-let g:pymode_rope_complete_on_dot = 0
-" Disable folding (https://github.com/klen/python-mode/issues/523)
-let g:pymode_folding = 0
-" Use PymodeLint instead of SyntasticCheck for Python
-autocmd FileType python nnoremap <buffer> <silent> <Leader>s :w<CR>:PymodeLint<CR>
-
-" Jedi-vim - Python autocompletion {{{2
-" Disable choosing the first function/method on autocomplete
-let g:jedi#popup_select_first = 0
-" Show function signatures in the Vim's command line, because pop-ups
-" seem to leave garbage in my configuration sometimes
-let g:jedi#show_call_signatures = "2"
-" Add a '<Leader>gd' (go to the definition) for consistency with the other mappings
-let g:jedi#goto_definitions_command = "<Leader>gd"
-
-" UltiSnips - Code snippets
-" Mappings not conflicting with YouCompleteMe
-let g:UltiSnipsExpandTrigger="<NL>"
-let g:UltiSnipsJumpForwardTrigger="<C-n>"
-let g:UltiSnipsJumpBackwardTrigger="<C-p>"
-
-" Vim-TaskWarrior - TaskWarrior command-line task manager Vim interface {{{2
-" Open the TaskWarrior's 'task next' report
-nmap T :TW<CR>
-" Clear filters (Ctrl-U clears the line in Insert mode)
-autocmd FileType taskreport nmap <buffer> F <Plug>(taskwarrior_filter)<C-U><CR>
-" Merge with the remote location
-autocmd FileType taskreport nmap <buffer> <Leader>m :TW merge<CR>
-" Modify the task priority
-autocmd FileType taskreport nmap <buffer> P <Plug>(taskwarrior_command)mod pri:
-" Include own reports into the report list
-function! TaskWarriorAddOwnReports()
-    for report in ['byproject']
-        if index(g:task_report_command, report) == -1
-            let g:task_report_command += [report]
-        endif
-    endfor
-endfunction
-autocmd FileType taskreport call TaskWarriorAddOwnReports()
-" Clear the defaults (with Ctrl-U) when asking for a report name
-autocmd FileType taskreport nmap <buffer> r <Plug>(taskwarrior_report)<C-U>
-" Default fields to ask when adding a new task
-let g:task_default_prompt = ['project', 'description', 'priority']
-" .taskrc overrides
-let g:task_rc_override = 'rc.defaultwidth=0 rc.defaultheight=0'
-
-" Sideways - move and jump to the elements of comma-separated lists (e.g. arguments)
-nnoremap <silent> <Leader>h :SidewaysLeft<CR>
-nnoremap <silent> <Leader>l :SidewaysRight<CR>
-
-" EnhancedDiff - use git-diff to obtain better diffs
-" If Vim is started in diff mode, use EnhancedDiff
-if &diff
-    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
-endif
-
-" LocalRC - Allow for per-project settings in the .local.vimrc file of the project root
-" Simplify the per-filetype regex to avoid globbing is highly populated directories upways along the path
-let g:localrc_filetype = '.local.%s.vimrc'
 
 
 " Local machine-specific .vimrc {{{1

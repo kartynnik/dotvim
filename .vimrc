@@ -711,6 +711,14 @@ command! -nargs=0 Mk
     \ | execute ':Silent make'
 
 
+" For quick Git commits+pushes
+function! QuickGitCommitPush()
+    wall
+    ! git commit -m "$(date --rfc-3339=seconds)" . && git push
+endfunction
+nnoremap gp :call QuickGitCommitPush()<CR>
+
+
 " Completion {{{1
 
 " Complete options (disable preview scratch window) {only insert the longest common prefix}

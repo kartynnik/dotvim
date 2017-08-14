@@ -479,7 +479,7 @@ inoremap jk <ESC>
 " inoremap <ESC> <Nop>
 
 " <Space> + character = insert one character
-nmap <silent> <Space> :execute "normal i" . nr2char(getchar())<CR>
+nmap <silent> <Space> :execute "normal i" . nr2char(getchar()) <bar> execute "normal l"<CR>
 
 " Use gj/gk by default (move by visible lines, not logical ones)
 nnoremap j gj

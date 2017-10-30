@@ -883,6 +883,8 @@ if v:version > 701
     command! -nargs=+ PythonPath call PythonPath(<args>)
 
     " Python-Mode - Python IDE features {{{2
+    " Disable project lookup
+    let g:pymode_rope_lookup_project = 0
     " Maximum line width
     let g:pymode_options_max_line_length = &colorcolumn - 1
     " Show the docstring

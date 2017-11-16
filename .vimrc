@@ -24,6 +24,9 @@ if v:version > 701
         \ (has('nvim') || v:version > 703 || (v:version == 703 && has('patch584'))) &&
         \ has('python')
 
+    " A flag to indicate desirability of Jedi-Vim (see below)
+    let g:_jedi_enabled = filereadable(expand('~/.want_jedi'))
+
     " Compare bundle cache modification time with .vimrc, skip if up to date
     if neobundle#load_cache()
         " For NeoBundle, 'user/repository' is a shortcut for GitHub repos
@@ -208,7 +211,7 @@ if v:version > 701
         NeoBundleSafe 'klen/python-mode'
 
         " Python autocompletion (YouCompleteMe includes its features)
-        if ! g:_ycm_enabled
+        if g:_jedi_enabled && ! g:_ycm_enabled
             NeoBundleSafe 'davidhalter/jedi-vim'
         endif
 
@@ -890,15 +893,17 @@ if v:version > 701
     " Show the docstring
     let g:pymode_rope_show_doc_bind = '<Leader>d'
     " Go to the definition
-    let g:pymode_rope_goto_definition_bind = 'gd'
+    let g:pymode_rope_goto_definition_bind = '<Leader>gd'
     " The command to execute when a definition has been found
     let g:pymode_rope_goto_definition_cmd = 'e'
     " Offer to import unresolved objects after completion
     let g:pymode_rope_autoimport_import_after_complete = 1
     " Disable Rope autocompletion in favour of jedi-vim
-    let g:pymode_rope = 0
-    let g:pymode_rope_completion = 0
-    let g:pymode_rope_complete_on_dot = 0
+    if g:_jedi_enabled
+        let g:pymode_rope = 0
+        let g:pymode_rope_completion = 0
+        let g:pymode_rope_complete_on_dot = 0
+    endif
     " Disable folding (https://github.com/klen/python-mode/issues/523)
     let g:pymode_folding = 0
     " Use PymodeLint instead of SyntasticCheck for Python

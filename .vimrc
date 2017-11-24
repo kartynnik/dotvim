@@ -130,6 +130,9 @@ if v:version > 701
         " Allows to build diffs with better algorithms (requires git-diff)
         NeoBundleSafe 'chrisbra/vim-diff-enhanced'
 
+        " Make the yanked region apparent
+        NeoBundleSafe 'machakann/vim-highlightedyank'
+
     " Bridges for other tools (UNIX, git, ack...) {{{2
 
         " Allows to open terminal sessions in buffers
@@ -784,6 +787,11 @@ if v:version > 701
     " Gundo - undo tree (requires Vim 7.3) {{{2
     " Toggle Gundo
     nnoremap <silent> <Leader>u :GundoToggle<CR>
+
+    " vim-highlightedyank - make the yanked region apparent
+    if ! has('nvim')
+        map y <Plug>(highlightedyank)
+    endif
 
     " Inccomplete - autocomplete #includes {{{2
     " In the inccomplete plugin, show directories too

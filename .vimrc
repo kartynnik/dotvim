@@ -210,10 +210,13 @@ if v:version >= 704
         " Syntax error highlighting
         Plugin 'scrooloose/syntastic'
 
-        " Code snippets support
-        Plugin 'SirVer/ultisnips'
-        " A bunch of predefined snippets for UltiSnips
-        Plugin 'honza/vim-snippets'
+        if has('python') || has('python3')
+            " Code snippets support
+            Plugin 'SirVer/ultisnips'
+
+            " A bunch of predefined snippets for UltiSnips
+            Plugin 'honza/vim-snippets'
+        endif
 
         " Commenting with gc*
         Plugin 'tpope/vim-commentary'

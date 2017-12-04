@@ -1,250 +1,250 @@
-" NeoBundle settings (plugins) {{{1
+" Dein settings (plugins) {{{1
 
-" NeoBundle plugin manager with initialization {{{2
+" Flags for enabling/disabling certain plugins {{{2
+
+" A flag to indicate availability and desirability of YouCompleteMe (see below)
+" YouCompleteMe requires Vim 7.3.584+ compiled with Python support
+let g:_ycm_enabled =
+    \ filereadable(expand('~/.want_ycm')) &&
+    \ (has('nvim') || v:version > 703 || (v:version == 703 && has('patch584'))) &&
+    \ has('python')
+
+" A flag to indicate desirability of Jedi-Vim (see below)
+let g:_jedi_enabled = filereadable(expand('~/.want_jedi'))
+
+
+" Dein plugin manager with initialization {{{2
 
 " Turn off vi compatibility
 set nocompatible
 
-if v:version > 701
-    " Use NeoBundle for plugin management
-    " (separate plugins live in private folders under ~/.vim/bundle)
-    " Should be called before "filetype *": manually add NeoBundle to the runtime path
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
+if v:version >= 704
+    " Use Dein for plugin management
+    " (separate plugins live in private folders under ~/.vim/bundle/repos)
+    " Should be called before "filetype *": manually add Dein to the runtime path
+    set runtimepath+=~/.vim/bundle/dein.vim/
 
     " NeoVim compatibility
     let g:_editor_home = has('nvim') ? '~/.config/nvim' : '~/.vim'
+    let g:_bundle_home = g:_editor_home . '/bundle/'
 
-    " List NeoBundle bundles
-    call neobundle#begin(expand(g:_editor_home . '/bundle/'))
-
-    " A flag to indicate availability and desirability of YouCompleteMe (see below)
-    " YouCompleteMe requires Vim 7.3.584+ compiled with Python support
-    let g:_ycm_enabled =
-        \ filereadable(expand('~/.want_ycm')) &&
-        \ (has('nvim') || v:version > 703 || (v:version == 703 && has('patch584'))) &&
-        \ has('python')
-
-    " A flag to indicate desirability of Jedi-Vim (see below)
-    let g:_jedi_enabled = filereadable(expand('~/.want_jedi'))
+    " Use shallow repository clones
+    let g:dein#types#git#clone_depth = 1
 
     " Compare bundle cache modification time with .vimrc, skip if up to date
-    if neobundle#load_cache()
-        " For NeoBundle, 'user/repository' is a shortcut for GitHub repos
+    if dein#load_state(g:_bundle_home)
 
-        " Use this function to overcome restrictive firewalls (allowing only :80 and :443 connections)
-        function! FirewallAwareURL(shortcut)
-            return 'ssh://git@ssh.github.com:443/' . a:shortcut . '.git'
-        endfunction
+        " List Dein bundles
+        call dein#begin(expand(g:_bundle_home))
 
-        " NeoBundle itself
-        " (registers a bundle but doesn't add it to the runtime path as we've done it manually before)
-        NeoBundleFetch FirewallAwareURL('Shougo/neobundle.vim')
+        " For Dein, 'user/repository' is a shortcut for GitHub repos
+
+        " Dein itself
+        call dein#add('Shougo/dein.vim')
 
         " A shortcut
-        command! -nargs=1 NeoBundleSafe :NeoBundle FirewallAwareURL("<args>")
+        command! -nargs=1 Plugin call dein#add(<args>)
 
     " }}}
 
     " Color schemes {{{2
 
         " Mustang
-        NeoBundleSafe 'croaker/mustang-vim'
+        Plugin 'croaker/mustang-vim'
 
     " }}}
 
     " Libraries - the plugins used by other plugins {{{2
 
-        " Asynchronous execution library for Vim (used e.g. by NeoBundle to parallelize updates)
-        NeoBundle FirewallAwareURL('Shougo/vimproc.vim'), {
-                \ 'build': {
-                \     'mac': 'make -f make_mac.mak',
-                \     'linux': 'make',
-                \     'unix': 'gmake',
-                \    },
-                \ }
-
         " Allows to repeat the plugin mappings with "." in the normal mode
-        NeoBundleSafe 'tpope/vim-repeat'
+        Plugin 'tpope/vim-repeat'
+
+        " Allows to define new text objects, see the examples at https://github.com/kana/vim-textobj-user/wiki
+        Plugin 'kana/vim-textobj-user'
 
     " New text objects (like "the right hand side of =" or "a camel case word") {{{2
 
         " Enables <Leader>w... for moving around CamelCase word parts
-        NeoBundleSafe 'bkad/CamelCaseMotion'
+        Plugin 'bkad/CamelCaseMotion'
 
         " Makes H a text object for the LHS of an expression (=, ==, =>) and L for the RHS,
         " try e.g. ciL in "stri|ng a = 'some string';"
-        NeoBundleSafe 'vim-scripts/text-object-left-and-right'
+        Plugin 'vim-scripts/text-object-left-and-right'
 
         " Text objects for surrounding brackets, tags... (:help surround.txt)
-        NeoBundleSafe 'tpope/vim-surround'
+        Plugin 'tpope/vim-surround'
+
+        " Python: "a class"/"inner class", "a function"/"inner function" text objects + class/function motions
+        Plugin 'bps/vim-textobj-python'
 
     " Editing experience enhancements {{{2
 
+        " Extended % matching for HTML, LaTeX, ...
+        Plugin 'tmhedberg/matchit'
+
+        " Automatic closing of quotes/parentheses/brackets
+        Plugin 'raimondi/delimitMate'
+
         " For modern terminals, frees from the need to :set paste / :set nopaste
-        NeoBundleSafe 'ConradIrwin/vim-bracketed-paste'
+        Plugin 'ConradIrwin/vim-bracketed-paste'
 
         " Move and jump to elements of comma-separated lists (e.g. function arguments)
-        NeoBundleSafe 'AndrewRadev/sideways.vim'
+        Plugin 'AndrewRadev/sideways.vim'
 
         " Automatic alignment
         " (e.g. columns of "=" signs; try <Enter> in visual mode; :help easy-align)
-        NeoBundleSafe 'junegunn/vim-easy-align'
+        Plugin 'junegunn/vim-easy-align'
 
         " Split argument lists to multiple lines
         " (binded to <Leader>a in this .vimrc, :help argumentrewrap-examples)
-        NeoBundleSafe 'jakobwesthoff/argumentrewrap'
+        Plugin 'jakobwesthoff/argumentrewrap'
 
         " Abbreviation and substitution of many word variants at once (:help abolish)
         " + case coercion (try crm on some_word, :help abolish-coerce)
-        NeoBundleSafe 'tpope/vim-abolish'
+        Plugin 'tpope/vim-abolish'
 
         " Enables <Leader>m to mark all the occurences of a word with a new color,
         " <Leader>r to mark by a regular expression specified, <Leader>n to clear the marks,
         " and allows to jump to the next/previous mark occurences with */# (:help mark.txt)
-        NeoBundleSafe 'vim-scripts/Mark--Karkat'
+        Plugin 'vim-scripts/Mark--Karkat'
 
         " Highlight pairs of matching parentheses in distinct colors
-        NeoBundleSafe 'kien/rainbow_parentheses.vim'
+        Plugin 'kien/rainbow_parentheses.vim'
 
         " SublimeText-like multiple cursors with Ctrl-N (:help vim-multiple-cursors.txt)
-        NeoBundleSafe 'terryma/vim-multiple-cursors'
+        Plugin 'terryma/vim-multiple-cursors'
 
     " Interface enhancements {{{2
 
+        " Smooth scrolling
+        Plugin 'yuttie/comfortable-motion.vim'
+
+        " Indentation markers
+        Plugin 'Yggdroot/indentLine'
+
         " Many paired commands
         " (like [on, ]on, con / [ow, ]ow, cow to enable/disable/toggle line numbering/wrapping, :help unimpaired)
-        NeoBundleSafe 'tpope/vim-unimpaired'
+        Plugin 'tpope/vim-unimpaired'
 
         " Mini buffer explorer (mapped to <Leader>x)
-        NeoBundleSafe 'fholgado/minibufexpl.vim'
+        Plugin 'fholgado/minibufexpl.vim'
 
         " Extended status line
-        NeoBundleSafe 'vim-airline/vim-airline'
-        NeoBundleSafe 'vim-airline/vim-airline-themes'
+        Plugin 'vim-airline/vim-airline'
+        Plugin 'vim-airline/vim-airline-themes'
 
         " Undo tree (mapped to <Leader>u)
         if (v:version >= 703)
-            NeoBundleSafe 'sjl/gundo.vim'
+            Plugin 'sjl/gundo.vim'
         endif
 
         " Allows to build diffs with better algorithms (requires git-diff)
-        NeoBundleSafe 'chrisbra/vim-diff-enhanced'
+        Plugin 'chrisbra/vim-diff-enhanced'
 
         " Make the yanked region apparent
-        NeoBundleSafe 'machakann/vim-highlightedyank'
+        Plugin 'machakann/vim-highlightedyank'
 
     " Bridges for other tools (UNIX, git, ack...) {{{2
 
         " Allows to open terminal sessions in buffers
-        NeoBundleSafe 'pthrasher/conqueterm-vim'
+        Plugin 'pthrasher/conqueterm-vim'
 
         " Vim sugar for the UNIX shell commands
         " (:Rename, :SudoWrite, :Chmod, :Locate... - :help eunuch-commands)
-        NeoBundleSafe 'tpope/vim-eunuch'
+        Plugin 'tpope/vim-eunuch'
 
         " Git management (:help fugitive.txt)
-        NeoBundleSafe 'tpope/vim-fugitive'
+        Plugin 'tpope/vim-fugitive'
         " Gitk-like repository history
-        NeoBundleSafe 'gregsexton/gitv'
+        Plugin 'gregsexton/gitv'
 
         " An Ack interface for Vim
-        NeoBundleSafe 'mileszs/ack.vim'
+        Plugin 'mileszs/ack.vim'
 
         if isdirectory(expand('~/.task'))
             " Vim interface for the TaskWarrior command line task manager
-            NeoBundleSafe 'farseer90718/vim-taskwarrior'
+            Plugin 'farseer90718/vim-taskwarrior'
         endif
 
         " Execute shell commands in the buffer
-        NeoBundleSafe 'JarrodCTaylor/vim-shell-executor'
+        Plugin 'JarrodCTaylor/vim-shell-executor'
 
     " Additional syntax definitions {{{2
 
     " tmux configuration
-        NeoBundleSafe 'whatyouhide/vim-tmux-syntax'
+        Plugin 'whatyouhide/vim-tmux-syntax'
 
     " IDE features {{{2
 
     " Language-agnostic {{{3
         " Filesystem tree
-        NeoBundleSafe 'scrooloose/nerdtree'
+        Plugin 'scrooloose/nerdtree'
 
         " Ctrl-P fuzzy filename search
-        NeoBundleSafe 'kien/ctrlp.vim'
+        Plugin 'kien/ctrlp.vim'
 
         " Allow for per-project settings in the .local.vimrc file of the project root
-        NeoBundleSafe 'thinca/vim-localrc'
+        Plugin 'thinca/vim-localrc'
 
         " :Make in a screen/tmux/iTerm/cmd.exe... spinoff with a quickfix window opened afterwards;
         " :Make! for background, and more: see https://github.com/tpope/vim-dispatch
-        NeoBundleSafe 'tpope/vim-dispatch'
+        Plugin 'tpope/vim-dispatch'
     " }}}
     " Multiple languages {{{3
         " Autocompletion with <Tab>, clang-based for C-like languages
         if g:_ycm_enabled
-            NeoBundleLazy FirewallAwareURL('Valloric/YouCompleteMe'), {
-                 \ 'autoload': {'filetypes': ['c', 'cpp', 'python', 'objcpp']},
-                 \ 'install_process_timeout': 3600,
-                 \ 'build' : {
-                 \     'mac' : './install.sh --clang-completer',
-                 \     'linux' : './install.sh --clang-completer',
-                 \     'unix' : './install.sh --clang-completer',
-                 \    }
-                 \ }
+            call dein#add(FirewallAwareURL('Valloric/YouCompleteMe'), {
+                 \ 'on_ft': ['c', 'cpp', 'python', 'objcpp'],
+                 \ 'timeout': 3600,
+                 \ 'build': './install.sh --clang-completer'
+            })
         endif
 
         " Syntax error highlighting
-        NeoBundleSafe 'scrooloose/syntastic'
+        Plugin 'scrooloose/syntastic'
 
         " Code snippets support
-        NeoBundleSafe 'SirVer/ultisnips'
+        Plugin 'SirVer/ultisnips'
         " A bunch of predefined snippets for UltiSnips
-        NeoBundleSafe 'honza/vim-snippets'
+        Plugin 'honza/vim-snippets'
 
         " Commenting with gc*
-        NeoBundleSafe 'tpope/vim-commentary'
+        Plugin 'tpope/vim-commentary'
+
+        " All-in-one programming language pack
+        Plugin 'sheerun/vim-polyglot'
     " }}}
     " C/C++ {{{3
         " #include completion
-        NeoBundleSafe 'xaizek/vim-inccomplete'
+        Plugin 'xaizek/vim-inccomplete'
     " }}}
     " Python {{{3
         " Python IDE and editor enhancement features
         " (motion, syntax checking, refactoring, documentation, breakpoints on <Leader>b, :help pymode)
-        NeoBundleSafe 'klen/python-mode'
+        Plugin 'klen/python-mode'
 
         " Python autocompletion (YouCompleteMe includes its features)
         if g:_jedi_enabled && ! g:_ycm_enabled
-            NeoBundleSafe 'davidhalter/jedi-vim'
+            Plugin 'davidhalter/jedi-vim'
         endif
 
         " Resolve Python modules on gf (go to file)
-        NeoBundleSafe 'mkomitee/vim-gf-python'
+        Plugin 'mkomitee/vim-gf-python'
     " }}}
-    " Go {{{3
-        " All-in-one Go development plugin
-        NeoBundleSafe 'fatih/vim-go'
-    " }}}
-    " JSON {{{3
-        " JSON highlighting/editing enhancements
-        NeoBundleSafe 'elzr/vim-json'
-    " }}}
-    " Jade templates {{{3
-        " Jade syntax plugin
-        NeoBundleSafe 'digitaltoad/vim-jade'
-    " }}}2
 
-    " NeoBundle initialization finish {{{2
+        " Dein initialization finish {{{2
+
+        " Finalize Dein initialization
+        call dein#end()
 
         " Save bundle cache
-        NeoBundleSaveCache
+        call dein#save_state()
     endif
 
-    " Finalize NeoBundle initialization
-    call neobundle#end()
-
-    " Check that all the NeoBundle plugins are installed
-    NeoBundleCheck
+    " Check that all the Dein plugins are installed
+    if dein#check_install()
+        call dein#install()
+    endif
 
 endif
 " }}}
@@ -860,6 +860,11 @@ if v:version > 701
     " ArgumentRewrap - split argument lists to multiple lines {{{2
     " Activate
     nnoremap <silent> <Leader>a :call argumentrewrap#RewrapArguments()<CR>
+
+    " Comfortable motion - smooth scrolling
+    " Mouse wheel support
+    noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
+    noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
 
     " ConqueTerm - a terminal inside Vim {{{2
     " Open terminal

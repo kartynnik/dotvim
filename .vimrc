@@ -52,10 +52,12 @@ if v:version >= 704
         " Mustang
         Plugin 'croaker/mustang-vim'
 
+        " Janah
+        Plugin 'mhinz/vim-janah'
+
     " }}}
 
     " Libraries - the plugins used by other plugins {{{2
-
         " Allows to repeat the plugin mappings with "." in the normal mode
         Plugin 'tpope/vim-repeat'
 
@@ -79,6 +81,9 @@ if v:version >= 704
 
     " Editing experience enhancements {{{2
 
+        " Visually select increasingly larger regions of text with + (shrink with _)
+        Plugin 'terryma/vim-expand-region'
+
         " Extended % matching for HTML, LaTeX, ...
         Plugin 'tmhedberg/matchit'
 
@@ -95,9 +100,8 @@ if v:version >= 704
         " (e.g. columns of "=" signs; try <Enter> in visual mode; :help easy-align)
         Plugin 'junegunn/vim-easy-align'
 
-        " Split argument lists to multiple lines
-        " (binded to <Leader>a in this .vimrc, :help argumentrewrap-examples)
-        Plugin 'jakobwesthoff/argumentrewrap'
+        " Switch between a single-line statement and a multi-line one (gJ / gS)
+        Plugin 'AndrewRadev/splitjoin.vim'
 
         " Abbreviation and substitution of many word variants at once (:help abolish)
         " + case coercion (try crm on some_word, :help abolish-coerce)
@@ -115,6 +119,9 @@ if v:version >= 704
         Plugin 'terryma/vim-multiple-cursors'
 
     " Interface enhancements {{{2
+
+        " A fancy tart screen
+        Plugin 'mhinz/vim-startify'
 
         " Smooth scrolling
         Plugin 'yuttie/comfortable-motion.vim'
@@ -169,14 +176,10 @@ if v:version >= 704
         " Execute shell commands in the buffer
         Plugin 'JarrodCTaylor/vim-shell-executor'
 
-    " Additional syntax definitions {{{2
-
-    " tmux configuration
-        Plugin 'whatyouhide/vim-tmux-syntax'
-
     " IDE features {{{2
 
     " Language-agnostic {{{3
+
         " Filesystem tree
         Plugin 'scrooloose/nerdtree'
 
@@ -189,11 +192,15 @@ if v:version >= 704
         " :Make in a screen/tmux/iTerm/cmd.exe... spinoff with a quickfix window opened afterwards;
         " :Make! for background, and more: see https://github.com/tpope/vim-dispatch
         Plugin 'tpope/vim-dispatch'
+
+        " QuickRun - execute whole/part of the edited file
+        Plugin 'thinca/vim-quickrun'
+
     " }}}
     " Multiple languages {{{3
         " Autocompletion with <Tab>, clang-based for C-like languages
         if g:_ycm_enabled
-            call dein#add(FirewallAwareURL('Valloric/YouCompleteMe'), {
+            call dein#add('Valloric/YouCompleteMe', {
                  \ 'on_ft': ['c', 'cpp', 'python', 'objcpp'],
                  \ 'timeout': 3600,
                  \ 'build': './install.sh --clang-completer'
@@ -283,9 +290,12 @@ set t_Co=256
 set background=dark
 if &t_Co >= 256 || has('gui_running')
     try
-        colorscheme mustang
+        " colorscheme mustang
+        autocmd ColorScheme janah highlight Normal ctermbg=233
+        autocmd ColorScheme janah highlight Search ctermbg=27
+        colorscheme janah
     catch /E185:/
-        " Mustang color scheme not (yet) installed
+        " Color scheme not (yet) installed
         colorscheme desert
     endtry
 endif
@@ -705,9 +715,6 @@ set path+=src,../src,../../src,../../../src
 " List possible tag files locations
 " set tags=tags\ ../tags\ ../../tags
 
-" Run the current file (for scripts)
-nnoremap <silent> <Leader><Leader> :!./%<CR>
-
 " http://vim.wikia.com/wiki/Avoiding_the_"Hit_ENTER_to_continue"_prompts
 command! -nargs=1 Silent
     \ | execute ':silent !' . <q-args>
@@ -811,7 +818,8 @@ if v:version > 701
     let g:airline#extensions#whitespace#max_lines = 2000
 
     " Ctrl-P - fuzzy finder {{{2
-    " For large directories, use .allfiles instead of spawning 'find' in Ctrl-P (listfiles.sh is a custom script to do that)
+    " For large directories, use .allfiles instead of spawning 'find' in Ctrl-P
+    " (listfiles.sh is a custom script to do that)
     " let g:ctrlp_user_command = 'listfiles.sh %s'
     " Use Ctrl-P in a mixed files/buffers/MRU mode
     let g:ctrlp_cmd = 'CtrlPMixed'
@@ -833,6 +841,10 @@ if v:version > 701
     if g:_ycm_enabled != 1
         nnoremap <silent> <Leader>s :w<CR>:SyntasticCheck<CR>
     endif
+
+    " QuickRun - execute whole/part of the edited file
+    " Run the current file (for scripts)
+    nnoremap <silent> <Leader><Leader> :QuickRun<CR>
 
     " YouCompleteMe - autocompletion {{{2
     if g:_ycm_enabled == 1
@@ -857,16 +869,12 @@ if v:version > 701
     " Activate interactive mode
     vmap <Enter> <Plug>(EasyAlign)
 
-    " ArgumentRewrap - split argument lists to multiple lines {{{2
-    " Activate
-    nnoremap <silent> <Leader>a :call argumentrewrap#RewrapArguments()<CR>
-
     " Comfortable motion - smooth scrolling
     " Mouse wheel support
     noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
     noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
 
-    " ConqueTerm - a terminal inside Vim {{{2
+    " VimShell - a terminal inside Vim {{{2
     " Open terminal
     nnoremap <Leader>t :ConqueTermSplit bash<CR>
     " Open Python

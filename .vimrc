@@ -3,14 +3,13 @@
 " Flags for enabling/disabling certain plugins {{{2
 
 " A flag to indicate availability and desirability of YouCompleteMe (see below)
-" YouCompleteMe requires Vim 7.3.584+ compiled with Python support
-let g:_ycm_enabled =
-    \ filereadable(expand('~/.want_ycm')) &&
-    \ (has('nvim') || v:version > 703 || (v:version == 703 && has('patch584'))) &&
-    \ has('python')
+let g:_ycm_enabled = filereadable(expand('~/.want_ycm'))
 
 " A flag to indicate desirability of Jedi-Vim (see below)
 let g:_jedi_enabled = filereadable(expand('~/.want_jedi'))
+
+" Dein.vim requires at least Vim 7.4
+let g:_dein_minimum_vim_version = 704
 
 
 " Dein plugin manager with initialization {{{2
@@ -18,7 +17,7 @@ let g:_jedi_enabled = filereadable(expand('~/.want_jedi'))
 " Turn off vi compatibility
 set nocompatible
 
-if v:version >= 704
+if v:version >= g:_dein_minimum_vim_version
     " Use Dein for plugin management
     " (separate plugins live in private folders under ~/.vim/bundle/repos)
     " Should be called before "filetype *": manually add Dein to the runtime path
@@ -201,7 +200,7 @@ if v:version >= 704
     " }}}
     " Multiple languages {{{3
         " Autocompletion with <Tab>, clang-based for C-like languages
-        if g:_ycm_enabled
+        if g:_ycm_enabled && (has('python') || has('python3'))
             call dein#add('Valloric/YouCompleteMe', {
                  \ 'on_ft': ['c', 'cpp', 'python', 'objcpp'],
                  \ 'timeout': 3600,
@@ -236,7 +235,7 @@ if v:version >= 704
         Plugin 'klen/python-mode'
 
         " Python autocompletion (YouCompleteMe includes its features)
-        if g:_jedi_enabled && ! g:_ycm_enabled
+        if g:_jedi_enabled && ! g:_ycm_enabled && (has('python') || has('python3'))
             Plugin 'davidhalter/jedi-vim'
         endif
 
@@ -769,7 +768,7 @@ inoremap <silent> <C-^> <ESC>:call LMap()<CR>
 
 " Plugin settings and mappings {{{1
 
-if v:version > 701
+if v:version > g:_dein_minimum_vim_version
     " CamelCaseMotion
     " Enable <Leader>-based mappings line <Leader>w to move one word inside a CamelCase or a snake_case word
     try

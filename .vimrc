@@ -153,8 +153,10 @@ if v:version >= 704
 
     " Bridges for other tools (UNIX, git, ack...) {{{2
 
-        " Allows to open terminal sessions in buffers
-        Plugin 'pthrasher/conqueterm-vim'
+        if !has('nvim')
+            " Allows to open terminal sessions in buffers
+            Plugin 'pthrasher/conqueterm-vim'
+        endif
 
         " Vim sugar for the UNIX shell commands
         " (:Rename, :SudoWrite, :Chmod, :Locate... - :help eunuch-commands)
@@ -877,11 +879,35 @@ if v:version > 701
     noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
     noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
 
-    " VimShell - a terminal inside Vim {{{2
-    " Open terminal
-    nnoremap <Leader>t :ConqueTermSplit bash<CR>
-    " Open Python
-    nnoremap <Leader>py :ConqueTermSplit python<CR>
+    " ConqueTerm - a terminal inside Vim (replaced by native termnal in NeoVim) {{{2
+    if has('nvim')
+        " Open terminal
+        nnoremap <silent> <Leader>t :vsplit term://bash<CR>
+        " Open Python
+        nnoremap <silent> <Leader>py :vsplit term://python<CR>
+
+        " Automatically enter and leave terminal mode
+        autocmd BufEnter term://* startinsert
+        autocmd BufLeave term://* stopinsert
+
+        " Keyboard mappings for terminal mode
+        " Esc to exit to normal mode (disabled for set -o vi to take over)
+        " tnoremap <Esc> <C-\><C-n>
+        " jk to exit to normal mode
+        tnoremap jk <C-\><C-n>
+        " jj to exit to normal mode
+        tnoremap jj <C-\><C-n>
+        " Easy window navigation
+        tnoremap <C-h> <C-\><C-n><C-w>h
+        tnoremap <C-j> <C-\><C-n><C-w>j
+        tnoremap <C-k> <C-\><C-n><C-w>k
+        tnoremap <C-l> <C-\><C-n><C-w>l
+    else
+        " Open terminal
+        nnoremap <silent> <Leader>t :ConqueTermSplit bash<CR>
+        " Open Python
+        nnoremap <silent> <Leader>py :ConqueTermSplit python<CR>
+    endif
 
     " Rainbow parentheses - show pairs of matching parentheses in different colors {{{2
     " A guard against the case when the plugin has not yet been installed

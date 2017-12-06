@@ -119,6 +119,9 @@ if v:version >= g:_dein_minimum_vim_version
 
     " Interface enhancements {{{2
 
+        " Adds a diff option when Vim finds a swap file
+        Plugin 'chrisbra/Recover.vim'
+
         " A fancy tart screen
         Plugin 'mhinz/vim-startify'
 
@@ -658,8 +661,9 @@ nnoremap <silent> <Leader>ev <C-w><C-v><C-l>:e $MYVIMRC<CR>
 " Open the .bashrc file for editing
 nnoremap <silent> <Leader>eb <C-w><C-v><C-l>:e ~/.bashrc<CR>
 
-" Source the .vimrc file upon writing to it
+" Source the .vimrc/init.vim file upon writing to it
 autocmd! BufWritePost .vimrc nested source %
+autocmd! BufWritePost init.vim nested source %
 
 
 " Search {{{1
@@ -681,6 +685,10 @@ vnoremap / /\v
 set gdefault
 " Clear search highlighting by <Leader><space>
 nnoremap <silent> <Leader><space> :noh<CR>
+" Use ripgrep for grepping
+if executable('rg')
+    set grepprg=rg\ --vimgrep
+endif
 
 
 " Make and quickfix {{{1
@@ -935,23 +943,25 @@ if v:version > g:_dein_minimum_vim_version
     command! -nargs=+ PythonPath call PythonPath(<args>)
 
     " Python-Mode - Python IDE features {{{2
-    " Disable project lookup
-    let g:pymode_rope_lookup_project = 0
     " Maximum line width
     let g:pymode_options_max_line_length = &colorcolumn - 1
-    " Show the docstring
-    let g:pymode_rope_show_doc_bind = '<Leader>d'
-    " Go to the definition
-    let g:pymode_rope_goto_definition_bind = '<Leader>gd'
-    " The command to execute when a definition has been found
-    let g:pymode_rope_goto_definition_cmd = 'e'
-    " Offer to import unresolved objects after completion
-    let g:pymode_rope_autoimport_import_after_complete = 1
     " Disable Rope autocompletion in favour of jedi-vim
     if g:_jedi_enabled
         let g:pymode_rope = 0
-        let g:pymode_rope_completion = 0
-        let g:pymode_rope_complete_on_dot = 0
+    else
+        let g:pymode_rope = 1
+        " Disable project lookup
+        let g:pymode_rope_lookup_project = 0
+        " Disable .ropeproject creation
+        let g:pymode_rope_project_root = '/tmp'
+        " Show the docstring
+        let g:pymode_rope_show_doc_bind = '<Leader>d'
+        " Go to the definition
+        let g:pymode_rope_goto_definition_bind = '<Leader>gd'
+        " The command to execute when a definition has been found
+        let g:pymode_rope_goto_definition_cmd = 'e'
+        " Offer to import unresolved objects after completion
+        let g:pymode_rope_autoimport_import_after_complete = 1
     endif
     " Disable folding (https://github.com/klen/python-mode/issues/523)
     let g:pymode_folding = 0

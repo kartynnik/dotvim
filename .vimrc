@@ -205,10 +205,9 @@ if v:version >= g:_dein_minimum_vim_version
         " Autocompletion with <Tab>, clang-based for C-like languages
         if g:_ycm_enabled && (has('python') || has('python3'))
             call dein#add('Valloric/YouCompleteMe', {
-                 \ 'on_ft': ['c', 'cpp', 'python', 'objcpp'],
-                 \ 'timeout': 3600,
-                 \ 'build': './install.sh --clang-completer'
-            })
+                \ 'on_ft': ['c', 'cpp', 'python', 'objcpp'],
+                \ 'timeout': 3600,
+                \ 'build': './install.sh --clang-completer'})
         endif
 
         " Syntax error highlighting

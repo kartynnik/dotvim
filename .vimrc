@@ -695,15 +695,12 @@ endif
 " Various make programs
 " %:r stands for "the current file path without the extension"
 command! GCC set makeprg=g++\ -O3\ -o\ %:p:r\ %
-command! Make set makeprg=make\ -j${cores:-16}
-command! YaMake set makeprg=ya\ make\ -j${cores:-16}\ -r
+command! Make set makeprg=make\ -j${cores:-$(nproc)}
 
-" Make with g++, make or ya build
+" Make with g++ or make
 GCC
 if filereadable("Makefile")
     Make
-elseif filereadable("CMakeLists.txt")
-    YaMake
 endif
 
 " Don't treat 'In file included from <path>' as a file name

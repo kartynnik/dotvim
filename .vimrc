@@ -743,7 +743,7 @@ nnoremap gp :call QuickGitCommitPush()<CR>
 " Completion {{{1
 
 " Complete options (disable preview scratch window) {only insert the longest common prefix}
-set completeopt=menu,menuone " {,longest}
+set completeopt=menuone,noinsert " {,longest}
 " Limit popup menu height
 set pumheight=15
 " When hitting <Tab> in command line and several words match by prefix, complete the longest prefix and show a list
@@ -938,12 +938,22 @@ if v:version > g:_dein_minimum_vim_version
     endfunction
     command! -nargs=+ PythonPath call PythonPath(<args>)
 
-    " Python-Mode - Python IDE features {{{2
+    " Python-Mode - Python IDE features (with Jedi-vim completion alternative) {{{2
     " Maximum line width
     let g:pymode_options_max_line_length = &colorcolumn - 1
     " Disable Rope autocompletion in favour of jedi-vim
     if g:_jedi_enabled
         let g:pymode_rope = 0
+
+        " Jedi-vim - Python autocompletion
+        let g:jedi#auto_vim_configuration = 0
+        " Disable choosing the first function/method on autocomplete
+        let g:jedi#popup_select_first = 0
+        " Show function signatures in the Vim's command line, because pop-ups
+        " seem to leave garbage in my configuration sometimes
+        let g:jedi#show_call_signatures = "2"
+        " Add a '<Leader>gd' (go to the definition) for consistency with the other mappings
+        let g:jedi#goto_definitions_command = "<Leader>gd"
     else
         let g:pymode_rope = 1
         " Disable project lookup
@@ -958,20 +968,13 @@ if v:version > g:_dein_minimum_vim_version
         let g:pymode_rope_goto_definition_cmd = 'e'
         " Offer to import unresolved objects after completion
         let g:pymode_rope_autoimport_import_after_complete = 1
+        " Disable complete-on-dot in insert mode, use manual <C-X><C-O> or <C-Space>
+        let g:pymode_rope_complete_on_dot = 0
     endif
     " Disable folding (https://github.com/klen/python-mode/issues/523)
     let g:pymode_folding = 0
     " Use PymodeLint instead of SyntasticCheck for Python
     autocmd FileType python nnoremap <buffer> <silent> <Leader>s :w<CR>:PymodeLint<CR>
-
-    " Jedi-vim - Python autocompletion {{{2
-    " Disable choosing the first function/method on autocomplete
-    let g:jedi#popup_select_first = 0
-    " Show function signatures in the Vim's command line, because pop-ups
-    " seem to leave garbage in my configuration sometimes
-    let g:jedi#show_call_signatures = "2"
-    " Add a '<Leader>gd' (go to the definition) for consistency with the other mappings
-    let g:jedi#goto_definitions_command = "<Leader>gd"
 
     " UltiSnips - Code snippets
     " Mappings not conflicting with YouCompleteMe

@@ -298,6 +298,7 @@ if &t_Co >= 256 || has('gui_running')
     try
         " colorscheme mustang
         autocmd ColorScheme janah highlight Normal ctermbg=233
+        autocmd ColorScheme janah highlight Comment ctermfg=245
         autocmd ColorScheme janah highlight Search ctermbg=27
         colorscheme janah
     catch /E185:/

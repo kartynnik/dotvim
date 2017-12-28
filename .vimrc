@@ -883,6 +883,10 @@ if v:version > g:_dein_minimum_vim_version
     noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
     noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
 
+    " SplitJoin - split/join argument lists into multiple/one line
+    " Put brackets on lines of their own
+    let g:splitjoin_python_brackets_on_separate_lines = 1
+
     " ConqueTerm - a terminal inside Vim (replaced by native termnal in NeoVim) {{{2
     if has('nvim')
         " Open terminal

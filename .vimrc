@@ -794,7 +794,7 @@ if v:version > g:_dein_minimum_vim_version
     " Draw pretty arrows in the tree
     let NERDTreeDirArrows=1
     " Close Vim if NERDTree is the last window left
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
     " Open the source root in NERDTree
     nnoremap <silent> <Leader>A :NERDTree $root<CR>
     " Autoopen NERDTree if no files were specified on the command line, but switch to the new file window
@@ -882,6 +882,10 @@ if v:version > g:_dein_minimum_vim_version
     " Mouse wheel support
     noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
     noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
+
+    " indentLine - indentation markers
+    " Disable concealing under cursor for insert mode - plays bad with e.g. vim-tex
+    let g:indentLine_concealcursor = 'nc'
 
     " SplitJoin - split/join argument lists into multiple/one line
     " Put brackets on lines of their own

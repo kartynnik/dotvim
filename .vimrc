@@ -857,8 +857,6 @@ if v:version > g:_dein_minimum_vim_version
 
     " YouCompleteMe - autocompletion {{{2
     if g:_ycm_enabled == 1
-        " A fallback file with the compilation flags
-        let g:ycm_global_ycm_extra_conf = expand('~/.repo/.ycm_extra_conf.py')
         " Whitelisted flag files
         python import os.path
         let g:ycm_extra_conf_globlist = [

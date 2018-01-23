@@ -200,7 +200,6 @@ if v:version >= g:_dein_minimum_vim_version
         " QuickRun - execute whole/part of the edited file
         Plugin 'thinca/vim-quickrun'
 
-    " }}}
     " Multiple languages {{{3
         " Autocompletion with <Tab>, clang-based for C-like languages
         if g:_ycm_enabled && (has('python') || has('python3'))
@@ -226,11 +225,11 @@ if v:version >= g:_dein_minimum_vim_version
 
         " All-in-one programming language pack
         Plugin 'sheerun/vim-polyglot'
-    " }}}
+
     " C/C++ {{{3
         " #include completion
         Plugin 'xaizek/vim-inccomplete'
-    " }}}
+
     " Python {{{3
         " Python IDE and editor enhancement features
         " (motion, syntax checking, refactoring, documentation, breakpoints on <Leader>b, :help pymode)
@@ -243,7 +242,10 @@ if v:version >= g:_dein_minimum_vim_version
 
         " Resolve Python modules on gf (go to file)
         Plugin 'mkomitee/vim-gf-python'
-    " }}}
+
+    " TeX/LaTeX {{{3
+        " :LLPStartLivePreview to start previewing the current TeX document live
+        Plugin 'xuhdev/vim-latex-live-preview'
 
         " Dein initialization finish {{{2
 

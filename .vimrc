@@ -509,6 +509,8 @@ nmap <silent> <Space> :execute "normal i" . nr2char(getchar()) <bar> execute "no
 " Use gj/gk by default (move by visible lines, not logical ones)
 nnoremap j gj
 nnoremap k gk
+vnoremap j gj
+vnoremap k gk
 
 " Use ; as :
 " nnoremap ; :

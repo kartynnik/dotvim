@@ -884,6 +884,9 @@ if v:version > g:_dein_minimum_vim_version
     " Mouse wheel support
     noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
     noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
+    " Scroll by visual, not logical lines
+    let g:comfortable_motion_scroll_down_key = "gj"
+    let g:comfortable_motion_scroll_up_key = "gk"
 
     " indentLine - indentation markers
     " Disable concealing under cursor for insert mode - plays bad with e.g. vim-tex

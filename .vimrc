@@ -44,9 +44,7 @@ if v:version >= g:_dein_minimum_vim_version
         " A shortcut
         command! -nargs=1 Plugin call dein#add(<args>)
 
-    " }}}
-
-    " Color schemes {{{2
+" Color schemes {{{2
 
         " Mustang
         Plugin 'croaker/mustang-vim'
@@ -54,16 +52,14 @@ if v:version >= g:_dein_minimum_vim_version
         " Janah
         Plugin 'mhinz/vim-janah'
 
-    " }}}
-
-    " Libraries - the plugins used by other plugins {{{2
+" Libraries - the plugins used by other plugins {{{2
         " Allows to repeat the plugin mappings with "." in the normal mode
         Plugin 'tpope/vim-repeat'
 
         " Allows to define new text objects, see the examples at https://github.com/kana/vim-textobj-user/wiki
         Plugin 'kana/vim-textobj-user'
 
-    " New text objects (like "the right hand side of =" or "a camel case word") {{{2
+" New text objects (like "the right hand side of =" or "a camel case word") {{{2
 
         " Enables <Leader>w... for moving around CamelCase word parts
         Plugin 'bkad/CamelCaseMotion'
@@ -78,7 +74,7 @@ if v:version >= g:_dein_minimum_vim_version
         " Python: "a class"/"inner class", "a function"/"inner function" text objects + class/function motions
         Plugin 'bps/vim-textobj-python'
 
-    " Editing experience enhancements {{{2
+" Editing experience enhancements {{{2
 
         " Visually select increasingly larger regions of text with + (shrink with _)
         Plugin 'terryma/vim-expand-region'
@@ -117,7 +113,7 @@ if v:version >= g:_dein_minimum_vim_version
         " SublimeText-like multiple cursors with Ctrl-N (:help vim-multiple-cursors.txt)
         Plugin 'terryma/vim-multiple-cursors'
 
-    " Interface enhancements {{{2
+" Interface enhancements {{{2
 
         " Adds a diff option when Vim finds a swap file
         Plugin 'chrisbra/Recover.vim'
@@ -153,7 +149,7 @@ if v:version >= g:_dein_minimum_vim_version
         " Make the yanked region apparent
         Plugin 'machakann/vim-highlightedyank'
 
-    " Bridges for other tools (UNIX, git, ack...) {{{2
+" Bridges for other tools (UNIX, git, ack/ripgrep...) {{{2
 
         if !has('nvim')
             " Allows to open terminal sessions in buffers
@@ -169,7 +165,7 @@ if v:version >= g:_dein_minimum_vim_version
         " Gitk-like repository history
         Plugin 'gregsexton/gitv'
 
-        " An Ack interface for Vim
+        " An Ack interface for Vim (using it with ripgrep if available)
         Plugin 'mileszs/ack.vim'
 
         if isdirectory(expand('~/.task'))
@@ -180,9 +176,9 @@ if v:version >= g:_dein_minimum_vim_version
         " Execute shell commands in the buffer
         Plugin 'JarrodCTaylor/vim-shell-executor'
 
-    " IDE features {{{2
+" IDE features {{{2
 
-    " Language-agnostic {{{3
+" Language-agnostic {{{3
 
         " Filesystem tree
         Plugin 'scrooloose/nerdtree'
@@ -200,7 +196,7 @@ if v:version >= g:_dein_minimum_vim_version
         " QuickRun - execute whole/part of the edited file
         Plugin 'thinca/vim-quickrun'
 
-    " Multiple languages {{{3
+" Multiple languages {{{3
         " Autocompletion with <Tab>, clang-based for C-like languages
         if g:_ycm_enabled && (has('python') || has('python3'))
             call dein#add('Valloric/YouCompleteMe', {
@@ -226,11 +222,11 @@ if v:version >= g:_dein_minimum_vim_version
         " All-in-one programming language pack
         Plugin 'sheerun/vim-polyglot'
 
-    " C/C++ {{{3
+" C/C++ {{{3
         " #include completion
         Plugin 'xaizek/vim-inccomplete'
 
-    " Python {{{3
+" Python {{{3
         " Python IDE and editor enhancement features
         " (motion, syntax checking, refactoring, documentation, breakpoints on <Leader>b, :help pymode)
         Plugin 'klen/python-mode'
@@ -243,11 +239,11 @@ if v:version >= g:_dein_minimum_vim_version
         " Resolve Python modules on gf (go to file)
         Plugin 'mkomitee/vim-gf-python'
 
-    " TeX/LaTeX {{{3
-        " :LLPStartLivePreview to start previewing the current TeX document live
+" TeX/LaTeX {{{3
+        " Live preview
         Plugin 'xuhdev/vim-latex-live-preview'
 
-        " Dein initialization finish {{{2
+" Dein initialization finish {{{2
 
         " Finalize Dein initialization
         call dein#end()
@@ -262,7 +258,6 @@ if v:version >= g:_dein_minimum_vim_version
     endif
 
 endif
-" }}}
 
 " Environment check {{{1
 if ! has('ex_extra') && ! has('nvim')
@@ -775,10 +770,11 @@ function! LMap()
 endfunction
 inoremap <silent> <C-^> <ESC>:call LMap()<CR>
 
+
 " Plugin settings and mappings {{{1
 
 if v:version > g:_dein_minimum_vim_version
-    " CamelCaseMotion
+" CamelCaseMotion {{{2
     " Enable <Leader>-based mappings line <Leader>w to move one word inside a CamelCase or a snake_case word
     try
         call camelcasemotion#CreateMotionMappings('<Leader>')
@@ -786,13 +782,13 @@ if v:version > g:_dein_minimum_vim_version
         " CamelCaseMotion not (yet) installed
     endtry
 
-    " Mini Buffer Explorer
+" Mini Buffer Explorer {{{2
     " Disable auto-start
     let g:miniBufExplAutoStart = 0
     " Toggle MiniBufExplorer
     nnoremap <silent> <Leader>x :MBEToggleAll<CR>
 
-    " NERDTree (filesystem tree) {{{2
+" NERDTree (filesystem tree) {{{2
     " Toggle NERDTree
     nnoremap <silent> <Leader>T :NERDTreeToggle<CR>
     " Draw pretty arrows in the tree
@@ -804,16 +800,16 @@ if v:version > g:_dein_minimum_vim_version
     " Autoopen NERDTree if no files were specified on the command line, but switch to the new file window
     " autocmd vimenter * if !argc() | NERDTree | call feedkeys("\<C-w>l") | endif
 
-    " Gundo - undo tree (requires Vim 7.3) {{{2
+" Gundo - undo tree (requires Vim 7.3) {{{2
     " Toggle Gundo
     nnoremap <silent> <Leader>u :GundoToggle<CR>
 
-    " vim-highlightedyank - make the yanked region apparent
+" vim-highlightedyank - make the yanked region apparent {{{2
     if ! has('nvim')
         map y <Plug>(highlightedyank)
     endif
 
-    " Inccomplete - autocomplete #includes {{{2
+" Inccomplete - autocomplete #includes {{{2
     " In the inccomplete plugin, show directories too
     let g:inccomplete_showdirs = 1
     " Append slash to directories
@@ -821,7 +817,7 @@ if v:version > g:_dein_minimum_vim_version
     " Use the external 'find' command to navigate paths
     " let g:inccomplete_findcmd = 'find'
 
-    " Airline - status line {{{2
+" Airline - status line {{{2
     " Show fancy unicode symbols (needs an ovelapping or a patched font on the client side, see
     "   http://powerline.readthedocs.org/en/latest/installation/linux.html)
     " let g:airline_powerline_fonts = 1
@@ -830,7 +826,7 @@ if v:version > g:_dein_minimum_vim_version
     " Whitespace errors check slows down loading of large files
     let g:airline#extensions#whitespace#max_lines = 2000
 
-    " Ctrl-P - fuzzy finder {{{2
+" Ctrl-P - fuzzy finder {{{2
     " For large directories, use .allfiles instead of spawning 'find' in Ctrl-P
     " (listfiles.sh is a custom script to do that)
     " let g:ctrlp_user_command = 'listfiles.sh %s'
@@ -839,7 +835,7 @@ if v:version > g:_dein_minimum_vim_version
     " Use only the directory of the current file in file mode
     let g:ctrlp_working_path_mode = 'c'
 
-    " Syntastic - syntax checker {{{2
+" Syntastic - syntax checker {{{2
     " Use a custom script for syntastic ('check' is my custom script that runs compilation with necessary options)
     let g:syntastic_cpp_compiler = 'check'
     " Do not search for the headers of special libraries
@@ -855,11 +851,11 @@ if v:version > g:_dein_minimum_vim_version
         nnoremap <silent> <Leader>s :w<CR>:SyntasticCheck<CR>
     endif
 
-    " QuickRun - execute whole/part of the edited file
+" QuickRun - execute whole/part of the edited file {{{2
     " Run the current file (for scripts)
     nnoremap <silent> <Leader><Leader> :QuickRun<CR>
 
-    " YouCompleteMe - autocompletion {{{2
+" YouCompleteMe - autocompletion {{{2
     if g:_ycm_enabled == 1
         " Whitelisted flag files
         python import os.path
@@ -876,11 +872,11 @@ if v:version > g:_dein_minimum_vim_version
         nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
     endif
 
-    " EasyAlign - text alignment {{{2
+" EasyAlign - text alignment {{{2
     " Activate interactive mode
     vmap <Enter> <Plug>(EasyAlign)
 
-    " Comfortable motion - smooth scrolling
+" Comfortable motion - smooth scrolling {{{2
     " Mouse wheel support
     noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
     noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
@@ -888,15 +884,15 @@ if v:version > g:_dein_minimum_vim_version
     let g:comfortable_motion_scroll_down_key = "gj"
     let g:comfortable_motion_scroll_up_key = "gk"
 
-    " indentLine - indentation markers
+" indentLine - indentation markers {{{2
     " Disable concealing under cursor for insert mode - plays bad with e.g. vim-tex
     let g:indentLine_concealcursor = 'nc'
 
-    " SplitJoin - split/join argument lists into multiple/one line
+" SplitJoin - split/join argument lists into multiple/one line {{{2
     " Put brackets on lines of their own
     let g:splitjoin_python_brackets_on_separate_lines = 1
 
-    " ConqueTerm - a terminal inside Vim (replaced by native termnal in NeoVim) {{{2
+" ConqueTerm - a terminal inside Vim (replaced by native termnal in NeoVim) {{{2
     if has('nvim')
         " Open terminal
         nnoremap <silent> <Leader>t :vsplit term://bash<CR>
@@ -926,7 +922,7 @@ if v:version > g:_dein_minimum_vim_version
         nnoremap <silent> <Leader>py :ConqueTermSplit python<CR>
     endif
 
-    " Rainbow parentheses - show pairs of matching parentheses in different colors {{{2
+" Rainbow parentheses - show pairs of matching parentheses in different colors {{{2
     " A guard against the case when the plugin has not yet been installed
     if isdirectory(expand('~/.vim/bundle/rainbow_parentheses.vim'))
         " Enable automatically
@@ -943,7 +939,7 @@ if v:version > g:_dein_minimum_vim_version
         \ ]
     endif
 
-    " Vim-gf-python - python-aware gf (go to file)
+" Vim-gf-python - python-aware gf (go to file) {{{2
     " Extend sys.path for the python gf plugin
     function! PythonPath(...)
         for path in a:000
@@ -952,7 +948,7 @@ if v:version > g:_dein_minimum_vim_version
     endfunction
     command! -nargs=+ PythonPath call PythonPath(<args>)
 
-    " Python-Mode - Python IDE features (with Jedi-vim completion alternative) {{{2
+" Python-Mode - Python IDE features (with Jedi-vim completion alternative) {{{2
     " Maximum line width
     let g:pymode_options_max_line_length = &colorcolumn - 1
     " Disable Rope autocompletion in favour of jedi-vim
@@ -990,13 +986,18 @@ if v:version > g:_dein_minimum_vim_version
     " Use PymodeLint instead of SyntasticCheck for Python
     autocmd FileType python nnoremap <buffer> <silent> <Leader>s :w<CR>:PymodeLint<CR>
 
-    " UltiSnips - Code snippets
+" UltiSnips - Code snippets {{{2
     " Mappings not conflicting with YouCompleteMe
     let g:UltiSnipsExpandTrigger="<NL>"
     let g:UltiSnipsJumpForwardTrigger="<C-n>"
     let g:UltiSnipsJumpBackwardTrigger="<C-p>"
 
-    " Vim-TaskWarrior - TaskWarrior command-line task manager Vim interface {{{2
+" Ack.vim - An Ack (and replacements) interface for Vim
+    if executable('rg')
+        let g:ackprg = 'rg --vimgrep --no-heading'
+    endif
+
+" Vim-TaskWarrior - TaskWarrior command-line task manager Vim interface {{{2
     " Open the TaskWarrior's 'task next' report
     nmap T :TW<CR>
     " Clear filters (Ctrl-U clears the line in Insert mode)
@@ -1021,25 +1022,24 @@ if v:version > g:_dein_minimum_vim_version
     " .taskrc overrides
     let g:task_rc_override = 'rc.defaultwidth=0 rc.defaultheight=0'
 
-    " Sideways - move and jump to the elements of comma-separated lists (e.g. arguments)
+" Sideways - move and jump to the elements of comma-separated lists (e.g. arguments) {{{2
     nnoremap <silent> <Leader>h :SidewaysLeft<CR>
     nnoremap <silent> <Leader>l :SidewaysRight<CR>
 
-    " EnhancedDiff - use git-diff to obtain better diffs
+" EnhancedDiff - use git-diff to obtain better diffs {{{2
     " If Vim is started in diff mode, use EnhancedDiff
     if &diff
         let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
     endif
 
-    " LocalRC - Allow for per-project settings in the .local.vimrc file of the project root
+" LocalRC - Allow for per-project settings in the .local.vimrc file of the project root {{{2
     " Simplify the per-filetype regex to avoid globbing is highly populated directories upways along the path
     let g:localrc_filetype = '.local.%s.vimrc'
 endif
 
 
 " Local machine-specific .vimrc {{{1
-
-" Execute ~/.specifics.vim {{{2
+" Execute ~/.specifics.vim
 if filereadable(expand('~/.specifics.vim'))
     execute 'source ~/.specifics.vim'
 endif

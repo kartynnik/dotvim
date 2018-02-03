@@ -885,8 +885,11 @@ if v:version > g:_dein_minimum_vim_version
     let g:comfortable_motion_scroll_up_key = "gk"
 
 " indentLine - indentation markers {{{2
-    " Disable concealing under cursor for insert mode - plays bad with e.g. vim-tex
+    " Disable concealing under cursor for insert mode
     let g:indentLine_concealcursor = 'nc'
+    " Completely disable it for TeX
+    let g:indentLine_fileTypeExclude = ['tex']
+    autocmd syntax tex setlocal conceallevel=0
 
 " SplitJoin - split/join argument lists into multiple/one line {{{2
     " Put brackets on lines of their own

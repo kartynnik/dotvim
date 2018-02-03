@@ -325,6 +325,10 @@ set ttyfast
 set nowrap
 " ...except in diff mode
 autocmd FilterWritePre * if &diff | setlocal wrap | endif
+" When wrapping, use `breakat` (by default whitespace/punctuation), not just anything
+set linebreak
+" Display as much as possible of the last line instead of '@'s
+set display=lastline
 
 " Show this amount of text around cursor
 set scrolloff=3

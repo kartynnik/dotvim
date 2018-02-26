@@ -189,6 +189,9 @@ if v:version >= g:_dein_minimum_vim_version
         " Allow for per-project settings in the .local.vimrc file of the project root
         Plugin 'thinca/vim-localrc'
 
+        " Auto-detect indentation options based on current or other similar files
+        Plugin 'tpope/vim-sleuth'
+
         " :Make in a screen/tmux/iTerm/cmd.exe... spinoff with a quickfix window opened afterwards;
         " :Make! for background, and more: see https://github.com/tpope/vim-dispatch
         Plugin 'tpope/vim-dispatch'
@@ -229,7 +232,7 @@ if v:version >= g:_dein_minimum_vim_version
 " Python {{{3
         " Python IDE and editor enhancement features
         " (motion, syntax checking, refactoring, documentation, breakpoints on <Leader>b, :help pymode)
-        Plugin 'klen/python-mode'
+        Plugin 'python-mode/python-mode'
 
         " Python autocompletion (YouCompleteMe includes its features)
         if g:_jedi_enabled && ! g:_ycm_enabled && (has('python') || has('python3'))
@@ -988,7 +991,7 @@ if v:version > g:_dein_minimum_vim_version
         " Disable complete-on-dot in insert mode, use manual <C-X><C-O> or <C-Space>
         let g:pymode_rope_complete_on_dot = 0
     endif
-    " Disable folding (https://github.com/klen/python-mode/issues/523)
+    " Disable folding (https://github.com/python-mode/python-mode/issues/523)
     let g:pymode_folding = 0
     " Use PymodeLint instead of SyntasticCheck for Python
     autocmd FileType python nnoremap <buffer> <silent> <Leader>s :w<CR>:PymodeLint<CR>

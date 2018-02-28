@@ -21,7 +21,7 @@ if v:version >= g:_dein_minimum_vim_version
     " Use Dein for plugin management
     " (separate plugins live in private folders under ~/.vim/bundle/repos)
     " Should be called before "filetype *": manually add Dein to the runtime path
-    set runtimepath+=~/.vim/bundle/dein.vim/
+    set runtimepath+=~/.vim/bundle/repos/github.com/Shougo/dein.vim/
 
     " NeoVim compatibility
     let g:_editor_home = has('nvim') ? '~/.config/nvim' : '~/.vim'

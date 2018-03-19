@@ -534,6 +534,13 @@ function! JumpToPreviousBuffer()
 endfunction
 nmap <silent> <Leader>o :call JumpToPreviousBuffer()<CR>
 
+" In git mergetool mode, use 1/2/3 to pull changes from LOCAL/BASE/REMOTE
+if &diff
+    map <Leader>1 :diffget LOCAL<CR>
+    map <Leader>2 :diffget BASE<CR>
+    map <Leader>3 :diffget REMOTE<CR>
+endif
+
 
 " Filesystem {{{1
 

@@ -17,6 +17,11 @@ let g:_dein_minimum_vim_version = 704
 " Turn off vi compatibility
 set nocompatible
 
+" Workaround for https://github.com/vim/vim/issues/3117
+if has('python3')
+    silent! python3 0
+endif
+
 if v:version >= g:_dein_minimum_vim_version
     " Use Dein for plugin management
     " (separate plugins live in private folders under ~/.vim/bundle/repos)

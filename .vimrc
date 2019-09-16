@@ -245,7 +245,7 @@ if v:version >= g:_dein_minimum_vim_version
         endif
 
         " Resolve Python modules on gf (go to file)
-        Plugin 'mkomitee/vim-gf-python'
+        Plugin 'Chenyzsjtu/vim-gf-python'
 
 " TeX/LaTeX {{{3
         " Live preview

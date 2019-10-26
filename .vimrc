@@ -18,7 +18,7 @@ let g:_dein_minimum_vim_version = 704
 set nocompatible
 
 " Workaround for https://github.com/vim/vim/issues/3117
-if has('python3')
+if !has('nvim') && !has('patch-8.1.201') && has('python3')
     silent! python3 0
 endif
 

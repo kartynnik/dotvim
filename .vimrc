@@ -64,10 +64,10 @@ if v:version >= g:_dein_minimum_vim_version
         " Allows to define new text objects, see the examples at https://github.com/kana/vim-textobj-user/wiki
         Plugin 'kana/vim-textobj-user'
 
-" New text objects (like "the right hand side of =" or "a camel case word") {{{2
+" New text objects (like "the right hand side of =" or "a camel case word component") {{{2
 
-        " Enables <Leader>w... for moving around CamelCase word parts
-        Plugin 'bkad/CamelCaseMotion'
+        " Enables <Leader>w... for moving around CamelCase / snake_case etc. word parts
+        Plugin 'chaoren/vim-wordmotion'
 
         " Makes H a text object for the LHS of an expression (=, ==, =>) and L for the RHS,
         " try e.g. ciL in "stri|ng a = 'some string';"
@@ -75,9 +75,6 @@ if v:version >= g:_dein_minimum_vim_version
 
         " Text objects for surrounding brackets, tags... (:help surround.txt)
         Plugin 'tpope/vim-surround'
-
-        " Python: "a class"/"inner class", "a function"/"inner function" text objects + class/function motions
-        Plugin 'bps/vim-textobj-python'
 
 " Editing experience enhancements {{{2
 
@@ -100,9 +97,6 @@ if v:version >= g:_dein_minimum_vim_version
         " (e.g. columns of "=" signs; try <Enter> in visual mode; :help easy-align)
         Plugin 'junegunn/vim-easy-align'
 
-        " Switch between a single-line statement and a multi-line one (gJ / gS)
-        Plugin 'AndrewRadev/splitjoin.vim'
-
         " Abbreviation and substitution of many word variants at once (:help abolish)
         " + case coercion (try crm on some_word, :help abolish-coerce)
         Plugin 'tpope/vim-abolish'
@@ -117,6 +111,10 @@ if v:version >= g:_dein_minimum_vim_version
 
         " SublimeText-like multiple cursors with Ctrl-N (:help vim-multiple-cursors.txt)
         Plugin 'terryma/vim-multiple-cursors'
+
+        " Vimperator/Vimium-style jumping to remote parts by appearing highlighted keys,
+        " e.g. <Leader><Leader>w followed by t to jump to the word with the key t like <number>w would
+        Plugin 'easymotion/vim-easymotion'
 
 " Interface enhancements {{{2
 
@@ -169,6 +167,9 @@ if v:version >= g:_dein_minimum_vim_version
         Plugin 'tpope/vim-fugitive'
         " Gitk-like repository history
         Plugin 'gregsexton/gitv'
+
+        " VCS diff in the gutter
+        Plugin 'mhinz/vim-signify'
 
         " An Ack interface for Vim (using it with ripgrep if available)
         Plugin 'mileszs/ack.vim'
@@ -230,6 +231,9 @@ if v:version >= g:_dein_minimum_vim_version
         " All-in-one programming language pack
         Plugin 'sheerun/vim-polyglot'
 
+        " Switch between a single-line statement and a multi-line one (gJ / gS)
+        Plugin 'AndrewRadev/splitjoin.vim'
+
 " C/C++ {{{3
         " #include completion
         Plugin 'xaizek/vim-inccomplete'
@@ -246,6 +250,9 @@ if v:version >= g:_dein_minimum_vim_version
 
         " Resolve Python modules on gf (go to file)
         Plugin 'Chenyzsjtu/vim-gf-python'
+
+        " "A class"/"inner class", "a function"/"inner function" text objects + class/function motions
+        Plugin 'bps/vim-textobj-python'
 
 " TeX/LaTeX {{{3
         " Live preview
@@ -352,6 +359,9 @@ set number
 
 " Highlight matching brackets
 set showmatch
+
+" Don't attempt syntax highlighting after this column (performance)
+set synmaxcol=200
 
 " Delphi-like highlighted 'last column'
 try
@@ -462,6 +472,11 @@ vnoremap <S-Tab> <<
 " Show tabs as >---, trailing spaces as _ and non-breakable spaces as ! in gray, see :help listchars
 set list
 set listchars=tab:>-,trail:_,nbsp:!
+
+" Delete comment character when joining commented lines
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j
+endif
 
 
 " Russian keymap support (switching via Ctrl-^, see language-mapping) {{{1
@@ -739,9 +754,6 @@ set path=.,
 set path+=include,../include,../../include,../../../include
 set path+=src,../src,../../src,../../../src
 
-" List possible tag files locations
-" set tags=tags\ ../tags\ ../../tags
-
 " http://vim.wikia.com/wiki/Avoiding_the_"Hit_ENTER_to_continue"_prompts
 command! -nargs=1 Silent
     \ | execute ':silent !' . <q-args>
@@ -793,13 +805,9 @@ inoremap <silent> <C-^> <ESC>:call LMap()<CR>
 " Plugin settings and mappings {{{1
 
 if v:version > g:_dein_minimum_vim_version
-" CamelCaseMotion {{{2
-    " Enable <Leader>-based mappings line <Leader>w to move one word inside a CamelCase or a snake_case word
-    try
-        call camelcasemotion#CreateMotionMappings('<Leader>')
-    catch /E117:/
-        " CamelCaseMotion not (yet) installed
-    endtry
+" vim-wordmotion - identifier component motions {{{2
+    " Enable <Leader>-based mappings like <Leader>w to move one word inside a CamelCase or a snake_case word
+    let g:wordmotion_prefix = '<Leader>'
 
 " Mini Buffer Explorer {{{2
     " Disable auto-start
@@ -872,7 +880,7 @@ if v:version > g:_dein_minimum_vim_version
 
 " QuickRun - execute whole/part of the edited file {{{2
     " Run the current file (for scripts)
-    nnoremap <silent> <Leader><Leader> :QuickRun<CR>
+    nnoremap <silent> <Leader><Leader><Leader> :QuickRun<CR>
 
 " YouCompleteMe - autocompletion {{{2
     if g:_ycm_enabled == 1
@@ -1013,6 +1021,12 @@ if v:version > g:_dein_minimum_vim_version
     let g:UltiSnipsExpandTrigger="<NL>"
     let g:UltiSnipsJumpForwardTrigger="<C-n>"
     let g:UltiSnipsJumpBackwardTrigger="<C-p>"
+
+" vim-signify - Highlighting changed lines in the gutter for VCS-tracked files {{{2
+    " Disable by default
+    let g:signify_disable_by_default = 1
+    " Toggle with gg
+    nmap gg :SignifyToggle<CR>
 
 " Ack.vim - An Ack (and replacements) interface for Vim
     if executable('rg')

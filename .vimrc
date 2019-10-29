@@ -5,6 +5,9 @@
 " A flag to indicate availability and desirability of YouCompleteMe (see below)
 let g:_ycm_enabled = filereadable(expand('~/.want_ycm'))
 
+" A flag to indicate desirability of Python-mode (see below)
+let g:_pymode_enabled = filereadable(expand('~/.want_pymode'))
+
 " A flag to indicate desirability of Jedi-Vim (see below)
 let g:_jedi_enabled = filereadable(expand('~/.want_jedi'))
 
@@ -241,7 +244,9 @@ if v:version >= g:_dein_minimum_vim_version
 " Python {{{3
         " Python IDE and editor enhancement features
         " (motion, syntax checking, refactoring, documentation, breakpoints on <Leader>b, :help pymode)
-        Plugin 'python-mode/python-mode'
+        if g:_pymode_enabled
+          Plugin 'python-mode/python-mode'
+        endif
 
         " Python autocompletion (YouCompleteMe includes its features)
         if g:_jedi_enabled && ! g:_ycm_enabled && (has('python') || has('python3'))
@@ -981,23 +986,27 @@ if v:version > g:_dein_minimum_vim_version
 " Python-Mode - Python IDE features (with Jedi-vim completion alternative) {{{2
     " Maximum line width
     let g:pymode_options_max_line_length = &colorcolumn - 1
+    " Disable indentation override
+    let g:pymode_indent = v:false
     " Disable Rope autocompletion in favour of jedi-vim
     if g:_jedi_enabled
-        let g:pymode_rope = 0
+        let g:pymode_rope = v:false
 
         " Jedi-vim - Python autocompletion
-        let g:jedi#auto_vim_configuration = 0
+        let g:jedi#auto_vim_configuration = v:false
         " Disable choosing the first function/method on autocomplete
-        let g:jedi#popup_select_first = 0
+        let g:jedi#popup_select_first = v:false
         " Show function signatures in the Vim's command line, because pop-ups
         " seem to leave garbage in my configuration sometimes
         let g:jedi#show_call_signatures = "2"
         " Add a '<Leader>gd' (go to the definition) for consistency with the other mappings
         let g:jedi#goto_definitions_command = "<Leader>gd"
     else
-        let g:pymode_rope = 1
+        let g:pymode_rope = v:true
+
+        " Python autocompletion via Rope
         " Disable project lookup
-        let g:pymode_rope_lookup_project = 0
+        let g:pymode_rope_lookup_project = v:false
         " Disable .ropeproject creation
         let g:pymode_rope_project_root = '/tmp'
         " Show the docstring
@@ -1007,12 +1016,12 @@ if v:version > g:_dein_minimum_vim_version
         " The command to execute when a definition has been found
         let g:pymode_rope_goto_definition_cmd = 'e'
         " Offer to import unresolved objects after completion
-        let g:pymode_rope_autoimport_import_after_complete = 1
+        let g:pymode_rope_autoimport_import_after_complete = v:true
         " Disable complete-on-dot in insert mode, use manual <C-X><C-O> or <C-Space>
-        let g:pymode_rope_complete_on_dot = 0
+        let g:pymode_rope_complete_on_dot = v:false
     endif
     " Disable folding (https://github.com/python-mode/python-mode/issues/523)
-    let g:pymode_folding = 0
+    let g:pymode_folding = v:false
     " Use PymodeLint instead of SyntasticCheck for Python
     autocmd FileType python nnoremap <buffer> <silent> <Leader>s :w<CR>:PymodeLint<CR>
 

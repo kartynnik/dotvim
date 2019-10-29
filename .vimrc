@@ -1025,8 +1025,8 @@ if v:version > g:_dein_minimum_vim_version
 " vim-signify - Highlighting changed lines in the gutter for VCS-tracked files {{{2
     " Disable by default
     let g:signify_disable_by_default = 1
-    " Toggle with gg
-    nmap gg :SignifyToggle<CR>
+    " Toggle with <Leader>S
+    nmap <Leader>S :SignifyToggle<CR>
 
 " Ack.vim - An Ack (and replacements) interface for Vim
     if executable('rg')

@@ -778,6 +778,15 @@ nnoremap gp :call QuickGitCommitPush()<CR>
 
 " Completion {{{1
 
+" Only look for completions in:
+"   . - the current buffer;
+"   w - buffers in other windows;
+"   b - other unloaded buffers;
+"   u - unloaded buffers;
+"   t - tags.
+" Do not look for completions in:
+"   i - included files (because there can be a ton of them; use ^X^I if needed).
+set complete=.,w,b,u,t
 " Complete options (disable preview scratch window) {only insert the longest common prefix}
 set completeopt=menuone,noinsert " {,longest}
 " Limit popup menu height

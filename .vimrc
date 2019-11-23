@@ -220,7 +220,7 @@ if v:version >= g:_dein_minimum_vim_version
         " Syntax error highlighting
         Plugin 'scrooloose/syntastic'
 
-        if has('python') || has('python3')
+        if has('python3')
             " Code snippets support
             Plugin 'SirVer/ultisnips'
 

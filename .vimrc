@@ -1045,6 +1045,10 @@ if v:version > g:_dein_minimum_vim_version
     let g:signify_disable_by_default = 1
     " Toggle with <Leader>S
     nmap <Leader>S :SignifyToggle<CR>
+    " Show hunk diff with <Leader>D
+    nmap <Leader>D :SignifyHunkDiff<CR>
+    " Undo hunk with <Leader>U
+    nmap <Leader>U :SignifyHunkUndo<CR>
 
 " Ack.vim - An Ack (and replacements) interface for Vim
     if executable('rg')

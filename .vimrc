@@ -1083,8 +1083,8 @@ if v:version > g:_dein_minimum_vim_version
 " DelimitMate - Automatic closing of quotes/parentheses/brackets
     " Split a pair across three lines on <CR>
     let g:delimitMate_expand_cr = v:true
-    " Don't autoclose if there is a non-whitespace character to the right
-    let g:delimitMate_smart_matchpairs = '[^[:space:]]'
+    " Don't autoclose if there is a character to the right (i.e. if not at EOL)
+    let g:delimitMate_smart_matchpairs = '.'
     " Don't match (opposite in mechanics to `smart_matchpairs`, negated with `!`)
     let g:delimitMate_smart_quotes = '!' . g:delimitMate_smart_matchpairs
 

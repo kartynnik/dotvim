@@ -253,9 +253,6 @@ if v:version >= g:_dein_minimum_vim_version
             Plugin 'davidhalter/jedi-vim'
         endif
 
-        " Resolve Python modules on gf (go to file)
-        Plugin 'Chenyzsjtu/vim-gf-python'
-
         " "A class"/"inner class", "a function"/"inner function" text objects + class/function motions
         Plugin 'bps/vim-textobj-python'
 

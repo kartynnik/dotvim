@@ -87,9 +87,6 @@ if v:version >= g:_dein_minimum_vim_version
         " Extended % matching for HTML, LaTeX, ...
         Plugin 'tmhedberg/matchit'
 
-        " Automatic closing of quotes/parentheses/brackets
-        Plugin 'raimondi/delimitMate'
-
         " For modern terminals, frees from the need to :set paste / :set nopaste
         Plugin 'ConradIrwin/vim-bracketed-paste'
 
@@ -145,7 +142,7 @@ if v:version >= g:_dein_minimum_vim_version
         Plugin 'vim-airline/vim-airline-themes'
 
         " Undo tree (mapped to <Leader>u)
-        if (v:version >= 703)
+        if has('nvim') || v:version >= 703
             Plugin 'sjl/gundo.vim'
         endif
 
@@ -839,6 +836,8 @@ if v:version > g:_dein_minimum_vim_version
     " autocmd vimenter * if !argc() | NERDTree | call feedkeys("\<C-w>l") | endif
 
 " Gundo - undo tree (requires Vim 7.3) {{{2
+    " Prefer Python 3
+    let g:gundo_prefer_python3 = v:true
     " Toggle Gundo
     nnoremap <silent> <Leader>u :GundoToggle<CR>
 
@@ -1076,14 +1075,6 @@ if v:version > g:_dein_minimum_vim_version
     let g:task_default_prompt = ['project', 'description', 'priority']
     " .taskrc overrides
     let g:task_rc_override = 'rc.defaultwidth=0 rc.defaultheight=0'
-
-" DelimitMate - Automatic closing of quotes/parentheses/brackets
-    " Split a pair across three lines on <CR>
-    let g:delimitMate_expand_cr = v:true
-    " Don't autoclose if there is a character to the right (i.e. if not at EOL)
-    let g:delimitMate_smart_matchpairs = '.'
-    " Don't match (opposite in mechanics to `smart_matchpairs`, negated with `!`)
-    let g:delimitMate_smart_quotes = '!' . g:delimitMate_smart_matchpairs
 
 " Sideways - move and jump to the elements of comma-separated lists (e.g. arguments) {{{2
     nnoremap <silent> <Leader>h :SidewaysLeft<CR>

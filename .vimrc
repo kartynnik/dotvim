@@ -154,8 +154,9 @@ if v:version >= g:_dein_minimum_vim_version
 
 " Bridges for other tools (UNIX, git, ack/ripgrep...) {{{2
 
-        if !has('nvim')
+        if !has('nvim') && !has('terminal')
             " Allows to open terminal sessions in buffers
+            " (superseded by NeoVim / Vim 8+ native terminal support)
             Plugin 'pthrasher/conqueterm-vim'
         endif
 
@@ -932,29 +933,36 @@ if v:version > g:_dein_minimum_vim_version
     " Put brackets on lines of their own
     let g:splitjoin_python_brackets_on_separate_lines = 1
 
-" ConqueTerm - a terminal inside Vim (replaced by native termnal in NeoVim) {{{2
-    if has('nvim')
-        " Open terminal
-        nnoremap <silent> <Leader>t :vsplit term://bash<CR>
-        " Open Python
-        nnoremap <silent> <Leader>py :vsplit term://python<CR>
-
-        " Automatically enter and leave terminal mode
-        autocmd BufEnter term://* startinsert
-        autocmd BufLeave term://* stopinsert
-
-        " Keyboard mappings for terminal mode
+" ConqueTerm - a terminal inside Vim (replaced by native termnal in NeoVim/Vim 8+) {{{2
+    if has('terminal') || has('nvim')
+        " Keyboard mappings for terminal mode common for Vim 8+ and NeoVim
         " Esc to exit to normal mode (disabled for set -o vi to take over)
         " tnoremap <Esc> <C-\><C-n>
         " jk to exit to normal mode
         tnoremap jk <C-\><C-n>
         " jj to exit to normal mode
         tnoremap jj <C-\><C-n>
+
         " Easy window navigation
         tnoremap <C-h> <C-\><C-n><C-w>h
         tnoremap <C-j> <C-\><C-n><C-w>j
         tnoremap <C-k> <C-\><C-n><C-w>k
         tnoremap <C-l> <C-\><C-n><C-w>l
+    endif
+    if has('terminal')
+        " Open terminal
+        noremap <silent> <Leader>t :vert terminal bash<CR>
+        " Open Python
+        noremap <silent> <Leader>py :vert terminal python<CR>
+    elseif has('nvim')
+        " Open terminal
+        nnoremap <silent> <Leader>t :vsplit term://bash<CR>
+        " Open Python
+        nnoremap <silent> <Leader>py :vsplit term://python<CR>
+
+        " Automatically enter and leave insert mode
+        autocmd BufEnter term://* startinsert
+        autocmd BufLeave term://* stopinsert
     else
         " Open terminal
         nnoremap <silent> <Leader>t :ConqueTermSplit bash<CR>

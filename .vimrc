@@ -365,6 +365,8 @@ endif
 
 " Highlight matching brackets
 set showmatch
+" Include angle brackets in bracket matching
+setglobal matchpairs+=<:>
 
 " Don't attempt syntax highlighting after this column (performance)
 set synmaxcol=200

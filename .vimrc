@@ -352,6 +352,12 @@ set scrolloff=3
 set ruler
 " Show line numbers
 set number
+" ...except in the terminal
+if has('nvim')
+  autocmd TermOpen * setlocal nonumber norelativenumber
+else
+  autocmd TerminalOpen * setlocal nonumber norelativenumber
+endif
 " Show relative line numbers
 " if (v:version >= 703)
 "     set relativenumber

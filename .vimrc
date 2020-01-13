@@ -107,7 +107,7 @@ if v:version >= g:_dein_minimum_vim_version
         Plugin 'vim-scripts/Mark--Karkat'
 
         " Highlight pairs of matching parentheses in distinct colors
-        Plugin 'kien/rainbow_parentheses.vim'
+        Plugin 'luochen1990/rainbow'
 
         " SublimeText-like multiple cursors with Ctrl-N (:help vim-multiple-cursors.txt)
         Plugin 'terryma/vim-multiple-cursors'
@@ -978,22 +978,8 @@ if v:version > g:_dein_minimum_vim_version
         nnoremap <silent> <Leader>py :ConqueTermSplit python<CR>
     endif
 
-" Rainbow parentheses - show pairs of matching parentheses in different colors {{{2
-    " A guard against the case when the plugin has not yet been installed
-    if isdirectory(expand('~/.vim/bundle/rainbow_parentheses.vim'))
-        " Enable automatically
-        autocmd VimEnter * RainbowParenthesesToggle
-        autocmd Syntax * RainbowParenthesesLoadRound
-        autocmd Syntax * RainbowParenthesesLoadSquare
-        autocmd Syntax * RainbowParenthesesLoadBraces
-        " Colors used for bracket pairs
-        let g:rbpt_colorpairs = [
-            \ ['darkblue',    'SeaGreen3'],
-            \ ['darkgreen',   'firebrick3'],
-            \ ['darkcyan',    'RoyalBlue3'],
-            \ ['darkmagenta', 'DarkOrchid3'],
-        \ ]
-    endif
+" Rainbow Parentheses Improved - highlight pairs of matching parentheses in distinct colors
+let g:rainbow_active = 0  " Disable by default but allow :RainbowToggle
 
 " Vim-gf-python - python-aware gf (go to file) {{{2
     " Extend sys.path for the python gf plugin

@@ -80,6 +80,8 @@ if v:version >= g:_dein_minimum_vim_version
         Plugin 'tpope/vim-surround'
 
 " Editing experience enhancements {{{2
+        " Access various alternate clipboards even if `+clipboard` is missing
+        Plugin "kana/vim-fakeclip"
 
         " Visually select increasingly larger regions of text with + (shrink with _)
         Plugin 'terryma/vim-expand-region'
@@ -1077,6 +1079,12 @@ let g:rainbow_active = 0  " Disable by default but allow :RainbowToggle
     let g:task_default_prompt = ['project', 'description', 'priority']
     " .taskrc overrides
     let g:task_rc_override = 'rc.defaultwidth=0 rc.defaultheight=0'
+
+" fakeclip - access various alternate clipboards even if `+clipboard` is missing
+    " Force using the plugin when not under X, even when `+clipboard` is set.
+    if empty($DISPLAY)
+        let g:fakeclip_provide_clipboard_key_mappings = 1
+    endif
 
 " Sideways - move and jump to the elements of comma-separated lists (e.g. arguments) {{{2
     nnoremap <silent> <Leader>h :SidewaysLeft<CR>

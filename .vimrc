@@ -999,16 +999,7 @@ if v:version > g:_dein_minimum_vim_version
     endif
 
 " Rainbow Parentheses Improved - highlight pairs of matching parentheses in distinct colors
-let g:rainbow_active = 0  " Disable by default but allow :RainbowToggle
-
-" Vim-gf-python - python-aware gf (go to file) {{{2
-    " Extend sys.path for the python gf plugin
-    function! PythonPath(...)
-        for path in a:000
-            python import os, vim, sys; sys.path.append(vim.eval('expand(path)'))
-        endfor
-    endfunction
-    command! -nargs=+ PythonPath call PythonPath(<args>)
+    let g:rainbow_active = 0  " Disable by default but allow :RainbowToggle
 
 " Python-Mode - Python IDE features (with Jedi-vim completion alternative) {{{2
     " Maximum line width

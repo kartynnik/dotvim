@@ -708,7 +708,7 @@ nnoremap <Leader>v V']
 " set the mark 'x', go to the definition, go to previous unmatched '{', select all the lines down to the pairing '}',
 " replace every occurence of the last search with the contents of the 'z' named register, return to the mark 'x'.
 " https://gist.github.com/DelvarWorld/048616a2e3f5d1b5a9ad
-nmap <silent> <Leader>rf "zyiw:call AskForTheNewName()<CR>mx:silent! normal gd<CR>[{V%:s/<C-R>//<C-R>z/<CR>`x
+nmap <silent> <Leader>R "zyiw:call AskForTheNewName()<CR>mx:silent! normal gd<CR>[{V%:s/<C-R>//<C-R>z/<CR>`x
 function! AskForTheNewName()
     call inputsave()
     let @z=input("What do you want to rename '" . @z . "' to? ")
@@ -918,6 +918,7 @@ if v:version > g:_dein_minimum_vim_version
 
 " QuickRun - execute whole/part of the edited file {{{2
     " Run the current file (for scripts)
+    let g:quickrun_no_default_key_mappings = 1
     nnoremap <silent> <Leader><Leader><Leader> :QuickRun<CR>
 
 " YouCompleteMe - autocompletion {{{2

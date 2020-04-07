@@ -611,8 +611,10 @@ set nowritebackup
 " Auto-confirm unsaved changes, read-only writes etc.
 set confirm
 
-" Use terminal code to display a visual bell (probably a screen flash) instead of a beep
-" set visualbell
+" Use terminal code to display a visual bell (most likely a screen flash) instead of a beep
+set visualbell
+" And then use an empty code to produce the visual bell, i.e. do nothing
+set t_vb=
 
 " Hide a modified buffer when moving to another
 set hidden

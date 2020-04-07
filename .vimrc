@@ -1114,7 +1114,7 @@ endif
 " Local machine-specific .vimrc {{{1
 " Execute ~/.specifics.vim
 if filereadable(expand('~/.specifics.vim'))
-    execute 'source ~/.specifics.vim'
+    source ~/.specifics.vim
 endif
 
 " Vim folding for this file {{{1

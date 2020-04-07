@@ -300,7 +300,6 @@ endif
 
 " GUI font and control visibility options
 if has('gui_running')
-    set guifont=Fantasque\ Sans\ Mono\ 13
     " Some of the GUI options (notably M) need to be set before syntax/filetype
     " A minimalist setup (much like a console Vim):
     " "a" - autoselect (use X clipboard with visual selections)

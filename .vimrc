@@ -626,7 +626,7 @@ nnoremap <silent> <Leader>: :echo expand("%:p")<CR>
 " Go to the *.proto file on gf instead of *.pb.h
 :set includeexpr=substitute(v:fname,'\\.pb\\.h$','.proto','')
 
-" gf will create an unexisting file, see :help gf and :help <cfile>
+" gf will create a non-existent file, see :help gf and :help <cfile>
 function! FindOrCreateCurrentFile()
     let curfile = expand("%:p")
     let thatfile = expand("<cfile>:p")
@@ -636,7 +636,9 @@ function! FindOrCreateCurrentFile()
         execute "edit " . thatfile
     endif
 endfunction
-nnoremap <silent> gf :call FindOrCreateCurrentFile()<CR>
+if !g:_embedded
+    nnoremap <silent> gf :call FindOrCreateCurrentFile()<CR>
+endif
 
 
 " Switch source/header with "gs"

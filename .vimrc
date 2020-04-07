@@ -2,6 +2,11 @@
 
 " Flags for enabling/disabling certain plugins {{{2
 
+" A flag indicating that we are running under the "Neo Vim" VSCode extension
+let g:_vscode = exists('g:vscode')
+" A flag to indicate that only plugins for embedded NeoVim should be loaded
+let g:_embedded = g:_vscode
+
 " A flag to indicate availability and desirability of YouCompleteMe (see below)
 let g:_ycm_enabled = filereadable(expand('~/.want_ycm'))
 
@@ -49,16 +54,22 @@ if v:version >= g:_dein_minimum_vim_version
         " Dein itself
         call dein#add('Shougo/dein.vim')
 
-        " A shortcut
+        " A shortcut for plugins that are loaded for any environment
         command! -nargs=1 Plugin call dein#add(<args>)
+
+        " A shortcut for plugins that are loaded only in VSCode "Neo Vim" plugin
+        command! -nargs=1 PluginVSCode call dein#add(<args>, {'if': g:_vscode})
+
+        " A shortcut for plugins that are not loaded in embedded NeoVim
+        command! -nargs=1 PluginFull call dein#add(<args>, {'if': !g:_embedded})
 
 " Color schemes {{{2
 
         " Mustang
-        Plugin 'croaker/mustang-vim'
+        PluginFull 'croaker/mustang-vim'
 
         " Janah
-        Plugin 'mhinz/vim-janah'
+        PluginFull 'mhinz/vim-janah'
 
 " Libraries - the plugins used by other plugins {{{2
         " Allows to repeat the plugin mappings with "." in the normal mode
@@ -81,7 +92,7 @@ if v:version >= g:_dein_minimum_vim_version
 
 " Editing experience enhancements {{{2
         " Access various alternate clipboards even if `+clipboard` is missing
-        Plugin "kana/vim-fakeclip"
+        PluginFull "kana/vim-fakeclip"
 
         " Visually select increasingly larger regions of text with + (shrink with _)
         Plugin 'terryma/vim-expand-region'
@@ -90,7 +101,7 @@ if v:version >= g:_dein_minimum_vim_version
         Plugin 'tmhedberg/matchit'
 
         " For modern terminals, frees from the need to :set paste / :set nopaste
-        Plugin 'ConradIrwin/vim-bracketed-paste'
+        PluginFull 'ConradIrwin/vim-bracketed-paste'
 
         " Move and jump to elements of comma-separated lists (e.g. function arguments)
         Plugin 'AndrewRadev/sideways.vim'
@@ -112,44 +123,45 @@ if v:version >= g:_dein_minimum_vim_version
         Plugin 'luochen1990/rainbow'
 
         " SublimeText-like multiple cursors with Ctrl-N (:help vim-multiple-cursors.txt)
-        Plugin 'terryma/vim-multiple-cursors'
+        PluginFull 'terryma/vim-multiple-cursors'
 
         " Vimperator/Vimium-style jumping to remote parts by appearing highlighted keys,
         " e.g. <Leader><Leader>w followed by t to jump to the word with the key t like <number>w would
-        Plugin 'easymotion/vim-easymotion'
+        PluginFull 'easymotion/vim-easymotion'
+        PluginVSCode 'asvetliakov/vim-easymotion'
 
 " Interface enhancements {{{2
 
         " Adds a diff option when Vim finds a swap file
-        Plugin 'chrisbra/Recover.vim'
+        PluginFull 'chrisbra/Recover.vim'
 
         " A fancy tart screen
-        Plugin 'mhinz/vim-startify'
+        PluginFull 'mhinz/vim-startify'
 
         " Smooth scrolling
-        Plugin 'yuttie/comfortable-motion.vim'
+        PluginFull 'yuttie/comfortable-motion.vim'
 
         " Indentation markers
-        Plugin 'Yggdroot/indentLine'
+        PluginFull 'Yggdroot/indentLine'
 
         " Many paired commands
         " (like [on, ]on, con / [ow, ]ow, cow to enable/disable/toggle line numbering/wrapping, :help unimpaired)
         Plugin 'tpope/vim-unimpaired'
 
         " Mini buffer explorer (mapped to <Leader>x)
-        Plugin 'fholgado/minibufexpl.vim'
+        PluginFull 'fholgado/minibufexpl.vim'
 
         " Extended status line
-        Plugin 'vim-airline/vim-airline'
-        Plugin 'vim-airline/vim-airline-themes'
+        PluginFull 'vim-airline/vim-airline'
+        PluginFull 'vim-airline/vim-airline-themes'
 
         " Undo tree (mapped to <Leader>u)
         if has('nvim') || v:version >= 703
-            Plugin 'sjl/gundo.vim'
+            PluginFull 'sjl/gundo.vim'
         endif
 
         " Allows to build diffs with better algorithms (requires git-diff)
-        Plugin 'chrisbra/vim-diff-enhanced'
+        PluginFull 'chrisbra/vim-diff-enhanced'
 
         " Make the yanked region apparent
         Plugin 'machakann/vim-highlightedyank'
@@ -159,41 +171,41 @@ if v:version >= g:_dein_minimum_vim_version
         if !has('nvim') && !has('terminal')
             " Allows to open terminal sessions in buffers
             " (superseded by NeoVim / Vim 8+ native terminal support)
-            Plugin 'pthrasher/conqueterm-vim'
+            PluginFull 'pthrasher/conqueterm-vim'
         endif
 
         " Vim sugar for the UNIX shell commands
         " (:Rename, :SudoWrite, :Chmod, :Locate... - :help eunuch-commands)
-        Plugin 'tpope/vim-eunuch'
+        PluginFull 'tpope/vim-eunuch'
 
         " Git management (:help fugitive.txt)
-        Plugin 'tpope/vim-fugitive'
+        PluginFull 'tpope/vim-fugitive'
         " Gitk-like repository history
-        Plugin 'gregsexton/gitv'
+        PluginFull 'gregsexton/gitv'
 
         " VCS diff in the gutter
-        Plugin 'mhinz/vim-signify'
+        PluginFull 'mhinz/vim-signify'
 
         " An Ack interface for Vim (using it with ripgrep if available)
-        Plugin 'mileszs/ack.vim'
+        PluginFull 'mileszs/ack.vim'
 
         if isdirectory(expand('~/.task'))
             " Vim interface for the TaskWarrior command line task manager
-            Plugin 'farseer90718/vim-taskwarrior'
+            PluginFull 'farseer90718/vim-taskwarrior'
         endif
 
         " Execute shell commands in the buffer
-        Plugin 'JarrodCTaylor/vim-shell-executor'
+        PluginFull 'JarrodCTaylor/vim-shell-executor'
 
 " IDE features {{{2
 
 " Language-agnostic {{{3
 
         " Filesystem tree
-        Plugin 'scrooloose/nerdtree'
+        PluginFull 'scrooloose/nerdtree'
 
         " Ctrl-P fuzzy filename search
-        Plugin 'kien/ctrlp.vim'
+        PluginFull 'kien/ctrlp.vim'
 
         " Allow for per-project settings in the .local.vimrc file of the project root
         Plugin 'thinca/vim-localrc'
@@ -203,10 +215,10 @@ if v:version >= g:_dein_minimum_vim_version
 
         " :Make in a screen/tmux/iTerm/cmd.exe... spinoff with a quickfix window opened afterwards;
         " :Make! for background, and more: see https://github.com/tpope/vim-dispatch
-        Plugin 'tpope/vim-dispatch'
+        PluginFull 'tpope/vim-dispatch'
 
         " QuickRun - execute whole/part of the edited file
-        Plugin 'thinca/vim-quickrun'
+        PluginFull 'thinca/vim-quickrun'
 
 " Multiple languages {{{3
         " Autocompletion with <Tab>, clang-based for C-like languages
@@ -214,43 +226,44 @@ if v:version >= g:_dein_minimum_vim_version
             call dein#add('Valloric/YouCompleteMe', {
                 \ 'on_ft': ['c', 'cpp', 'python', 'objcpp'],
                 \ 'timeout': 3600,
-                \ 'build': './install.sh --clang-completer'})
+                \ 'build': './install.sh --clang-completer',
+                \ 'if': !g:_embedded})
         endif
 
         " Syntax error highlighting
-        Plugin 'scrooloose/syntastic'
+        PluginFull 'scrooloose/syntastic'
 
         if has('python3')
             " Code snippets support
-            Plugin 'SirVer/ultisnips'
+            PluginFull 'SirVer/ultisnips'
 
             " A bunch of predefined snippets for UltiSnips
-            Plugin 'honza/vim-snippets'
+            PluginFull 'honza/vim-snippets'
         endif
 
         " Commenting with gc*
         Plugin 'tpope/vim-commentary'
 
         " All-in-one programming language pack
-        Plugin 'sheerun/vim-polyglot'
+        PluginFull 'sheerun/vim-polyglot'
 
         " Switch between a single-line statement and a multi-line one (gJ / gS)
         Plugin 'AndrewRadev/splitjoin.vim'
 
 " C/C++ {{{3
         " #include completion
-        Plugin 'xaizek/vim-inccomplete'
+        PluginFull 'xaizek/vim-inccomplete'
 
 " Python {{{3
         " Python IDE and editor enhancement features
         " (motion, syntax checking, refactoring, documentation, breakpoints on <Leader>b, :help pymode)
         if g:_pymode_enabled
-          Plugin 'python-mode/python-mode'
+          PluginFull 'python-mode/python-mode'
         endif
 
         " Python autocompletion (YouCompleteMe includes its features)
         if g:_jedi_enabled && ! g:_ycm_enabled && (has('python') || has('python3'))
-            Plugin 'davidhalter/jedi-vim'
+            PluginFull 'davidhalter/jedi-vim'
         endif
 
         " "A class"/"inner class", "a function"/"inner function" text objects + class/function motions
@@ -258,7 +271,7 @@ if v:version >= g:_dein_minimum_vim_version
 
 " TeX/LaTeX {{{3
         " Live preview
-        Plugin 'xuhdev/vim-latex-live-preview'
+        PluginFull 'xuhdev/vim-latex-live-preview'
 
 " Dein initialization finish {{{2
 

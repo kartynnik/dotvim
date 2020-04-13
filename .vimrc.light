@@ -250,15 +250,29 @@
   " Do not automatically wrap lines in text files and comments.
   set textwidth=0
 
+  " Enable file type-based syntax plugin and indentation plugin loading.
+  filetype plugin indent on
+
+  " Tabulation stops. `<TAB>`s are regarded as 8 spaces, but 4 spaces can be mixed with them.
+  set tabstop=8
+  set softtabstop=4
+  " Use spaces instead of `<TAB>`s.
+  set expandtab
+
   " Enable automatic indentation.
   set autoindent
+  " Number of spaces for an autoindentation step.
+  set shiftwidth=4
   " Language-specific autoindenting.
   set smartindent
   " Let `<Backspace>` undo indentation.
   set smarttab
 
-  " Use spaces instead of `<TAB>`s.
-  set expandtab
+  " Show tabs as `>-------`, trailing spaces as `_`,
+  " and non-breakable spaces as `!` (see `:help listchars`).
+  set list
+  set listchars=tab:>-,trail:_,nbsp:!
+
   " Auto-remove spaces at ends of lines in source files.
   function! TrimWhitespace()
     " Credits: https://vi.stackexchange.com/a/456.
@@ -270,18 +284,6 @@
     autocmd!
     autocmd BufWritePre *.{c,cc,cxx,cpp,h,py,sh,vimrc} call TrimWhitespace()
   augroup END
-
-  " Tabulation stops. `<TAB>`s are regarded as 8 spaces, but 4 spaces can be mixed with them.
-  set tabstop=8
-  set softtabstop=4
-
-  " Number of spaces for an autoindentation step.
-  set shiftwidth=4
-
-  " Show tabs as `>-------`, trailing spaces as `_`,
-  " and non-breakable spaces as `!` (see `:help listchars`).
-  set list
-  set listchars=tab:>-,trail:_,nbsp:!
 
 
 " Editing {{{1

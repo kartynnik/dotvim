@@ -36,14 +36,11 @@ if v:version >= g:_dein_minimum_vim_version
     " Should be called before "filetype *": manually add Dein to the runtime path
     set runtimepath+=~/.vim/bundle/repos/github.com/Shougo/dein.vim/
 
-    " NeoVim compatibility
-    let g:_editor_home = has('nvim') ? '~/.config/nvim' : '~/.vim'
-    let g:_bundle_home = g:_editor_home . '/bundle/'
-
     " Use shallow repository clones
     let g:dein#types#git#clone_depth = 1
 
     " Compare bundle cache modification time with .vimrc, skip if up to date
+    let g:_bundle_home = expand('~/.vim/bundle/')
     if dein#load_state(g:_bundle_home)
 
         " List Dein bundles

@@ -346,7 +346,7 @@ if has('title')
     set title
     " Change to the host:filename.ext pattern
     autocmd BufEnter * let &titlestring = hostname() . ':' . expand("%:t")
-    " Upon existing, change to just hostname
+    " Upon exiting, change to just hostname
     let &titleold = hostname()
 endif
 
@@ -1108,7 +1108,7 @@ if v:version > g:_dein_minimum_vim_version
     endif
 
 " LocalRC - Allow for per-project settings in the .local.vimrc file of the project root {{{2
-    " Simplify the per-filetype regex to avoid globbing is highly populated directories upways along the path
+    " Simplify the per-filetype regex to avoid globbing in highly populated directories upward the path
     let g:localrc_filetype = '.local.%s.vimrc'
 endif
 

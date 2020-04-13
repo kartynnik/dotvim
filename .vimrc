@@ -132,7 +132,7 @@ if v:version >= g:_dein_minimum_vim_version
         " Adds a diff option when Vim finds a swap file
         PluginFull 'chrisbra/Recover.vim'
 
-        " A fancy tart screen
+        " A fancy start screen
         PluginFull 'mhinz/vim-startify'
 
         " Smooth scrolling

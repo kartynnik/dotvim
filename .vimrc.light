@@ -114,7 +114,7 @@
 
 
 " Interface {{{1
-  " Enable syntax highlighting, defining the colors for groups with missing highlighting.
+  " Enable syntax highlighting, filling in the colors for groups with missing definintions.
   syntax enable
 
   " Color scheme.

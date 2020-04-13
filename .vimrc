@@ -97,9 +97,6 @@ if v:version >= g:_dein_minimum_vim_version
         " Visually select increasingly larger regions of text with + (shrink with _)
         Plugin 'terryma/vim-expand-region'
 
-        " Extended % matching for HTML, LaTeX, ...
-        Plugin 'tmhedberg/matchit'
-
         " For modern terminals, frees from the need to :set paste / :set nopaste
         PluginFull 'ConradIrwin/vim-bracketed-paste'
 

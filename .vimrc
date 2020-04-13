@@ -270,6 +270,11 @@ if v:version >= g:_dein_minimum_vim_version
         " Live preview
         PluginFull 'xuhdev/vim-latex-live-preview'
 
+" Machine-specific plugins {{{3
+        if filereadable(expand('~/.specific.plugins.vim'))
+          source ~/.specific.plugins.vim
+        endif
+
 " Dein initialization finish {{{2
 
         " Finalize Dein initialization

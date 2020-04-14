@@ -1,0 +1,13 @@
+Common:
+  Evaluate options in https://github.com/kana/vim-textobj-user/wiki.
+
+For `.vimrc.light`:
+  See if loading `Sideways` 'on' `gS`/`gJ` helps startup times.
+  Consider adding a command / adding a config that causes loading of less used stuff.
+  Chart out the useful commands in the imported plugins in a single README.
+
+For `.vimrc`:
+  Mark all places different from `.vimrc.light` (besides using NeoBundle).
+  Evaluate if they still make sense.
+  Consider moving everything extra into two `.plugins` and `.after` files
+    that can be imported in `.local.vimrc.*`.

@@ -1,5 +1,7 @@
 Common:
   Evaluate options in https://github.com/kana/vim-textobj-user/wiki.
+  Try out https://github.com/dense-analysis/ale:
+    https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 
 For `.vimrc.light`:
   See if loading `Sideways` 'on' `gS`/`gJ` helps startup times.

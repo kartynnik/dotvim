@@ -108,6 +108,12 @@
     " Automatically makes new files with a shebang executable.
     Plug 'tpope/vim-eunuch'
 
+    " Executes the whole / a part of the edited file.
+    Plug 'thinca/vim-quickrun'
+      let g:quickrun_no_default_key_mappings = 1
+      " Run the current file (for scripts).
+      nnoremap <silent> <Leader><Leader><Leader> :QuickRun<CR>
+
   " Machine-specific {{{2
     if filereadable(expand('~/.local.vimrc.plugins'))
       source ~/.local.vimrc.plugins

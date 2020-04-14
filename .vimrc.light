@@ -137,7 +137,7 @@
     colorscheme janah
     " Some color scheme tweaks.
     highlight Normal ctermbg=black guibg=black
-    highlight Comment ctermfg=104 guifg=#8787d7
+    highlight Comment ctermfg=245 guifg=#8a8aa0
     highlight Search ctermbg=229 ctermfg=black guibg=#ffffaf guifg=black
   endtry
 

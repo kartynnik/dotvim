@@ -126,12 +126,14 @@
   " Enable syntax highlighting, filling in the colors for groups with missing definintions.
   syntax enable
 
+  " Use TrueColor colors.
+  set termguicolors
+
   " Color scheme.
   augroup janah_colorscheme_tweaks
     autocmd!
-    autocmd ColorScheme janah highlight Normal ctermbg=232
-    autocmd ColorScheme janah highlight Comment ctermfg=245
-    autocmd ColorScheme janah highlight Search ctermbg=27
+    autocmd ColorScheme janah highlight Normal guibg=black
+    autocmd ColorScheme janah highlight Search guibg=#CCCC00 guifg=black
   augroup END
   " Suppress errors if the color scheme has not yet been installed.
   colorscheme janah

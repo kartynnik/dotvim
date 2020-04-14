@@ -126,17 +126,20 @@
   " Enable syntax highlighting, filling in the colors for groups with missing definintions.
   syntax enable
 
-  " Use TrueColor colors.
-  set termguicolors
+  " Use TrueColor if possible.
+  if has('termguicolors') && $TERM == 'xterm-256color'
+    set termguicolors
+  endif
 
   " Color scheme.
-  augroup janah_colorscheme_tweaks
-    autocmd!
-    autocmd ColorScheme janah highlight Normal guibg=black
-    autocmd ColorScheme janah highlight Search guibg=#CCCC00 guifg=black
-  augroup END
   " Suppress errors if the color scheme has not yet been installed.
-  colorscheme janah
+  try
+    colorscheme janah
+    " Some color scheme tweaks.
+    highlight Normal ctermbg=black guibg=black
+    highlight Comment ctermfg=104 guifg=#8787d7
+    highlight Search ctermbg=229 ctermfg=black guibg=#ffffaf guifg=black
+  endtry
 
   " Indicate a fast terminal connection: smoother redrawing,
   " better for copying in graphic terminals.

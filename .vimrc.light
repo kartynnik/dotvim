@@ -246,7 +246,7 @@
   " Source the .vimrc/init.vim file upon writing to it
   augroup source_written_vimrc
     autocmd!
-    autocmd BufWritePost .vimrc nested source %
+    autocmd BufWritePost *.vimrc* nested source %
     autocmd BufWritePost init.vim nested source %
   augroup END
 

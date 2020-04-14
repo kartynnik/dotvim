@@ -358,4 +358,4 @@
 
 
 " Vim folding for this file {{{1
-" vim: set foldmethod=marker
+" vim: set foldmethod=marker:

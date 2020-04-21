@@ -39,6 +39,9 @@
     " Autodetect indentation options based on current or other similar files.
     Plug 'tpope/vim-sleuth'
 
+    " `f`/`F`/`t`/`T` support searching for a character across lines
+    Plug 'dahu/vim-fanfingtastic'
+
     " Move and jump to elements of comma-separated lists (e.g. function arguments).
     Plug 'AndrewRadev/sideways.vim'
       nnoremap <silent> <Leader>h :SidewaysLeft<CR>

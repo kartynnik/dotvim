@@ -35,7 +35,7 @@
     " text objects + class/function motions (`[p`/`]p` + `c`/`f`).
     Plug 'bps/vim-textobj-python'
 
-  " Editing {{{2
+  " Editing and navigation {{{2
     " Autodetect indentation options based on current or other similar files.
     Plug 'tpope/vim-sleuth'
 
@@ -66,6 +66,9 @@
     Plug 'AndrewRadev/splitjoin.vim'
       " Python: Put brackets on lines of their own.
       let g:splitjoin_python_brackets_on_separate_lines = 1
+
+    " Search for the current visual selection with `*`.
+    Plug 'nelstrom/vim-visual-star-search'
 
   " Interface {{{2
     " Many paired commands to toggle settings (like `[on`, `]on`, `con` /

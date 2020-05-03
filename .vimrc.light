@@ -70,6 +70,11 @@
     " Search for the current visual selection with `*`.
     Plug 'nelstrom/vim-visual-star-search'
 
+    " `:BufSurf{Back,Forward}` to move to the previous  / next used buffer in the jumplist.
+    Plug 'alisnic/vim-bufsurf'
+      nnoremap <silent> <Leader><C-o> :BufSurfBack<CR>
+      nnoremap <silent> <Leader><C-i> :BufSurfForward<CR>
+
   " Interface {{{2
     " Many paired commands to toggle settings (like `[on`, `]on`, `con` /
     " `[ow`, `]ow`, `cow` to enable/disable/toggle line numbering/wrapping, `:help unimpaired`).

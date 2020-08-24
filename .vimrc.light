@@ -71,7 +71,8 @@
     Plug 'nelstrom/vim-visual-star-search'
 
     " `:BufSurf{Back,Forward}` to move to the previous  / next used buffer in the jumplist.
-    Plug 'alisnic/vim-bufsurf'
+    " 'on' is used to avoid errors after installing since the plugin doesn't support lazy loading.
+    Plug 'alisnic/vim-bufsurf', { 'on': ['BufSurfBack', 'BufSurfForward'] }
       nnoremap <silent> <Leader><C-o> :BufSurfBack<CR>
       nnoremap <silent> <Leader><C-i> :BufSurfForward<CR>
 

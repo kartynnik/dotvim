@@ -115,6 +115,9 @@
     " Adds a "Diff" option when Vim finds an existing swap file.
     Plug 'chrisbra/Recover.vim'
 
+    " `:DirDiff A B` to run `vimdiff` on the contents of two file trees.
+    Plug 'will133/vim-dirdiff'
+
     " UNIX shell command wrappers
     " (`:Rename`, `:SudoWrite`, `:Chmod`, `:Locate`... - see `:help eunuch-commands`).
     " Automatically makes new files with a shebang executable.

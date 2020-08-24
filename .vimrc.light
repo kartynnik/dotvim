@@ -70,11 +70,11 @@
     " Search for the current visual selection with `*`.
     Plug 'nelstrom/vim-visual-star-search'
 
-    " `:BufSurf{Back,Forward}` to move to the previous  / next used buffer in the jumplist.
-    " 'on' is used to avoid errors after installing since the plugin doesn't support lazy loading.
-    Plug 'alisnic/vim-bufsurf', { 'on': ['BufSurfBack', 'BufSurfForward'] }
-      nnoremap <silent> <Leader><C-o> :BufSurfBack<CR>
-      nnoremap <silent> <Leader><C-i> :BufSurfForward<CR>
+    " `:BufferRing{Reverse,Forward}` to move to the previous  / next used buffer
+    " in the "buffer ring" (circular deduplicated version of the jumplist).
+    Plug 'landonb/vim-buffer-ring', { 'branch': 'develop' }
+      nnoremap <silent> <Leader><C-o> :BufferRingReverse<CR>
+      nnoremap <silent> <Leader><C-i> :BufferRingForward<CR>
 
   " Interface {{{2
     " Many paired commands to toggle settings (like `[on`, `]on`, `con` /

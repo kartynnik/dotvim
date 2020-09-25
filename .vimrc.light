@@ -31,6 +31,11 @@
       " Prepend a motion by `<Leader>` to move granularly.
       let g:wordmotion_prefix = '<Leader>'
 
+    " "In"/"an"/"inside"/"around" for different brackets, separators, and arguments.
+    " E.g. `aa` - an argument in a list of arguments, `i/` - a path component (`a/` - plus slash).
+    " Makes e.g. the usual "inside quotes" smarter by counting and "inside brackets" multiline.
+    Plug 'wellle/targets.vim'
+
     " Python: "A class"/"inner class" (`ac`/`ic`), "a function"/"inner function" (`af`/`if`)
     " text objects + class/function motions (`[p`/`]p` + `c`/`f`).
     Plug 'bps/vim-textobj-python'

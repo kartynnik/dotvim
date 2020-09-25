@@ -4,6 +4,7 @@ Common:
     https://github.com/dense-analysis/ale/blob/master/supported-tools.md
   Try out the https://github.com/sainnhe/sonokai themes.
   https://stackoverflow.com/questions/4312664/is-there-a-vim-command-to-select-pasted-text
+  Consider trying https://github.com/benmills/vimux.
 
 For `.vimrc.light`:
   See if loading `Sideways` 'on' `gS`/`gJ` helps startup times.

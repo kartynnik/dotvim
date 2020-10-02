@@ -1,10 +1,14 @@
 Common:
   Evaluate options in https://github.com/kana/vim-textobj-user/wiki.
-  Try out https://github.com/dense-analysis/ale:
+  Try out https://github.com/dense-analysis/ale (Async Lint Engine):
     https://github.com/dense-analysis/ale/blob/master/supported-tools.md
   Try out the https://github.com/sainnhe/sonokai themes.
   https://stackoverflow.com/questions/4312664/is-there-a-vim-command-to-select-pasted-text
-  Consider trying https://github.com/benmills/vimux.
+  Try out https://github.com/benmills/vimux (tmux window)
+  Try out https://github.com/dockyard/vim-easydir (create non-existent folders on saving)
+  Try out https://github.com/osyo-manga/vim-anzu (search status: "match #/total matches")
+  Add https://github.com/junegunn/fzf and https://github.com/junegunn/fzf.vim by default?
+    Or make some plugins optional via settings in something like `.local.plugins-enabled`?
 
 For `.vimrc.light`:
   See if loading `Sideways` 'on' `gS`/`gJ` helps startup times.
@@ -16,3 +20,7 @@ For `.vimrc`:
   Evaluate if they still make sense.
   Consider moving everything extra into two `.plugins` and `.after` files
     that can be imported in `.local.vimrc.*`.
+
+Good to know:
+  https://www.vim.org/scripts/script.php?script_id=2390
+    GUI color scheme approximation for terminals, may be useful for Mosh

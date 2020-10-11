@@ -141,6 +141,11 @@
     " <C-W> to undo closing a window.
     Plug 'AndrewRadev/undoquit.vim'
 
+    " `fzf`-based fuzzy search.
+    Plug 'junegunn/fzf', {'do': { -> fzf#install() }}
+    Plug 'junegunn/fzf.vim'
+      nmap <silent> <C-p> :Files<CR>
+
     " Adds a "Diff" option when Vim finds an existing swap file.
     Plug 'chrisbra/Recover.vim'
 

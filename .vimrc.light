@@ -106,6 +106,9 @@
       let g:comfortable_motion_scroll_down_key = 'gj'
       let g:comfortable_motion_scroll_up_key = 'gk'
 
+    " Highlight other occurences of the word under cursor.
+    Plug 'RRethy/vim-illuminate'
+
     " Indentation markers.
     Plug 'Yggdroot/indentLine'
       " Set the concealed character color.

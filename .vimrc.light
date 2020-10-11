@@ -109,6 +109,13 @@
     " Highlight other occurences of the word under cursor.
     Plug 'RRethy/vim-illuminate'
 
+    " Live preview for results of Ex commands.
+    if has('nvim')
+      set inccommand
+    else
+      Plug 'markonm/traces.vim'
+    endif
+
     " Indentation markers.
     Plug 'Yggdroot/indentLine'
       " Set the concealed character color.

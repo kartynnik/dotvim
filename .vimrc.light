@@ -61,8 +61,8 @@
     " while `cs(]` replaces them by square brackets.
     Plug 'tpope/vim-surround'
 
-    " For modern terminals, frees from the need to `:set paste` / `:set nopaste`.
-    Plug 'ConradIrwin/vim-bracketed-paste'
+    " For modern terminals, frees from the need to `:set paste` / `:set nopaste` etc.
+    Plug 'wincent/terminus'
 
     " Commenting with gc*
     Plug 'tpope/vim-commentary'

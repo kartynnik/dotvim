@@ -138,6 +138,9 @@
       " Toggle Gundo.
       nnoremap <silent> <Leader>u :GundoToggle<CR>
 
+    " <C-W> to undo closing a window.
+    Plug 'AndrewRadev/undoquit.vim'
+
     " Adds a "Diff" option when Vim finds an existing swap file.
     Plug 'chrisbra/Recover.vim'
 

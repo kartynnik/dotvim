@@ -66,7 +66,7 @@ if v:version >= g:_dein_minimum_vim_version
         PluginFull 'croaker/mustang-vim'
 
         " Janah
-        PluginFull 'mhinz/vim-janah'
+        PluginFull 'kartynnik/vim-janah'
 
 " Libraries - the plugins used by other plugins {{{2
         " Allows to repeat the plugin mappings with "." in the normal mode
@@ -319,19 +319,9 @@ set t_Co=256
 
 " Background and color scheme
 set background=dark
-if &t_Co >= 256 || has('gui_running')
-    try
-        " colorscheme mustang
-
-        autocmd ColorScheme janah highlight Normal ctermbg=232
-        autocmd ColorScheme janah highlight Comment ctermfg=245
-        autocmd ColorScheme janah highlight Search ctermbg=27
-        colorscheme janah
-    catch /E185:/
-        " Color scheme not (yet) installed
-        colorscheme desert
-    endtry
-endif
+try
+    colorscheme janah
+endtry
 
 " Prevent $VIMRUNTIME/syntax/synload.vim from issuing :colors when .vimrc is reloaded
 if exists('colors_name')

@@ -15,7 +15,7 @@
 
   " Color schemes {{{2
     " Janah color scheme.
-    Plug 'mhinz/vim-janah'
+    Plug 'kartynnik/vim-janah'
 
   " Library plugins serving as dependencies for the others {{{2
     " Allows to repeat the plugin mappings with `.` in the normal mode.
@@ -184,16 +184,6 @@
   " Suppress errors if the color scheme has not yet been installed.
   try
     colorscheme janah
-
-    " Some color scheme tweaks.
-    highlight Normal   ctermbg=black  guibg=black
-    highlight Comment  ctermfg=245    guifg=#8a8aa0
-    highlight Search   ctermbg=229    ctermfg=black  guibg=#ffffaf  guifg=black
-
-    highlight DiffAdd      guifg=NONE     guibg=#204204
-    highlight DiffChange   guifg=NONE     guibg=#23132b
-    highlight DiffDelete   guifg=#1c1c1c  guibg=#1c1c1c
-    highlight DiffText     guifg=NONE     guibg=#204a7d
   endtry
 
   " Indicate a fast terminal connection: smoother redrawing,

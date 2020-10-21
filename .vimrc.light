@@ -109,6 +109,10 @@
     " Highlight other occurences of the word under cursor.
     Plug 'RRethy/vim-illuminate'
 
+    " Highlight matching parentheses in different colors.
+    Plug 'luochen1990/rainbow'
+      let g:rainbow_active = 0
+
     " Live preview for results of Ex commands.
     if has('nvim')
       set inccommand

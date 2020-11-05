@@ -252,11 +252,14 @@
   " `jk` is another alternative.
   inoremap jk <Esc>
 
-  " Use gj/gk by default (move by visible lines, not logical ones)
+  " Use gj/gk by default (move by visible lines, not logical ones).
   nnoremap j gj
   nnoremap k gk
   vnoremap j gj
   vnoremap k gk
+
+  " Visually select pasted text (actually "previously changed or yanked").
+  nmap gp `[v`]
 
 
 " Filesystem {{{1

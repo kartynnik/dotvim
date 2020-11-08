@@ -186,9 +186,7 @@
 
   " Color scheme.
   " Suppress errors if the color scheme has not yet been installed.
-  try
-    colorscheme janah
-  endtry
+  silent! colorscheme janah
 
   " Indicate a fast terminal connection: smoother redrawing,
   " better for copying in graphic terminals.

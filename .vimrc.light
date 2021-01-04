@@ -44,7 +44,10 @@
     " Autodetect indentation options based on current or other similar files.
     Plug 'tpope/vim-sleuth'
 
-    " `f`/`F`/`t`/`T` support searching for a character across lines
+    " `vv`/`viv`/`vav` for smart detection of relevant inner/outer pairs.
+    Plug 'gorkunov/smartpairs.vim'
+
+    " `f`/`F`/`t`/`T` support searching for a character across lines.
     Plug 'dahu/vim-fanfingtastic'
 
     " Move and jump to elements of comma-separated lists (e.g. function arguments).
@@ -64,7 +67,7 @@
     " For modern terminals, frees from the need to `:set paste` / `:set nopaste` etc.
     Plug 'wincent/terminus'
 
-    " Commenting with gc*
+    " Commenting with `gc*`.
     Plug 'tpope/vim-commentary'
 
     " Switching between a single-line statement and a multi-line one (`gJ` / `gS`).
@@ -173,6 +176,7 @@
     endif
 
   call plug#end()
+
 
 
 " Interface {{{1

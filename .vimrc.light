@@ -14,7 +14,7 @@
   call plug#begin('~/.vim/plugins')
 
   " Color schemes {{{2
-    " Janah color scheme.
+    " My modified version of the Janah color scheme.
     Plug 'kartynnik/vim-janah'
 
   " Library plugins serving as dependencies for the others {{{2
@@ -201,7 +201,6 @@
   call plug#end()
 
 
-
 " Interface {{{1
   " Enable syntax highlighting, filling in the colors for groups with missing definintions.
   syntax enable
@@ -215,8 +214,8 @@
   " Suppress errors if the color scheme has not yet been installed.
   silent! colorscheme janah
 
-  " Indicate a fast terminal connection: smoother redrawing,
-  " better for copying in graphic terminals.
+  " Indicate a fast terminal connection:
+  " smoother redrawing, better for copying in graphic terminals.
   set ttyfast
 
   " Don't wrap long lines by default (use the `cow` mapping from `vim-unimpaired` to toggle).

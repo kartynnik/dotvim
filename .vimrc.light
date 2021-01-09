@@ -170,6 +170,29 @@
       " Run the current file (for scripts).
       nnoremap <silent> <Leader><Leader><Leader> :QuickRun<CR>
 
+    " A secure alternative to modelines.
+    Plug 'ypcrts/securemodelines'
+      let g:secure_modelines_allowed_items = [
+          \ "textwidth",     "tw",
+          \ "softtabstop",   "sts",
+          \ "tabstop",       "ts",
+          \ "shiftwidth",    "sw",
+          \ "expandtab",     "et",   "noexpandtab",   "noet",
+          \ "filetype",      "ft",
+          \ "foldlevel",     "fdl",
+          \ "commentstring", "cms",
+          \ "foldmethod",    "fdm",
+          \ "readonly",      "ro",   "noreadonly",    "noro",
+          \ "rightleft",     "rl",   "norightleft",   "norl",
+          \ "cindent",       "cin",  "nocindent",     "nocin",
+          \ "smartindent",   "si",   "nosmartindent", "nosi",
+          \ "autoindent",    "ai",   "noautoindent",  "noai",
+          \ "wrap",                  "nowrap",
+          \ "statusline",
+          \ "laststatus",
+          \ "number",                "nonumber",
+          \ ]
+
   " Machine-specific {{{2
     if filereadable(expand('~/.local.vimrc.plugins'))
       source ~/.local.vimrc.plugins
@@ -422,6 +445,5 @@
   endif
 
 
-" Enabling modelines and a modeline for this file {{{1
-set modeline
+" A modeline for this file {{{1
 " vim: foldmethod=marker textwidth=100 colorcolumn=100

@@ -269,6 +269,29 @@
   nnoremap <C-k> <C-w>k
   nnoremap <C-l> <C-w>l
 
+  " GUI elements.
+  " `a` - autoselect (become the owner of X selection in visual mode).
+  " `b` - bottom horizontal scrollbar.
+  " `c` - console dialogs instead of popups for simple choices.
+  " `d` - dark theme variant if available.
+  " `l` - left-hand scrollbar (always).
+  " `L` - left-hand scrollbar (when there's a vertical split).
+  " `m` - menu bar.
+  " `r` - right-hand scrollbar (always).
+  " `R` - right-hand scrollbar (when there's a vertical split).
+  " `T` - toolbar.
+  if has('gui')
+    set guioptions+=c
+    set guioptions+=d
+    set guioptions-=h
+    set guioptions-=l
+    set guioptions-=L
+    set guioptions-=m
+    set guioptions-=r
+    set guioptions-=R
+    set guioptions-=T
+  endif
+
 
 " Basic mappings {{{1
   " Use `jj` as an alternative to `<Esc>`.

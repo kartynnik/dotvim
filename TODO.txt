@@ -1,36 +1,27 @@
 Bugs:
   Figure out which plugin breaks `vi(i(`/`va(a(`
 
-Common:
+Tasks:
+  Study and evaluate the differences between the current and the old `.vimrc`.
+  Chart out the useful commands in the imported plugins in a single README.
+
+Ideas:
+  Make some plugins optional via settings in something like `.local.plugins-enabled`?
+
+New plugins:
   Evaluate options in https://github.com/kana/vim-textobj-user/wiki.
   Try out https://github.com/dense-analysis/ale (Async Lint Engine):
     https://github.com/dense-analysis/ale/blob/master/supported-tools.md
   Try out the https://github.com/sainnhe/sonokai themes.
-  https://stackoverflow.com/questions/4312664/is-there-a-vim-command-to-select-pasted-text
-  Try out https://github.com/benmills/vimux (tmux window)
-  Try out https://github.com/dockyard/vim-easydir (create non-existent folders on saving)
-  Try out https://github.com/osyo-manga/vim-anzu (search status: "match #/total matches")
-  Add https://github.com/junegunn/fzf and https://github.com/junegunn/fzf.vim by default?
-    Or make some plugins optional via settings in something like `.local.plugins-enabled`?
-  Consider https://github.com/AndrewRadev/bufferize.vim (create buffers for command outputs)
-  Try out https://github.com/AndrewRadev/linediff.vim (diff ranges of lines + conflicts)
-  Try out https://github.com/junegunn/vim-peekaboo (register preview)
-  Check whether https://github.com/machakann/vim-swap (argument swapper) is better
-  Consider https://github.com/kana/vim-textobj-entire (entire file)
-  Try out https://github.com/wellle/tmux-complete.vim (completion from other `tmux` windows)
-  Try out https://github.com/wellle/visual-split.vim (split window that fits visual selection)
-
-For `.vimrc.light`:
-  See if loading `Sideways` 'on' `gS`/`gJ` helps startup times.
-  Consider adding a command / adding a config that causes loading of less used stuff.
-  Chart out the useful commands in the imported plugins in a single README.
-
-For `.vimrc`:
-  Mark all places different from `.vimrc.light` (besides using NeoBundle).
-  Evaluate if they still make sense.
-  Consider moving everything extra into two `.plugins` and `.after` files
-    that can be imported in `.local.vimrc.*`.
-
-Good to know:
-  https://www.vim.org/scripts/script.php?script_id=2390
-    GUI color scheme approximation for terminals, may be useful for Mosh
+  Try out https://github.com/benmills/vimux (tmux window).
+  Try out https://github.com/dockyard/vim-easydir (create non-existent folders on saving).
+  Try out https://github.com/osyo-manga/vim-anzu (search status: "match #/total matches").
+  Consider https://github.com/AndrewRadev/bufferize.vim (create buffers for command outputs).
+  Try out https://github.com/AndrewRadev/linediff.vim (diff ranges of lines + conflicts).
+  Try out https://github.com/junegunn/vim-peekaboo (register preview).
+  Check whether https://github.com/machakann/vim-swap (argument swapper) is better.
+  Consider https://github.com/kana/vim-textobj-entire (entire file).
+  Try out https://github.com/wellle/tmux-complete.vim (completion from other `tmux` windows).
+  Try out https://github.com/wellle/visual-split.vim (split window that fits visual selection).
+  Try out https://www.vim.org/scripts/script.php?script_id=2390
+    (GUI color scheme approximation for terminals, may be useful for Mosh).

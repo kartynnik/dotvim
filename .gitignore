@@ -1,6 +1,4 @@
 autoload/plug.vim
 autoload/plug.vim.old
-bundle/*
-!bundle/dein.vim
 plugins
 .netrwhist

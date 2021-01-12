@@ -193,6 +193,14 @@
           \ "number",                "nonumber",
           \ ]
 
+    " `gx` partially provides its functionality,
+    " but is broken at the time of this writing (https://github.com/vim/vim/issues/4738).
+    " `g<CR>` - search the word under cursor with DuckDuckGo;
+    " `gG` - with Google; gW - with Wikipedia.
+    Plug 'dhruvasagar/vim-open-url'
+      nmap gx <Plug>(open-url-browser)
+      xmap gx <Plug>(open-url-browser)
+
   " Machine-specific {{{2
     if filereadable(expand('~/.local.vimrc.plugins'))
       source ~/.local.vimrc.plugins

@@ -391,6 +391,9 @@
   set list
   set listchars=tab:>-,trail:_,nbsp:!
 
+  " Don't conceal the current line in normal mode (like in insert mode by default).
+  set concealcursor-=n
+
   " Auto-remove spaces at ends of lines in source files.
   function! TrimWhitespace()
     " Credits: https://vi.stackexchange.com/a/456.

@@ -25,6 +25,10 @@
     " https://github.com/kana/vim-textobj-user/wiki lists many useful plugins doing that.
     Plug 'kana/vim-textobj-user'
 
+    " A plugin that is actually standalone (provides aligment via `:Tab[ularize]`,
+    " but added as a dependency of `vim-markdown`.
+    Plug 'godlygeek/tabular'
+
   " New text objects {{{2
     " `CamelCase` / `snake_case` etc. identifier parts.
     Plug 'chaoren/vim-wordmotion'
@@ -200,6 +204,9 @@
     Plug 'dhruvasagar/vim-open-url'
       nmap gx <Plug>(open-url-browser)
       xmap gx <Plug>(open-url-browser)
+
+  " File type-specific {{{2
+  Plug 'plasticboy/vim-markdown'
 
   " Machine-specific {{{2
     if filereadable(expand('~/.local.vimrc.plugins'))

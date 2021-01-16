@@ -378,15 +378,14 @@
   " Enable file type-based syntax plugin and indentation plugin loading.
   filetype plugin indent on
 
-  " Tabulation stops. `<TAB>`s are regarded as 8 spaces, but 4 spaces can be mixed with them.
-  set tabstop=8
-  set softtabstop=4
-  " Use spaces instead of `<TAB>`s.
+  " Spaces in a `<TAB>`.
+  set tabstop=4
+  " Use spaces instead of `<TAB>`s by default (unless `vim-sleuth` detects preexisting ones).
   set expandtab
 
   " Enable automatic indentation.
   set autoindent
-  " Number of spaces for an autoindentation step.
+  " Number of spaces for an autoindentation step (unless `vim-sleuth` deduces another value).
   set shiftwidth=4
   " Language-specific autoindenting.
   set smartindent

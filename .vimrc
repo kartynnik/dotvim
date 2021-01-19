@@ -133,10 +133,10 @@
       let g:indentLine_color_term = 235
       " Use a Unicode character that comprises the whole character cell height.
       let g:indentLine_char = '▏'
-      " Disable concealing under cursor for insert and normal modes.
-      let g:indentLine_concealcursor = 'c'
-      " Completely disable for TeX.
-      let g:indentLine_fileTypeExclude = ['tex']
+      " Disable concealing in the current line for insert mode.
+      let g:indentLine_concealcursor = 'nc'
+      " Completely disable for Markdown and TeX.
+      let g:indentLine_fileTypeExclude = ['markdown', 'tex']
       augroup disable_tex_concealing
         autocmd!
         autocmd syntax tex setlocal conceallevel=0

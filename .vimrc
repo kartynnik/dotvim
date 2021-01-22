@@ -137,6 +137,11 @@
       let g:indentLine_concealcursor = 'nc'
       " Completely disable for Markdown and TeX.
       let g:indentLine_fileTypeExclude = ['markdown', 'tex']
+      augroup enable_markdown_concealing
+        " `indentLine_fileTypeExclude` above leads to resetting `conceallevel`.
+        autocmd!
+        autocmd syntax markdown setlocal conceallevel=2
+      augroup END
       augroup disable_tex_concealing
         autocmd!
         autocmd syntax tex setlocal conceallevel=0

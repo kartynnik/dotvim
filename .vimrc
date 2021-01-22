@@ -212,6 +212,10 @@
 
   " File type-specific {{{2
   Plug 'plasticboy/vim-markdown'
+    augroup disable_vim_markdown_extended_gx
+      autocmd!
+      autocmd syntax markdown unmap <buffer> gx
+    augroup END
 
   " Machine-specific {{{2
     if filereadable(expand('~/.local.vimrc.plugins'))

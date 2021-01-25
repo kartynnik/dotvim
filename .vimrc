@@ -212,9 +212,10 @@
 
   " File type-specific {{{2
   Plug 'plasticboy/vim-markdown'
+    let g:vim_markdown_new_list_item_indent = 2
     augroup disable_vim_markdown_extended_gx
       autocmd!
-      autocmd syntax markdown unmap <buffer> gx
+      autocmd syntax markdown silent! unmap <buffer> gx
     augroup END
 
   " Machine-specific {{{2

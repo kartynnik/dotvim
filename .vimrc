@@ -395,8 +395,8 @@
 
   " Enable automatic indentation.
   set autoindent
-  " Number of spaces for an autoindentation step (unless `vim-sleuth` deduces another value).
-  set shiftwidth=4
+  " Number of spaces for an autoindentation step (zero corresponds to the value of `tabstop`).
+  set shiftwidth=0
   " Language-specific autoindenting.
   set smartindent
   " Let `<Backspace>` undo indentation.

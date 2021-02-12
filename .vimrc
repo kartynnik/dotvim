@@ -127,6 +127,8 @@
       Plug 'markonm/traces.vim'
     endif
 
+    Plug 'vim-airline/vim-airline'
+
     " Indentation markers.
     Plug 'Yggdroot/indentLine'
       " Set the concealed character color.

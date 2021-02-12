@@ -134,17 +134,13 @@
       " Use a Unicode character that comprises the whole character cell height.
       let g:indentLine_char = '▏'
       " Disable concealing in the current line for insert mode.
-      let g:indentLine_concealcursor = 'nc'
-      " Completely disable for Markdown and TeX.
+      let g:indentLine_concealcursor = ''
+      " Completely disable for these file types.
       let g:indentLine_fileTypeExclude = ['markdown', 'tex']
-      augroup enable_markdown_concealing
+      augroup re_enable_concealing
         " `indentLine_fileTypeExclude` above leads to resetting `conceallevel`.
         autocmd!
         autocmd syntax markdown setlocal conceallevel=2
-      augroup END
-      augroup disable_tex_concealing
-        autocmd!
-        autocmd syntax tex setlocal conceallevel=0
       augroup END
 
     " Undo tree.
@@ -408,7 +404,7 @@
   set listchars=tab:>-,trail:_,nbsp:!
 
   " Don't conceal the current line in normal mode (like in insert mode by default).
-  set concealcursor-=n
+  set concealcursor=
 
   " Auto-remove spaces at ends of lines in source files.
   function! TrimWhitespace()

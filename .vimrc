@@ -152,7 +152,7 @@
       " Toggle Gundo.
       nnoremap <silent> <Leader>u :GundoToggle<CR>
 
-    " <C-W> to undo closing a window.
+    " `<C-w>u` to undo closing a window.
     Plug 'AndrewRadev/undoquit.vim'
 
     " `fzf`-based fuzzy search.

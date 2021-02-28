@@ -158,7 +158,11 @@
     " `fzf`-based fuzzy search.
     Plug 'junegunn/fzf', {'do': { -> fzf#install() }}
     Plug 'junegunn/fzf.vim'
+      let g:fzf_layout = { 'down': '~20%' }
       nmap <silent> <C-p> :Files<CR>
+      nmap <silent> <C-p><C-p> :Files<CR>
+      nmap <silent> <C-p>h :History:<CR>
+      nmap <silent> <C-p>/ :History/<CR>
 
     " Adds a "Diff" option when Vim finds an existing swap file.
     Plug 'chrisbra/Recover.vim'

@@ -161,7 +161,8 @@
       let g:fzf_layout = { 'down': '~20%' }
       nmap <silent> <C-p> :Files<CR>
       nmap <silent> <C-p><C-p> :Files<CR>
-      nmap <silent> <C-p>h :History:<CR>
+      nmap <silent> <C-p>h :History<CR>
+      nmap <silent> <C-p>: :History:<CR>
       nmap <silent> <C-p>/ :History/<CR>
 
     " Adds a "Diff" option when Vim finds an existing swap file.

@@ -339,8 +339,8 @@
   nnoremap <C-k> <C-w>k
   nnoremap <C-l> <C-w>l
 
-  " Run `&makeprg`.
-  nmap <silent> <Leader>m :make<CR>
+  " Run `&makeprg`, but do not jump to the first QuickFix result.
+  nmap <silent> <Leader>m :make!<CR>
 
 
 " Filesystem {{{1

@@ -294,12 +294,6 @@
   " When jumping to a buffer, use a window already containing it.
   set switchbuf=useopen
 
-  " Easy window navigation.
-  nnoremap <C-h> <C-w>h
-  nnoremap <C-j> <C-w>j
-  nnoremap <C-k> <C-w>k
-  nnoremap <C-l> <C-w>l
-
   " GUI elements.
   " `a` - autoselect (become the owner of X selection in visual mode).
   " `b` - bottom horizontal scrollbar.
@@ -338,6 +332,15 @@
 
   " Visually select pasted text (actually "previously changed or yanked").
   nmap gp `[v`]
+
+  " Easy window navigation.
+  nnoremap <C-h> <C-w>h
+  nnoremap <C-j> <C-w>j
+  nnoremap <C-k> <C-w>k
+  nnoremap <C-l> <C-w>l
+
+  " Run `&makeprg`.
+  nmap <silent> <Leader>m :make<CR>
 
 
 " Filesystem {{{1

@@ -53,6 +53,9 @@
 
     " `f`/`F`/`t`/`T` support searching for a character across lines.
     Plug 'dahu/vim-fanfingtastic'
+      nmap - <Plug>fanfingtastic_,
+      xmap - <Plug>fanfingtastic_,
+      omap - <Plug>fanfingtastic_,
 
     " Move and jump to elements of comma-separated lists (e.g. function arguments).
     Plug 'AndrewRadev/sideways.vim'

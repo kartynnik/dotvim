@@ -165,6 +165,7 @@
       nmap <silent> <C-p> :Files<CR>
       nmap <silent> <C-p><C-p> :Files<CR>
       nmap <silent> <C-p>h :History<CR>
+      nmap <silent> <C-p>; :History:<CR>
       nmap <silent> <C-p>: :History:<CR>
       nmap <silent> <C-p>/ :History/<CR>
 

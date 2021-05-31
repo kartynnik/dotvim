@@ -175,6 +175,10 @@
     " `:DirDiff A B` to run `vimdiff` on the contents of two file trees.
     Plug 'will133/vim-dirdiff'
 
+    " Conflict resolution based on a 2-way diff of the parts between conflict markers.
+    " See https://github.com/haraldkl/diffconflicts#installation for Git/Mercurial installation.
+    Plug 'haraldkl/diffconflicts'
+
     " UNIX shell command wrappers
     " (`:Rename`, `:SudoWrite`, `:Chmod`, `:Locate`... - see `:help eunuch-commands`).
     " Automatically makes new files with a shebang executable.

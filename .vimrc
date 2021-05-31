@@ -217,6 +217,9 @@
       nmap gx <Plug>(open-url-browser)
       xmap gx <Plug>(open-url-browser)
 
+    " `<Leader><Leader>+' increases the GUI font size, allowing to repeat `+` multiple times.
+    Plug 'drmikehenry/vim-fontsize'
+
   " File type-specific {{{2
   Plug 'plasticboy/vim-markdown'
     let g:vim_markdown_new_list_item_indent = 2

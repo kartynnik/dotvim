@@ -7,10 +7,12 @@
   endif
 
 
-" Plugins {{{1
+" Leader {{{1
   " Set `<Leader>` upfront so that `<Leader>`-based mappings below take it into account.
-  let mapleader = ','
+  let mapleader = ' '
 
+
+" Plugins {{{1
   call plug#begin('~/.vim/plugins')
 
   " Color schemes {{{2
@@ -459,8 +461,8 @@
 
   " Highlight search results.
   set hlsearch
-  " Clear search highlight by `<Leader><Space>`.
-  nnoremap <silent> <Leader><Space> :noh<CR>
+  " Clear search highlight by `<Leader>/`.
+  nnoremap <silent> <Leader>/ :noh<CR>
 
   " Incremental search (as you type).
   set incsearch

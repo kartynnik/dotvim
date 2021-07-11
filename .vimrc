@@ -46,6 +46,9 @@
     " text objects + class/function motions (`[p`/`]p` + `c`/`f`).
     Plug 'bps/vim-textobj-python'
 
+    " `ii`/`ai`/`aI` - current indentation level / + a line above / + above and below.
+    Plug 'michaeljsmith/vim-indent-object'
+
   " Editing and navigation {{{2
     " Autodetect indentation options based on current or other similar files.
     Plug 'tpope/vim-sleuth'

@@ -67,6 +67,9 @@
       nnoremap <silent> <Leader>h :SidewaysLeft<CR>
       nnoremap <silent> <Leader>l :SidewaysRight<CR>
 
+    " `<Leader><Leader>` + motion creates Vimium-like motion hints around the document.
+    Plug 'easymotion/vim-easymotion'
+
     " Makes H a text object for the LHS of an expression (=, ==, =>) and L for the RHS.
     " E.g.: `ciL` in "stri|ng a = 'some string';" changes the left hand side.
     Plug 'vim-scripts/text-object-left-and-right'

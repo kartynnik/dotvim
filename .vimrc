@@ -19,7 +19,7 @@
     " My modified version of the Janah color scheme.
     Plug 'kartynnik/vim-janah'
 
-  " Library plugins serving as dependencies for the others {{{2
+  " Library plugins serving as dependencies for others {{{2
     " Allows to repeat the plugin mappings with `.` in the normal mode.
     Plug 'tpope/vim-repeat'
 
@@ -27,7 +27,7 @@
     " https://github.com/kana/vim-textobj-user/wiki lists many useful plugins doing that.
     Plug 'kana/vim-textobj-user'
 
-    " A plugin that is actually standalone (provides aligment via `:Tab[ularize]`,
+    " A plugin that is actually standalone (provides alignment via `:Tab[ularize]`,
     " but added as a dependency of `vim-markdown`.
     Plug 'godlygeek/tabular'
 

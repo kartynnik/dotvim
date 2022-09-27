@@ -27,7 +27,7 @@
     " https://github.com/kana/vim-textobj-user/wiki lists many useful plugins doing that.
     Plug 'kana/vim-textobj-user'
 
-    " A plugin that is actually standalone (provides alignment via `:Tab[ularize]`,
+    " A plugin that is actually standalone (provides alignment via `:Tab[ularize]`),
     " but added as a dependency of `vim-markdown`.
     Plug 'godlygeek/tabular'
 

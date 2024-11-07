@@ -106,7 +106,7 @@
 
     " `:BufferRing{Reverse,Forward}` to move to the previous  / next used buffer
     " in the "buffer ring" (circular deduplicated version of the jumplist).
-    Plug 'landonb/vim-buffer-ring', { 'branch': 'develop' }
+    Plug 'landonb/vim-buffer-ring'
       nnoremap <silent> <Leader><C-o> :BufferRingReverse<CR>
       nnoremap <silent> <Leader><C-i> :BufferRingForward<CR>
 

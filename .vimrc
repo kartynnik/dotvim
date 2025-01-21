@@ -195,6 +195,8 @@
     " Executes the whole / a part of the edited file.
     Plug 'thinca/vim-quickrun'
       let g:quickrun_no_default_key_mappings = 1
+      let g:quickrun_config = {}
+      let g:quickrun_config.python = {'command' : 'python3'}
       " Run the current file (for scripts).
       nnoremap <silent> <Leader><Leader><Leader> :QuickRun<CR>
 

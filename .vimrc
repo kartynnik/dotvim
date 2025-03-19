@@ -133,7 +133,7 @@
 
     " Live preview for results of Ex commands.
     if has('nvim')
-      set inccommand
+      set inccommand=nosplit
     else
       Plug 'markonm/traces.vim'
     endif
